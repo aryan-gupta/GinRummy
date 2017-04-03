@@ -36,6 +36,13 @@ int main(int argc, char* argv[]) {
 	return 0;
 }
 
+void create52Cards() {
+	for(Suits i = 0; i < SUIT_TOTAL; ++i) {
+		for(Suits j = 0; j < CARDS_TOTAL; ++j) {
+			gCards.push_back(new Card(i, j));
+		}
+	}
+}
 
 void shuffleCards() {
 	int shuffle = SHUFFLE_TIMES;
