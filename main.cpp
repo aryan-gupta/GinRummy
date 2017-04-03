@@ -32,11 +32,9 @@ std::vector<Player*> gPlayers;
 int main(int argc, char* argv[]) {
 	srand(time(0));
 	
-	create52Cards();
-	shuffleCards();
-	
+	gDeck = new CardPile(PILE_DECK);
+	gDiscard = new CardPile(PILE_DISCARD);
 	createPlayers();
-	
 	dealCards();
 	
 	return 0;
@@ -52,7 +50,7 @@ void createPlayers() {
 void dealCards() {
 	for(int i = 0; i < NUM_CARDS_PER; ++i) {
 		for(Player* tmp : gPlayers) {
-			tmp->
+			tmp->takeCard(gDeck->getACard());
 		}
 	}
 }

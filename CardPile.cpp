@@ -28,6 +28,8 @@ CardPile::CardPile(CardPileTypes type) {
 			for(Suits j = 0; j < CARDS_TOTAL; ++j)
 				gDeck.push_back( new Card{i, j} ); // create cards with combinations of Suits and Cards
 	}
+	
+	this->type = type;
 }
 
 void CardPile::shuffle() {
@@ -39,4 +41,10 @@ void CardPile::shuffle() {
 		
 		suffle--;
 	}
+}
+
+Card* getACard() {
+	Card* tmpCard = pile[0];
+	pile.erase(pile.begin());
+	return tmpCard;
 }
