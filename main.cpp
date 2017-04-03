@@ -15,42 +15,17 @@
  * =============================================================================
  */
 #include "info.h"
+#define PRINT_LEGAL_TERR std::cout << '\n' << R_PROJNAME << " v" << R_PVERSION \
+		<< " by " << R_AUTHOR << '\n' << R_COPYRIGHT << '\n' << R_COMMENTS \
+		<< "\n\n\n" // Legal and Informational
+
 
 #include <iostream>
-#include <algorithm>
 
-#include ".\inc\main.h"
-#include ".\inc\Card.h"
-
-const int SHUFFLE_TIMES = 50;
-
-std::vector<Card*> gCards;
+#include ".\h\main.h"
 
 int main(int argc, char* argv[]) {
-	srand(time(0));
-	
-	create52Cards();
-	shuffleCards();
+	PRINT_LEGAL_TERR;
 	
 	return 0;
-}
-
-void create52Cards() {
-	for(Suits i = 0; i < SUIT_TOTAL; ++i) {
-		for(Suits j = 0; j < CARDS_TOTAL; ++j) {
-			gCards.push_back(new Card(i, j));
-		}
-	}
-}
-
-void shuffleCards() {
-	int shuffle = SHUFFLE_TIMES;
-	while(shuffle) {
-		int first = rand() % 52;
-		int second = rand() % 52;
-		
-		std::swap(gCards[first], gCards[second]);
-		
-		suffle--;
-	}
 }
