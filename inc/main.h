@@ -20,11 +20,11 @@
 
 class Card;
 
-extern const int SHUFFLE_TIMES;
-extern std::vector<Card*> gCards;
-
 
 int main(int argc, char* argv[]);
-void create52Cards();
+
+void createPlayers();
+
+void dealCards();
 
 #endif // MAIN_H_INCLUDED

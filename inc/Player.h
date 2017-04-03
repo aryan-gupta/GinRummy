@@ -42,6 +42,7 @@ public:
 	
 	std::vector<Meld> getMelds();
 	void takeCard(Card*);
+	void doTurn();
 private:
 	std::vector<Card*> hand;
 	

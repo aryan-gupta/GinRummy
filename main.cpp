@@ -42,7 +42,8 @@ int main(int argc, char* argv[]) {
 	dealCards();
 	
 	do {
-		
+		for(Player* tmpPlayer : gPlayers)
+			tmpPlayer->doTurn();
 	} while(true);
 	
 	return 0;
