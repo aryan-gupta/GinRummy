@@ -20,6 +20,7 @@
 
 #include <vector>
 
+/// @brief The different types of melds
 enum MeldTypes {
 	MELD_SETS,
 	MELD_RUNS,
@@ -28,13 +29,16 @@ enum MeldTypes {
 	MELD_NONE
 };
 
+/// @brief A complete meld
 struct Meld {
 	MeldTypes type;
 	std::vector<Card*> cards;
 };
 
+/// @brief A player on the board
 class Player {
 public:
+	
 	std::vector<Meld> getMelds();
 private:
 	std::vector<Card*> hand;
