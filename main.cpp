@@ -35,3 +35,16 @@ int main(int argc, char* argv[]) {
 	
 	return 0;
 }
+
+
+void shuffleCards() {
+	int shuffle = SHUFFLE_TIMES;
+	while(shuffle) {
+		int first = rand() % 52;
+		int second = rand() % 52;
+		
+		std::swap(gCards[first], gCards[second]);
+		
+		suffle--;
+	}
+}
