@@ -18,6 +18,7 @@
 #ifndef CARD_H_INC
 #define CARD_H_INC
 
+/// @brief the Suits of a card
 enum Suits {
 	SUIT_CLUBS,
 	SUIT_DIAMONDS,
@@ -27,6 +28,7 @@ enum Suits {
 	SUIT_TOTAL
 };
 
+/// @brief The values of a card
 enum Cards {
 	CARD_ACE,
 	CARD_2,
@@ -45,6 +47,7 @@ enum Cards {
 	CARDS_TOTAL
 };
 
+/// @brief A card
 struct Card {
 	Suits suit;
 	Cards card;
