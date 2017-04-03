@@ -24,7 +24,7 @@
 
 const int SHUFFLE_TIMES = 50;
 
-std::vector<Card*> gCards;
+std::vector<Card*> gDeck;
 
 int main(int argc, char* argv[]) {
 	srand(time(0));
@@ -39,7 +39,7 @@ int main(int argc, char* argv[]) {
 void create52Cards() {
 	for(Suits i = 0; i < SUIT_TOTAL; ++i) {
 		for(Suits j = 0; j < CARDS_TOTAL; ++j) {
-			gCards.push_back(new Card(i, j));
+			gDeck.push_back(new Card(i, j)); // create cards with combinations of Suits and Cards
 		}
 	}
 }
@@ -47,10 +47,9 @@ void create52Cards() {
 void shuffleCards() {
 	int shuffle = SHUFFLE_TIMES;
 	while(shuffle) {
-		int first = rand() % 52;
-		int second = rand() % 52;
+		int first = rand() % 52, second = rand() % 52; // Pick 2 random numbers
 		
-		std::swap(gCards[first], gCards[second]);
+		std::swap(gDeck[first], gDeck[second]); // Swap those two cards
 		
 		suffle--;
 	}
