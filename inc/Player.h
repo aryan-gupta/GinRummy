@@ -18,8 +18,28 @@
 #ifndef PLAYER_H_INC
 #define PLAYER_H_INC
 
-class Player {
+#include <vector>
 
+enum MeldTypes {
+	MELD_SETS,
+	MELD_RUNS,
+	
+	MELD_TOTAL,
+	MELD_NONE
+};
+
+struct Meld {
+	MeldTypes type;
+	std::vector<Card*> cards;
+};
+
+class Player {
+public:
+	std::vector<Meld> getMelds();
+private:
+	std::vector<Card*> hand;
+	
+	bool isUser;
 };
 
 #endif
