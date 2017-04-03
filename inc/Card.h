@@ -25,7 +25,7 @@ enum Suits {
 	SUIT_SPADES,
 	
 	SUIT_TOTAL
-}
+};
 
 enum Cards {
 	CARD_ACE,
@@ -43,19 +43,11 @@ enum Cards {
 	CARD_KING,
 	
 	CARDS_TOTAL
-}
+};
 
 struct Card {
 	Suits suit;
 	Cards card;
-}
-
-inline
-Suits getSuit()
-{ return suit; }
-
-inline
-Cards getCard() 
-{ return card; }
+};
 
 #endif
