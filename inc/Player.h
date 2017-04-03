@@ -38,7 +38,10 @@ struct Meld {
 /// @brief A player on the board
 class Player {
 public:
+	Player(bool isUser = false);
+	
 	std::vector<Meld> getMelds();
+	void takeCard(Card*);
 private:
 	std::vector<Card*> hand;
 	

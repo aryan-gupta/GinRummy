@@ -22,9 +22,12 @@
 #include ".\inc\main.h"
 #include ".\inc\Card.h"
 
-const int SHUFFLE_TIMES = 50;
+const int NUM_PLAYERS = 4;
+const int NUM_CARDS_PER = 7;
 
-std::vector<Card*> gDeck;
+CardPile* gDeck;
+CardPile* gDiscard;
+std::vector<Player*> gPlayers;
 
 int main(int argc, char* argv[]) {
 	srand(time(0));
@@ -32,25 +35,24 @@ int main(int argc, char* argv[]) {
 	create52Cards();
 	shuffleCards();
 	
+	createPlayers();
+	
+	dealCards();
 	
 	return 0;
 }
 
-void create52Cards() {
-	for(Suits i = 0; i < SUIT_TOTAL; ++i) {
-		for(Suits j = 0; j < CARDS_TOTAL; ++j) {
-			gDeck.push_back(new Card(i, j)); // create cards with combinations of Suits and Cards
-		}
+void createPlayers() {
+	gPlayers.push_back(new Player(true));
+	for(int i = 1; i < NUM_PLAYERS; ++i) {
+		gPlayers.push_back(new Player());
 	}
 }
 
-void shuffleCards() {
-	int shuffle = SHUFFLE_TIMES;
-	while(shuffle) {
-		int first = rand() % 52, second = rand() % 52; // Pick 2 random numbers
-		
-		std::swap(gDeck[first], gDeck[second]); // Swap those two cards
-		
-		suffle--;
+void dealCards() {
+	for(int i = 0; i < NUM_CARDS_PER; ++i) {
+		for(Player* tmp : gPlayers) {
+			tmp->
+		}
 	}
 }
