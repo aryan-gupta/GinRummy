@@ -27,15 +27,23 @@ const int NUM_CARDS_PER = 7;
 
 CardPile* gDeck;
 CardPile* gDiscard;
+
+std::vector<CardPile*> melds;
 std::vector<Player*> gPlayers;
 
 int main(int argc, char* argv[]) {
 	srand(time(0));
 	
 	gDeck = new CardPile(PILE_DECK);
+	gDeck->shuffle();
+	
 	gDiscard = new CardPile(PILE_DISCARD);
 	createPlayers();
 	dealCards();
+	
+	do {
+		
+	} while(true);
 	
 	return 0;
 }

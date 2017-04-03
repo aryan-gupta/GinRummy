@@ -56,7 +56,7 @@ struct Card {
 enum CardPileTypes {
 	PILE_DECK,
 	PILE_DISCARD,
-	
+	PILE_MELD,
 	PILE_TOTAL
 };
 
