@@ -21,6 +21,7 @@ RES = "C:\Compiler\MinGW-w64\mingw32\bin\windres.exe"
 OBJDIR = .\obj
 BINDIR = .\bin
 DATDIR = .\dat
+INCDIR = .\inc
 
 DEBUG = -g -DDEBUG=true
 
@@ -34,12 +35,14 @@ L_SDLL = -LC:\Compiler\SDL\lib -lmingw32 -lSDL2main -lSDL2 \
 # ==============================  MACROS  ======================================
 CFLAGS = $(DEBUG) -Wall -std=c++17 -c
 LFLAGS = $(DEBUG) -Wall
-OBJ = $(OBJDIR)\main.o $(OBJDIR)\board.o $(OBJDIR)\computerAI.o \
-	  $(OBJDIR)\gameFunc.o $(OBJDIR)\graphics.o $(OBJDIR)\res.o
+OBJ = $(OBJDIR)\main.o $(OBJDIR)\Player.o
 
 # ============================ RECEPIES ========================================
 
-$(OBJDIR)\main.o: .\main.cpp
+$(OBJDIR)\main.o: .\main.cpp $(INCDIR)\main.h
+	$(CC) .\$^ -o .\$@ $(CFLAGS)
+
+$(OBJDIR)\Player.o: .\Player.cpp $(INCDIR)\Player.h $(INCDIR)\main.h
 	$(CC) .\$^ -o .\$@ $(CFLAGS)
 
 $(OBJDIR)\%.o: .\%.cpp
