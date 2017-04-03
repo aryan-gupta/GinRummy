@@ -44,7 +44,10 @@ void CardPile::shuffle() {
 }
 
 Card* getACard() {
-	Card* tmpCard = pile[0];
-	pile.erase(pile.begin());
-	return tmpCard;
+	if(pile.size() == 0) // If pile is empty, return null
+		return nullptr;
+	
+	Card* tmpCard = pile[0]; // get first card
+	pile.erase(pile.begin()); // erase it
+	return tmpCard; // return the card
 }
