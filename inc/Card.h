@@ -18,12 +18,47 @@
 #ifndef CARD_H_INC
 #define CARD_H_INC
 
-class Card {
-public:
-
-private:
-
+enum Suits {
+	SUIT_CLUBS,
+	SUIT_DIAMONDS,
+	SUIT_HEARTS,
+	SUIT_SPADES
 }
 
+enum Cards {
+	CARD_ACE,
+	CARD_2,
+	CARD_3,
+	CARD_4,
+	CARD_5,
+	CARD_6,
+	CARD_7,
+	CARD_8,
+	CARD_9,
+	CARD_10,
+	CARD_JACK,
+	CARD_QUEEN,
+	CARD_KING,
+}
+
+class Card {
+public:
+	Card(Suits suit, Cards card);
+	~Card();
+	
+	inline Suits getSuit();
+	inline Cards getCard();
+private:
+	Suits suit;
+	Cards card;
+}
+
+inline
+Suits getSuit()
+{ return suit; }
+
+inline
+Cards getCard() 
+{ return card; }
 
 #endif
