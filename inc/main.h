@@ -15,10 +15,16 @@
  * =============================================================================
  */
 
-#ifndef MAIN_H_INCLUDED
-#define MAIN_H_INCLUDED
+#ifndef MAIN_H_INC
+#define MAIN_H_INC
+
+class Card;
+
+extern const int SHUFFLE_TIMES;
+extern std::vector<Card*> gCards;
 
 
 int main(int argc, char* argv[]);
+void create52Cards();
 
 #endif // MAIN_H_INCLUDED

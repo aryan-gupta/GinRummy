@@ -22,7 +22,9 @@ enum Suits {
 	SUIT_CLUBS,
 	SUIT_DIAMONDS,
 	SUIT_HEARTS,
-	SUIT_SPADES
+	SUIT_SPADES,
+	
+	SUIT_TOTAL
 }
 
 enum Cards {
@@ -39,16 +41,11 @@ enum Cards {
 	CARD_JACK,
 	CARD_QUEEN,
 	CARD_KING,
+	
+	CARDS_TOTAL
 }
 
-class Card {
-public:
-	Card(Suits suit, Cards card);
-	~Card();
-	
-	inline Suits getSuit();
-	inline Cards getCard();
-private:
+struct Card {
 	Suits suit;
 	Cards card;
 }
