@@ -18,9 +18,6 @@
 #ifndef MAIN_H_INC
 #define MAIN_H_INC
 
-class Card;
-
-
 int main(int argc, char* argv[]);
 
 void createPlayers();
