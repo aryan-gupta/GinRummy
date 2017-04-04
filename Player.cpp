@@ -16,4 +16,23 @@
  */
 #include "info.h"
 
+#include <vector>
+using std::vector;
+
 #include ".\h\main.h"
+
+vector<Meld> getMelds() {
+	
+}
+
+void Player::takeCard(Card* card) {
+	hand.push_back(card);
+}
+
+void Player::doTurn() {
+	if(isUser) {
+		
+	} else {
+		
+	}
+}
