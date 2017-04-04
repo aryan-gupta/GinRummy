@@ -17,12 +17,17 @@
 #include "info.h"
 
 #include <iostream>
+#include <vector>
 #include <algorithm>
+#include <time.h>
+
+#include <SDL.h>
 
 #include ".\inc\main.h"
 #include ".\inc\CardPile.h"
 #include ".\inc\Player.h"
 
+SDL_Texture* test;
 
 const int NUM_PLAYERS = 4;
 const int NUM_CARDS_PER = 7;
