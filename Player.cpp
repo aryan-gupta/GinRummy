@@ -19,7 +19,7 @@
 #include <vector>
 using std::vector;
 
-#include ".\h\main.h"
+#include ".\inc\main.h"
 
 vector<Meld> getMelds() {
 	

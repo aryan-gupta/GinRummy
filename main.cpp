@@ -20,7 +20,9 @@
 #include <algorithm>
 
 #include ".\inc\main.h"
-#include ".\inc\Card.h"
+#include ".\inc\CardPile.h"
+#include ".\inc\Player.h"
+
 
 const int NUM_PLAYERS = 4;
 const int NUM_CARDS_PER = 7;
