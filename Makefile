@@ -33,7 +33,7 @@ L_SDLL = -L.\SDL\lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL
 # ==============================  MACROS  ======================================
 CFLAGS = $(DEBUG) -Wall -std=c++17 -c
 LFLAGS = $(DEBUG) -Wall
-OBJ = $(OBJDIR)\main.o $(OBJDIR)\Player.o
+OBJ = $(OBJDIR)\main.o $(OBJDIR)\Player.o $(OBJDIR)\CardPile.o
 
 # ============================ RECEPIES ========================================
 
@@ -41,13 +41,13 @@ $(OBJDIR)\main.o: .\main.cpp $(INCDIR)\main.h
 	$(CC) .\main.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
 $(OBJDIR)\Player.o: .\Player.cpp $(INCDIR)\Player.h $(INCDIR)\main.h
-	$(CC) .\Player.cpp -o .\$@ $(CFLAGS)
+	$(CC) .\Player.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
 $(OBJDIR)\CardPile.o: .\CardPile.cpp $(INCDIR)\CardPile.h $(INCDIR)\main.h
-	$(CC) .\CardPile.cpp -o .\$@ $(CFLAGS)
+	$(CC) .\CardPile.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
 $(OBJDIR)\%.o: .\%.cpp
-	$(CC) .\$^ -o .\$@ $(CFLAGS) 
+	$(CC) .\$^ -o .\$@ $(CFLAGS) $(L_SDLC)
 
 $(OBJDIR)\res.o: .\res.rc .\info.h
 	$(RES) .\res.rc  .\$@
