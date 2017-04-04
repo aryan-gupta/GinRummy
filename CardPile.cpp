@@ -18,9 +18,9 @@
 
 #include <algorithm>
 
-#include ".\h\main.h"
+#include ".\inc\main.h"
+#include ".\inc\CardPile.h"
 
-const int SHUFFLE_TIMES = 50;
 
 CardPile::CardPile(CardPileTypes type) {
 	if(type == PILE_DECK) {
@@ -33,15 +33,6 @@ CardPile::CardPile(CardPileTypes type) {
 }
 
 void CardPile::shuffle() {
-	/*int shuffle = SHUFFLE_TIMES;
-	while(shuffle) { // Shuffle the deck
-		int first = rand() % 52, second = rand() % 52; // Pick 2 random numbers
-		
-		std::swap(pile[first], pile[second]); // Swap those two cards
-		
-		suffle--;
-	}*/
-	
 	std::random_suffle(pile.begin(), pile.end());
 }
 
