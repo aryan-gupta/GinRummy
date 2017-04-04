@@ -38,10 +38,13 @@ OBJ = $(OBJDIR)\main.o $(OBJDIR)\Player.o
 # ============================ RECEPIES ========================================
 
 $(OBJDIR)\main.o: .\main.cpp $(INCDIR)\main.h
-	$(CC) .\$^ -o .\$@ $(CFLAGS)
+	$(CC) .\main.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
 $(OBJDIR)\Player.o: .\Player.cpp $(INCDIR)\Player.h $(INCDIR)\main.h
-	$(CC) .\$^ -o .\$@ $(CFLAGS)
+	$(CC) .\Player.cpp -o .\$@ $(CFLAGS)
+
+$(OBJDIR)\CardPile.o: .\CardPile.cpp $(INCDIR)\CardPile.h $(INCDIR)\main.h
+	$(CC) .\CardPile.cpp -o .\$@ $(CFLAGS)
 
 $(OBJDIR)\%.o: .\%.cpp
 	$(CC) .\$^ -o .\$@ $(CFLAGS) 
@@ -51,7 +54,7 @@ $(OBJDIR)\res.o: .\res.rc .\info.h
 	
 # Link	
 $(BINDIR)\main.exe: $(OBJ)
-	$(CC) .\$^ -o .\$@ $(LFLAGS)
+	$(CC) .\$^ -o .\$@ $(LFLAGS) $(L_SDLL)
 
 # ============================= PHONY RECEPIES =================================
 .PHONY: all
