@@ -15,9 +15,8 @@
 # ==============================================================================
 .DEFAULT_GOAL := all
 # ==========================  CONST MACROS  ====================================
-CC = "C:\Compiler\MinGW-w64\mingw32\bin\g++.exe"
-7Z = "C:\Program Files (Portable)\7-Zip\7z.exe"
-RES = "C:\Compiler\MinGW-w64\mingw32\bin\windres.exe"
+CC = "g++.exe"
+RES = "windres.exe"
 OBJDIR = .\obj
 BINDIR = .\bin
 DATDIR = .\dat
@@ -28,9 +27,8 @@ DEBUG = -g -DDEBUG=true
 # ============================  SDL LIBS  ======================================
 GRAPHICS = -w -Wl,-subsystem,windows
 # Standard SDL libs
-L_SDLC = -IC:\Compiler\SDL\include\SDL2 
-L_SDLL = -LC:\Compiler\SDL\lib -lmingw32 -lSDL2main -lSDL2 \
-							   -lSDL2_mixer  -lSDL2_ttf  -lSDL2_image
+L_SDLC = -I.\SDL\include\SDL2 
+L_SDLL = -L.\SDL\lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL2_image
 
 # ==============================  MACROS  ======================================
 CFLAGS = $(DEBUG) -Wall -std=c++17 -c
@@ -68,8 +66,3 @@ link:
 clean:
 	del $(OBJDIR)\*.o
 	del $(BINDIR)\*.exe
-	del $(DATDIR)\*.dat
-
-.PHONY: archive
-archive:
-	$(7Z) a -tzip .\arc\"%DATE:~-4%%DATE:~4,2%%DATE:~7,2%".zip * -xr!obj -xr!bin -xr!arc
