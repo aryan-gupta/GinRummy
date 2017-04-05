@@ -16,12 +16,22 @@
  */
 #include "info.h"
 
+#include <iostream>
+using std::cout;
+using std::cin;
+using std::endl;
 #include <vector>
 using std::vector;
 
 #include ".\inc\main.h"
+#include ".\inc\Player.h"
+#include ".\inc\CardPile.h"
 
-vector<Meld> getMelds() {
+Player::Player(bool isUser) {
+	this->isUser = isUser;
+}
+
+vector<Meld> Player::getMelds() {
 	
 }
 
@@ -31,7 +41,7 @@ void Player::takeCard(Card* card) {
 
 void Player::doTurn() {
 	if(isUser) {
-		
+		cout << "I have this many cards: " << hand.size() << endl;
 	} else {
 		
 	}

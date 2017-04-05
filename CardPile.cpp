@@ -17,6 +17,8 @@
 #include "info.h"
 
 #include <algorithm>
+#include <vector>
+#include <random>
 
 #include ".\inc\main.h"
 #include ".\inc\CardPile.h"
@@ -24,19 +26,19 @@
 
 CardPile::CardPile(CardPileTypes type) {
 	if(type == PILE_DECK) {
-		for(Suits i = 0; i < SUIT_TOTAL; ++i)
-			for(Suits j = 0; j < CARDS_TOTAL; ++j)
-				pile.push_back( new Card{i, j} ); // create cards with combinations of Suits and Cards
+		for(int i = 0; i < SUIT_TOTAL; ++i)
+			for(int j = 0; j < CARDS_TOTAL; ++j)
+				pile.push_back( new Card{(Suits)i, (Cards)j} ); // create cards with combinations of Suits and Cards
 	}
 	
 	this->type = type;
 }
 
 void CardPile::shuffle() {
-	std::random_suffle(pile.begin(), pile.end());
+	std::random_shuffle(pile.begin(), pile.end());
 }
 
-Card* getACard() {
+Card* CardPile::getACard() {
 	if(pile.size() == 0) // If pile is empty, return null
 		return nullptr;
 	

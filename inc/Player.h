@@ -20,6 +20,8 @@
 
 #include <vector>
 
+struct Card;
+
 /// @brief The different types of melds
 enum MeldTypes {
 	MELD_SETS,

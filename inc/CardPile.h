@@ -18,6 +18,8 @@
 #ifndef CARD_H_INC
 #define CARD_H_INC
 
+#include <vector>
+
 /// @brief the Suits of a card
 enum Suits {
 	SUIT_CLUBS,
