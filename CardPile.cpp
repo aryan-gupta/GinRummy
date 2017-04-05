@@ -27,7 +27,7 @@
 CardPile::CardPile(CardPileTypes type) {
 	if(type == PILE_DECK) {
 		for(int i = 0; i < SUIT_TOTAL; ++i)
-			for(int j = 0; j < CARDS_TOTAL; ++j)
+			for(int j = 0; j < RANK_TOTAL; ++j)
 				pile.push_back( new Card{(Suits)i, (Ranks)j} ); // create cards with combinations of Suits and Cards
 	}
 	
