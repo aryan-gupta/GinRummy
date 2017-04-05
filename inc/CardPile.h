@@ -31,7 +31,7 @@ enum Suits {
 };
 
 /// @brief The values of a card
-enum Cards {
+enum Ranks {
 	CARD_ACE,
 	CARD_2,
 	CARD_3,
@@ -52,7 +52,7 @@ enum Cards {
 /// @brief A card
 struct Card {
 	Suits suit;
-	Cards card;
+	Ranks rank;
 };
 
 enum CardPileTypes {
