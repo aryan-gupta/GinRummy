@@ -61,8 +61,11 @@ void Player::getMelds(vector<Meld*>& foundMelds) {
 						[](Card* a, Card* b) { return a->rank < b->rank; }
 					);
 					
-					if(    tmpCards[0]->rank == tmpCards[1]->rank + 1 // see if the ranks are incrementing
-						&& tmpCards[1]->rank == tmpCards[2]->rank + 1
+					// for(Card* tmpCard : tmpCards)
+						// cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+					
+					if(    tmpCards[0]->rank == tmpCards[1]->rank - 1 // see if the ranks are incrementing
+						&& tmpCards[1]->rank == tmpCards[2]->rank - 1
 					) { foundMelds.push_back( new Meld{MELD_RUN, tmpCards} ); }
 				}
 			}
@@ -85,9 +88,9 @@ void Player::doTurn() {
 	} else {
 		for(auto tmpMeld : foundMelds) {
 			cout << tmpMeld->type << " " << endl;
-			for(auto tmpCard : tmpMeld->cards) {
-				cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
-			}
+			// for(auto tmpCard : tmpMeld->cards) {
+				// cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+			// }
 		}
 	}
 	
