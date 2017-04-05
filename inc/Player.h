@@ -24,8 +24,8 @@ struct Card;
 
 /// @brief The different types of melds
 enum MeldTypes {
-	MELD_SETS,
-	MELD_RUNS,
+	MELD_SET,
+	MELD_RUN,
 	
 	MELD_TOTAL,
 	MELD_NONE

@@ -22,6 +22,7 @@ using std::cin;
 using std::endl;
 #include <vector>
 using std::vector;
+#include <algorithm>
 
 #include ".\inc\main.h"
 #include ".\inc\Player.h"
@@ -34,9 +35,9 @@ Player::Player(bool isUser) {
 vector<Meld*> Player::getMelds() {
 	vector<Meld*> foundMelds;
 	
-	for(int i = 0; i < hand.size(); ++i) {
-		for(int j = i + 1; j < hand.size(); ++j) {
-			for(int k = j + 1; k < hand.size(); ++k) {
+	for(unsigned i = 0; i < hand.size(); ++i) {
+		for(unsigned j = i + 1; j < hand.size(); ++j) {
+			for(unsigned k = j + 1; k < hand.size(); ++k) {
 				if(    (hand[i]->rank == hand[j]->rank)
 					&& (hand[j]->rank == hand[k]->rank)
 				) {
@@ -50,9 +51,9 @@ vector<Meld*> Player::getMelds() {
 	}
 	///@todo Check for a 4 card set
 	
-	for(int i = 0; i < hand.size(); ++i) {
-		for(int j = i + 1; j < hand.size(); ++j) {
-			for(int k = j + 1; k < hand.size(); ++k) { // go through sets of 3 cards
+	for(unsigned i = 0; i < hand.size(); ++i) {
+		for(unsigned j = i + 1; j < hand.size(); ++j) {
+			for(unsigned k = j + 1; k < hand.size(); ++k) { // go through sets of 3 cards
 				if(    hand[i]->suit == hand[j]->suit // if the suits are all the same, we may have a run
 					&& hand[j]->suit == hand[k]->suit
 				) {
@@ -71,6 +72,8 @@ vector<Meld*> Player::getMelds() {
 			}
 		}
 	}
+	
+	return foundMelds;
 }
 
 void Player::takeCard(Card* rank) {
