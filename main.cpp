@@ -37,6 +37,7 @@ std::vector<Meld*> melds;
 std::vector<Player*> gPlayers;
 
 int main(int argc, char* argv[]) {
+	srand(time(0));
 	initSDL();
 	
 	gDeck = new CardPile(PILE_DECK);
