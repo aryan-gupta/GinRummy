@@ -20,10 +20,12 @@
 
 #include <vector>
 
+struct Card;
+
 /// @brief The different types of melds
 enum MeldTypes {
-	MELD_SETS,
-	MELD_RUNS,
+	MELD_SET,
+	MELD_RUN,
 	
 	MELD_TOTAL,
 	MELD_NONE
@@ -40,12 +42,12 @@ class Player {
 public:
 	Player(bool isUser = false);
 	
-	std::vector<Meld> getMelds();
+	void getMelds(std::vector<Meld*>& foundMelds);
 	void takeCard(Card* card);
 	void doTurn();
+	void printHand();
 private:
 	std::vector<Card*> hand;
-	
 	bool isUser;
 };
 

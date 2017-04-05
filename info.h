@@ -42,6 +42,8 @@
 #define LOGL(msg) if(DEBUG) {std::cout << msg << std::endl;}
 #define LOG(msg) if(DEBUG) {std::cout << msg;}
 
+#define EXIT(msg, code) {std::cout << msg << std::endl; exit(code);}
+
 // CLEAR TERMINAL 
 #if defined(__linux__) || defined(linux) || defined(__linux)
 	#define CLEAR_TERMINAL if(DEBUG){system("clear");}
