@@ -18,12 +18,33 @@
 #ifndef WINDOW_H_INC
 #define WINDOW_H_INC
 
+extern const int SCRN_W;
+extern const int SCRN_H;
 
 class Window {
 public:
-
+	Window();  ///< Creates our Window
+	~Window(); ///< Destroys our Window and cleans up variables
+	
+	/// @brief initializes all the variables in our window
+	/// The variables aren't done in the constructor because many of the
+	/// variables used in this class need to be accessed after the main window 
+	/// is created, but after the window is set up
+	void initWindow();
+	
+	void renderAll();            ///< Renders all of the objects on the screen
+	
+	inline SDL_Renderer*  getRenderer();       ///< Get the current Window's renderer
 private:
+	SDL_Window* window;     ///< Stores our main Window
+	SDL_Renderer* renderer; ///< Stores our main renderer
+	
+	SDL_Texture* background; ///< The background texture, Points to texture in \ref Resources
 };
 
+
+inline
+SDL_Renderer* Window::getRenderer()
+{ return renderer; }
 
 #endif

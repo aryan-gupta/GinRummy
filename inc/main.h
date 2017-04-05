@@ -32,7 +32,8 @@ extern std::vector<Meld*> melds;      ///< The melds on the board
 extern std::vector<Player*> gPlayers; ///< The players
 
 // =========================
-
+/// @retval -0x101 initSDL();
+/// @retval -0x102 Window::Window();
 int main(int argc, char* argv[]); ///< Program Entry (if anyone wants to elaborate, feel free to)
 
 void initSDL();       ///< Inits the graphics
