@@ -32,14 +32,15 @@ Player::Player(bool isUser) {
 	this->isUser = isUser;
 }
 
-void Player::getMelds(vector<Meld*>& foundMelds) {	
+void Player::getMelds(vector<Meld*>& foundMelds) {
+	// FIND SETS (3 or 4 cards with the same rank/value)
 	for(unsigned i = 0; i < hand.size(); ++i) {
 		for(unsigned j = i + 1; j < hand.size(); ++j) {
 			for(unsigned k = j + 1; k < hand.size(); ++k) {
 				if(    (hand[i]->rank == hand[j]->rank) // see if the ranks are the same
 					&& (hand[j]->rank == hand[k]->rank)
 				) {
-					foundMelds.push_back( new Meld {
+					foundMelds.push_back( new Meld{
 						MELD_SET,
 						{hand[i], hand[j], hand[k]}
 					});
@@ -49,6 +50,7 @@ void Player::getMelds(vector<Meld*>& foundMelds) {
 	}
 	///@todo Check for a 4 card set
 	
+	// FIND RUNS (3 cards in the same suit that go in order)
 	for(unsigned i = 0; i < hand.size(); ++i) {
 		for(unsigned j = i + 1; j < hand.size(); ++j) {
 			for(unsigned k = j + 1; k < hand.size(); ++k) { // go through sets of 3 cards
@@ -88,9 +90,9 @@ void Player::doTurn() {
 	} else {
 		for(auto tmpMeld : foundMelds) {
 			cout << tmpMeld->type << " " << endl;
-			// for(auto tmpCard : tmpMeld->cards) {
-				// cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
-			// }
+			for(auto tmpCard : tmpMeld->cards) {
+				cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+			}
 		}
 	}
 	

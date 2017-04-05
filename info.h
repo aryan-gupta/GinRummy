@@ -21,11 +21,11 @@
 // =================  PROGRAM  INFO  =================
 #define R_PVERSION	       /* Version Number */ "1.0.0"
  
-#define R_PROJNAME		     /* Project Name */ "Template"
-#define R_PRGMNAME		     /* Program Name */ "Template"
-#define R_DESCRIPTION	      /* Description */ "This is a Template"
+#define R_PROJNAME		     /* Project Name */ "Gin Rummy"
+#define R_PRGMNAME		     /* Program Name */ "Gin Rummy"
+#define R_DESCRIPTION	      /* Description */ "This is a game of Gin ummy"
 
-#define R_AUTHOR		     	   /* Author */ "Aryan Gupta"
+#define R_AUTHOR		     	   /* Author */ "Aryan Gupta" ///@todo modify this to reflect group
 #define R_COMPANY		          /* Company */ "The Gupta Empire"
 #define R_COPYRIGHT				/* Copyright */ "Copyright (c) The Gupta Empire - All Rights Reserved"
 #define R_ORGFILENAME  /* Original File Name */ "main.exe" 

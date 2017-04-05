@@ -30,6 +30,7 @@ enum Suits {
 	SUIT_TOTAL
 };
 
+/// @brief labels for the suits (for debugging)
 static const char* Suits_Label[] {
 	"SUIT_CLUBS",
 	"SUIT_DIAMONDS",
@@ -56,8 +57,9 @@ enum Ranks {
 	RANK_KING,
 	
 	RANK_TOTAL
-};/// @brief The values of a card
+};
 
+/// @brief Labels for the ranks
 static const char* Ranks_Label[] {
 	"RANK_ACE",
 	"RANK_2",
@@ -82,6 +84,7 @@ struct Card {
 	Ranks rank;
 };
 
+/// @brief The card pile types
 enum CardPileTypes {
 	PILE_DECK,
 	PILE_DISCARD,
@@ -89,17 +92,18 @@ enum CardPileTypes {
 	PILE_TOTAL
 };
 
+/// @brief A card pile
 class CardPile {
 public:
 	CardPile(CardPileTypes type);
 	~CardPile();
 	
-	void shuffle();
+	void shuffle(); ///< Suffle the deck
 	
-	Card* getACard();
+	Card* getACard(); ///< Pulls a card from the deck
 private:
-	std::vector<Card*> pile;
-	CardPileTypes type;
+	std::vector<Card*> pile; ///< the deck/pile of cards
+	CardPileTypes type;      ///< type of CardPile
 };
 
 #endif
