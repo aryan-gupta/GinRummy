@@ -46,11 +46,10 @@ int main(int argc, char* argv[]) {
 	createPlayers();
 	dealCards();
 	
-	do {
-		for(Player* tmpPlayer : gPlayers)
-			tmpPlayer->doTurn();
-	} while(true);
+	for(Player* tmpPlayer : gPlayers)
+		tmpPlayer->doTurn();
 	
+	system("pause");
 	return 0;
 }
 
