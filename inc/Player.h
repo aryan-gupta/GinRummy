@@ -35,6 +35,15 @@ struct Meld {
 	std::vector<Card*> cards; ///< The cards that are part of the meld
 };
 
+enum Places {
+	PLACE_MAIN,
+	PLACE_LEFT,
+	PLACE_TOP,
+	PLACE_RIGHT,
+	
+	PLACE_TOTAL
+}
+
 /// @brief A player on the board
 class Player {
 public:
@@ -50,6 +59,7 @@ public:
 	void takeCard(Card* card);
 	
 	void doTurn(); ///< Does a turn for the player
+	void render(Places place);
 private:
 	std::vector<Card*> hand; ///< Stores the cards in the Player's hand
 	bool isUser; ///> Is the Player a user

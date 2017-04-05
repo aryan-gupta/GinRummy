@@ -104,3 +104,7 @@ void Player::printHand() {
 	for(Card* tmpCard : hand)
 		cout << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
 }
+
+void render(Places place) {
+	
+}
