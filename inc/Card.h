@@ -18,13 +18,17 @@
 #ifndef CARD_H_INC
 #define CARD_H_INC
 
+/// @brief the Suits of a card
 enum Suits {
 	SUIT_CLUBS,
 	SUIT_DIAMONDS,
 	SUIT_HEARTS,
-	SUIT_SPADES
-}
+	SUIT_SPADES,
+	
+	SUIT_TOTAL
+};
 
+/// @brief The values of a card
 enum Cards {
 	CARD_ACE,
 	CARD_2,
@@ -39,26 +43,14 @@ enum Cards {
 	CARD_JACK,
 	CARD_QUEEN,
 	CARD_KING,
-}
-
-class Card {
-public:
-	Card(Suits suit, Cards card);
-	~Card();
 	
-	inline Suits getSuit();
-	inline Cards getCard();
-private:
+	CARDS_TOTAL
+};
+
+/// @brief A card
+struct Card {
 	Suits suit;
 	Cards card;
-}
-
-inline
-Suits getSuit()
-{ return suit; }
-
-inline
-Cards getCard() 
-{ return card; }
+};
 
 #endif

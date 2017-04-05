@@ -15,42 +15,46 @@
 # ==============================================================================
 .DEFAULT_GOAL := all
 # ==========================  CONST MACROS  ====================================
-CC = "C:\Compiler\MinGW-w64\mingw32\bin\g++.exe"
-7Z = "C:\Program Files (Portable)\7-Zip\7z.exe"
-RES = "C:\Compiler\MinGW-w64\mingw32\bin\windres.exe"
+CC = "g++.exe"
+RES = "windres.exe"
 OBJDIR = .\obj
 BINDIR = .\bin
 DATDIR = .\dat
+INCDIR = .\inc
 
 DEBUG = -g -DDEBUG=true
 
 # ============================  SDL LIBS  ======================================
 GRAPHICS = -w -Wl,-subsystem,windows
 # Standard SDL libs
-L_SDLC = -IC:\Compiler\SDL\include\SDL2 
-L_SDLL = -LC:\Compiler\SDL\lib -lmingw32 -lSDL2main -lSDL2 \
-							   -lSDL2_mixer  -lSDL2_ttf  -lSDL2_image
+L_SDLC = -I.\SDL\include\SDL2 
+L_SDLL = -L.\SDL\lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL2_image
 
 # ==============================  MACROS  ======================================
 CFLAGS = $(DEBUG) -Wall -std=c++17 -c
 LFLAGS = $(DEBUG) -Wall
-OBJ = $(OBJDIR)\main.o $(OBJDIR)\board.o $(OBJDIR)\computerAI.o \
-	  $(OBJDIR)\gameFunc.o $(OBJDIR)\graphics.o $(OBJDIR)\res.o
+OBJ = $(OBJDIR)\main.o $(OBJDIR)\Player.o $(OBJDIR)\CardPile.o
 
 # ============================ RECEPIES ========================================
 
-$(OBJDIR)\main.o: .\main.cpp
-	$(CC) .\$^ -o .\$@ $(CFLAGS)
+$(OBJDIR)\main.o: .\main.cpp $(INCDIR)\main.h
+	$(CC) .\main.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
+
+$(OBJDIR)\Player.o: .\Player.cpp $(INCDIR)\Player.h $(INCDIR)\main.h
+	$(CC) .\Player.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
+
+$(OBJDIR)\CardPile.o: .\CardPile.cpp $(INCDIR)\CardPile.h $(INCDIR)\main.h
+	$(CC) .\CardPile.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
 $(OBJDIR)\%.o: .\%.cpp
-	$(CC) .\$^ -o .\$@ $(CFLAGS) 
+	$(CC) .\$^ -o .\$@ $(CFLAGS) $(L_SDLC)
 
 $(OBJDIR)\res.o: .\res.rc .\info.h
 	$(RES) .\res.rc  .\$@
 	
 # Link	
 $(BINDIR)\main.exe: $(OBJ)
-	$(CC) .\$^ -o .\$@ $(LFLAGS)
+	$(CC) .\$^ -o .\$@ $(LFLAGS) $(L_SDLL)
 
 # ============================= PHONY RECEPIES =================================
 .PHONY: all
@@ -65,8 +69,3 @@ link:
 clean:
 	del $(OBJDIR)\*.o
 	del $(BINDIR)\*.exe
-	del $(DATDIR)\*.dat
-
-.PHONY: archive
-archive:
-	$(7Z) a -tzip .\arc\"%DATE:~-4%%DATE:~4,2%%DATE:~7,2%".zip * -xr!obj -xr!bin -xr!arc
