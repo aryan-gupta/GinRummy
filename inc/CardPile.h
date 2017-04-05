@@ -15,8 +15,8 @@
  * =============================================================================
  */
 
-#ifndef CARD_H_INC
-#define CARD_H_INC
+#ifndef CARDPILE_H_INC
+#define CARDPILE_H_INC
 
 #include <vector>
 
@@ -30,23 +30,50 @@ enum Suits {
 	SUIT_TOTAL
 };
 
+static const char* Suits_Label[] {
+	"SUIT_CLUBS",
+	"SUIT_DIAMONDS",
+	"SUIT_HEARTS",
+	"SUIT_SPADES",
+	
+	"SUIT_TOTAL"
+};
+
 /// @brief The values of a card
 enum Ranks {
-	CARD_ACE,
-	CARD_2,
-	CARD_3,
-	CARD_4,
-	CARD_5,
-	CARD_6,
-	CARD_7,
-	CARD_8,
-	CARD_9,
-	CARD_10,
-	CARD_JACK,
-	CARD_QUEEN,
-	CARD_KING,
+	RANK_ACE,
+	RANK_2,
+	RANK_3,
+	RANK_4,
+	RANK_5,
+	RANK_6,
+	RANK_7,
+	RANK_8,
+	RANK_9,
+	RANK_10,
+	RANK_JACK,
+	RANK_QUEEN,
+	RANK_KING,
 	
-	CARDS_TOTAL
+	RANK_TOTAL
+};/// @brief The values of a card
+
+static const char* Ranks_Label[] {
+	"RANK_ACE",
+	"RANK_2",
+	"RANK_3",
+	"RANK_4",
+	"RANK_5",
+	"RANK_6",
+	"RANK_7",
+	"RANK_8",
+	"RANK_9",
+	"RANK_10",
+	"RANK_JACK",
+	"RANK_QUEEN",
+	"RANK_KING",
+	
+	"RANK_TOTAL"
 };
 
 /// @brief A card
