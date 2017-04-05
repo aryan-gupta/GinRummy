@@ -31,17 +31,56 @@ Player::Player(bool isUser) {
 	this->isUser = isUser;
 }
 
-vector<Meld> Player::getMelds() {
+vector<Meld*> Player::getMelds() {
+	vector<Meld*> foundMelds;
 	
+	for(int i = 0; i < hand.size(); ++i) {
+		for(int j = i + 1; j < hand.size(); ++j) {
+			for(int k = j + 1; k < hand.size(); ++k) {
+				if(    (hand[i]->rank == hand[j]->rank)
+					&& (hand[j]->rank == hand[k]->rank)
+				) {
+					foundMelds.push_back( new Meld {
+						MELD_SET,
+						{hand[i], hand[j], hand[k]}
+					});
+				}
+			}
+		}
+	}
+	///@todo Check for a 4 card set
+	
+	for(int i = 0; i < hand.size(); ++i) {
+		for(int j = i + 1; j < hand.size(); ++j) {
+			for(int k = j + 1; k < hand.size(); ++k) { // go through sets of 3 cards
+				if(    hand[i]->suit == hand[j]->suit // if the suits are all the same, we may have a run
+					&& hand[j]->suit == hand[k]->suit
+				) {
+					vector<Card*> tmpCards{hand[i], hand[j], hand[k]}; // create vector to sort 
+					std::sort( // sort the 3 cards 
+						tmpCards.begin(), tmpCards.end(),
+						[](Card* a, Card* b) { return a->rank < b->rank; }
+					);
+					
+					if(    tmpCards[0]->rank == tmpCards[1]->rank + 1 // see if the ranks are incrementing
+						&& tmpCards[1]->rank == tmpCards[2]->rank + 1
+					) {
+						foundMelds.push_back( new Meld {MELD_RUN, tmpCards} );
+					}
+				}
+			}
+		}
+	}
 }
 
-void Player::takeCard(Card* card) {
-	hand.push_back(card);
+void Player::takeCard(Card* rank) {
+	hand.push_back(rank);
 }
 
 void Player::doTurn() {
 	if(isUser) {
-		cout << "I have this many cards: " << hand.size() << endl;
+		//cout << "I have this many ranks: " << hand.size() << endl;
+		
 	} else {
 		
 	}

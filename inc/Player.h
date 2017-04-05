@@ -42,7 +42,7 @@ class Player {
 public:
 	Player(bool isUser = false);
 	
-	std::vector<Meld> getMelds();
+	std::vector<Meld*> getMelds();
 	void takeCard(Card* card);
 	void doTurn();
 private:
