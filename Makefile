@@ -37,10 +37,10 @@ OBJ = $(OBJDIR)\main.o $(OBJDIR)\Player.o $(OBJDIR)\CardPile.o
 
 # ============================ RECEPIES ========================================
 
-$(OBJDIR)\main.o: .\main.cpp $(INCDIR)\main.h
+$(OBJDIR)\main.o: .\main.cpp $(INCDIR)\main.h $(INCDIR)\Player.h $(INCDIR)\CardPile.h
 	$(CC) .\main.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
-$(OBJDIR)\Player.o: .\Player.cpp $(INCDIR)\Player.h $(INCDIR)\main.h
+$(OBJDIR)\Player.o: .\Player.cpp $(INCDIR)\Player.h $(INCDIR)\main.h $(INCDIR)\CardPile.h
 	$(CC) .\Player.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
 $(OBJDIR)\CardPile.o: .\CardPile.cpp $(INCDIR)\CardPile.h $(INCDIR)\main.h
