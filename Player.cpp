@@ -32,13 +32,11 @@ Player::Player(bool isUser) {
 	this->isUser = isUser;
 }
 
-vector<Meld*> Player::getMelds() {
-	vector<Meld*> foundMelds;
-	
+void Player::getMelds(vector<Meld*>& foundMelds) {	
 	for(unsigned i = 0; i < hand.size(); ++i) {
 		for(unsigned j = i + 1; j < hand.size(); ++j) {
 			for(unsigned k = j + 1; k < hand.size(); ++k) {
-				if(    (hand[i]->rank == hand[j]->rank)
+				if(    (hand[i]->rank == hand[j]->rank) // see if the ranks are the same
 					&& (hand[j]->rank == hand[k]->rank)
 				) {
 					foundMelds.push_back( new Meld {
@@ -58,33 +56,46 @@ vector<Meld*> Player::getMelds() {
 					&& hand[j]->suit == hand[k]->suit
 				) {
 					vector<Card*> tmpCards{hand[i], hand[j], hand[k]}; // create vector to sort 
-					std::sort( // sort the 3 cards 
+					std::sort( // sort the 3 cards by rank
 						tmpCards.begin(), tmpCards.end(),
 						[](Card* a, Card* b) { return a->rank < b->rank; }
 					);
 					
 					if(    tmpCards[0]->rank == tmpCards[1]->rank + 1 // see if the ranks are incrementing
 						&& tmpCards[1]->rank == tmpCards[2]->rank + 1
-					) {
-						foundMelds.push_back( new Meld {MELD_RUN, tmpCards} );
-					}
+					) { foundMelds.push_back( new Meld{MELD_RUN, tmpCards} ); }
 				}
 			}
 		}
 	}
-	
-	return foundMelds;
 }
 
-void Player::takeCard(Card* rank) {
-	hand.push_back(rank);
+void Player::takeCard(Card* card) {
+	hand.push_back(card);
 }
 
 void Player::doTurn() {
-	if(isUser) {
-		//cout << "I have this many ranks: " << hand.size() << endl;
-		
+	printHand();
+	
+	vector<Meld*> foundMelds;
+	getMelds(foundMelds);
+	
+	if(foundMelds.size() == 0) {
+		cout << "NO MELDS FOUND" << endl;
 	} else {
-		
+		for(auto tmpMeld : foundMelds) {
+			cout << tmpMeld->type << " " << endl;
+			for(auto tmpCard : tmpMeld->cards) {
+				cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+			}
+		}
 	}
+	
+	if(isUser) {} else {}
+	cout << endl;
+}
+
+void Player::printHand() {
+	for(Card* tmpCard : hand)
+		cout << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
 }
