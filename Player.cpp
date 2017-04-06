@@ -122,5 +122,7 @@ void Player::render() {
 			CARD_W,
 			CARD_H
 		};
+		
+		
 	}
 }

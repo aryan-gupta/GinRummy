@@ -20,7 +20,8 @@
 // Forward Declarations
 class CardPile;
 class Player;
-struct Meld;
+class Window;
+class Resources;
 
 extern const int NUM_CARDS_PER; ///< Number of cards per player (default 10)
 
@@ -29,6 +30,10 @@ extern CardPile* gDiscard; ///< The discard pile
 
 extern Player* P1;
 extern Player* P2;
+
+extern Window* gWindow;
+extern Resources* gAssets;
+
 
 // =========================
 /// @retval -0x101 initSDL();

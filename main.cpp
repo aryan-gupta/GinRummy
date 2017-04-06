@@ -27,6 +27,7 @@
 #include ".\inc\CardPile.h"
 #include ".\inc\Player.h"
 #include ".\inc\Window.h"
+#include ".\inc\Resources.h"
 
 const int NUM_CARDS_PER = 10;
 
@@ -37,20 +38,20 @@ Player* P1;
 Player* P2;
 
 Window* gWindow;
+Resources* gAssets;
 
 int main(int argc, char* argv[]) {
 	srand(time(0));
 	initSDL();
 	
-	gWindow = new Window();
-	
-	gDeck = new CardPile(PILE_DECK);
-	gDeck->shuffle();
-	
+	gWindow  = new Window();
+	gAssets  = new Resources();
+	gDeck    = new CardPile(PILE_DECK);
 	gDiscard = new CardPile(PILE_DISCARD);
+	P1       = new Player(true);
+	P2       = new Player(false);
 	
-	P1 = new Player(true);
-	P2 = new Player(false);
+	gDeck->shuffle();
 	
 	dealCards();
 	
