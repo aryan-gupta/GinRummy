@@ -51,5 +51,8 @@ void Window::initWindow() {}
 
 
 void renderAll() {
+	renderBackground();
 	
+	P1->render();
+	P2->render();
 }
