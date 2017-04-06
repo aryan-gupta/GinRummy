@@ -18,6 +18,8 @@
 #ifndef RESOURCES_H_INC
 #define RESOURCES_H_INC
 
+#define GCI(s, r) (s*RANK_TOTAL)+r
+
 struct Resources {
 	Resources();
 	~Resources();
@@ -27,6 +29,6 @@ struct Resources {
 	
 private:
 	SDL_Texture* load(const char* file);
-}
+};
 
 #endif

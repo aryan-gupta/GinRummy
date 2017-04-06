@@ -16,16 +16,21 @@
  */
 #include "info.h"
 
+#include <SDL.h>
+#include <SDL_Image.h>
+#include <iostream>
+
 #include ".\inc\main.h"
+#include ".\inc\Resources.h"
+#include ".\inc\CardPile.h"
+#include ".\inc\Window.h"
 
-#define GCI(s, r) (s*RANK_TOTAL)+r
-
-static const char* CARDS_SHEET = ".\\res\\sprites\\Spritesheets\\playingCards.png";
+static const char* CARDS_SHEET = "..\\res\\sprites\\Spritesheets\\playingCards.png";
 
 Resources::Resources() {
 	cardsSheet = load(CARDS_SHEET);
 	
-	cardClippings = new SDL_Rect(SUIT_TOTAL * RANL_TOTAL); // 52 cards;
+	cardClippings = new SDL_Rect[SUIT_TOTAL * RANK_TOTAL]; // 52 cards;
 	cardClippings[GCI(SUIT_CLUBS   , RANK_ACE  )] = SDL_Rect{560,  570, 140, 190};
 	cardClippings[GCI(SUIT_CLUBS   , RANK_2    )] = SDL_Rect{280, 1140, 140, 190};
 	cardClippings[GCI(SUIT_CLUBS   , RANK_3    )] = SDL_Rect{700,  190, 140, 190};
