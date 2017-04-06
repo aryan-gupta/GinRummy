@@ -16,8 +16,13 @@
  */
 #include "info.h"
 
+#include <iostream>
+#include <SDL.h>
+#include <SDL_Image.h>
+
 #include ".\inc\main.h"
 #include ".\inc\Window.h"
+#include ".\inc\Player.h"
 
 const int SCRN_W = 680; /// @todo Make sure that this is a good ratio
 const int SCRN_H = 480;
@@ -50,6 +55,17 @@ Window::~Window() {}
 void Window::initWindow() {}
 
 
-void renderAll() {
+void Window::renderAll() {
+	renderBackground();
 	
+	P1->render();
+	P2->render();
+	
+	SDL_RenderPresent(renderer);
+}
+
+void Window::renderBackground() {
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x99, 0x00, 0xFF);
+	SDL_Rect bg{0, 0, SCRN_W, SCRN_H};
+	SDL_RenderFillRect(renderer, &bg);
 }

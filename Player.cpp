@@ -105,6 +105,6 @@ void Player::printHand() {
 		cout << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
 }
 
-void render(Places place) {
+void Player::render() {
 	
 }
