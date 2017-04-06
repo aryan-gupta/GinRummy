@@ -20,6 +20,7 @@
 
 extern const int SCRN_W;
 extern const int SCRN_H;
+extern const int WIN_PAD;
 
 class Window {
 public:
@@ -41,6 +42,7 @@ private:
 	
 	SDL_Texture* background; ///< The background texture, Points to texture in \ref Resources
 	
+	void clear();
 	void renderBackground();
 };
 

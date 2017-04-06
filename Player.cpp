@@ -23,10 +23,16 @@ using std::endl;
 #include <vector>
 using std::vector;
 #include <algorithm>
+#include <SDL.h>
 
 #include ".\inc\main.h"
 #include ".\inc\Player.h"
 #include ".\inc\CardPile.h"
+#include ".\inc\Window.h"
+
+const int CARD_W   = 140 *5/8;
+const int CARD_H   = 190 *5/8;
+const int CARD_PAD = 40  *5/8;
 
 Player::Player(bool isUser) {
 	this->isUser = isUser;
@@ -106,5 +112,15 @@ void Player::printHand() {
 }
 
 void Player::render() {
-	
+	// The entire card lay is going to be 140px for the top card and 40px for each
+	// card behind, But we are shrinking the card by a factor of 0.25 so its 35px
+	// for the top card and 10px for the sequential cards. Total of 125px
+	if(isUser) {
+		SDL_Rect currCardPos = {
+			SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2,
+			SCRN_H - WIN_PAD - CARD_H,
+			CARD_W,
+			CARD_H
+		};
+	}
 }
