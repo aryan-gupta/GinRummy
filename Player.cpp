@@ -29,10 +29,7 @@ using std::vector;
 #include ".\inc\Player.h"
 #include ".\inc\CardPile.h"
 #include ".\inc\Window.h"
-
-const int CARD_W   = 140 *5/8;
-const int CARD_H   = 190 *5/8;
-const int CARD_PAD = 40  *5/8;
+#include ".\inc\Resources.h"
 
 Player::Player(bool isUser) {
 	this->isUser = isUser;
@@ -112,9 +109,14 @@ void Player::printHand() {
 }
 
 void Player::render() {
+	renderCards();
+}
+
+void Player::renderCards() {
 	// The entire card lay is going to be 140px for the top card and 40px for each
 	// card behind, But we are shrinking the card by a factor of 0.25 so its 35px
 	// for the top card and 10px for the sequential cards. Total of 125px
+	
 	if(isUser) {
 		SDL_Rect currCardPos = {
 			SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2,
@@ -123,6 +125,33 @@ void Player::render() {
 			CARD_H
 		};
 		
+		for(Card* tmpCard : hand) {
+			SDL_RenderCopy(
+				gWindow->getRenderer(),
+				gAssets->cardsSheet,
+				&gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)],
+				&currCardPos
+			);
+			
+			currCardPos.x += CARD_PAD;
+		}
+	} else {
+		SDL_Rect currCardPos = {
+			SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2,
+			WIN_PAD,
+			CARD_W,
+			CARD_H
+		};
 		
+		for(unsigned i = 0; i < hand.size(); ++i) {
+			SDL_RenderCopy(
+				gWindow->getRenderer(),
+				gAssets->cardBackSheet,
+				&gAssets->cardClippingBack,
+				&currCardPos
+			);
+			
+			currCardPos.x += CARD_PAD;
+		}
 	}
 }

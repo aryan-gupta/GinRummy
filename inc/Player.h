@@ -56,6 +56,7 @@ private:
 	bool isUser; ///> Is the Player a user
 	
 	void printHand(); ///< Print the hand out
+	void renderCards();
 };
 
 #endif
