@@ -23,7 +23,7 @@ struct Resources {
 	~Resources();
 	
 	SDL_Texture* cardsSheet;
-	SDL_Rect**   cardClippings;
+	SDL_Rect*   cardClippings;
 	
 private:
 	SDL_Texture* load(const char* file);
