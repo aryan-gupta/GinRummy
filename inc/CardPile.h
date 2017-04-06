@@ -20,6 +20,10 @@
 
 #include <vector>
 
+extern const int CARD_W;
+extern const int CARD_H;
+extern const int CARD_PAD;
+
 /// @brief the Suits of a card
 enum Suits {
 	SUIT_CLUBS,
@@ -99,11 +103,12 @@ public:
 	~CardPile();
 	
 	void shuffle(); ///< Suffle the deck
+	void render();
 	
 	Card* getACard(); ///< Pulls a card from the deck
 private:
 	std::vector<Card*> pile; ///< the deck/pile of cards
-	CardPileTypes type;      ///< type of CardPile
+	CardPileTypes type;      ///< type of CardPile @todo Convert to bool
 };
 
 #endif

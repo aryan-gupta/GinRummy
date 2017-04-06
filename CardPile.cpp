@@ -16,13 +16,19 @@
  */
 #include "info.h"
 
+#include <SDL.h>
 #include <algorithm>
 #include <vector>
 #include <random>
 
 #include ".\inc\main.h"
 #include ".\inc\CardPile.h"
+#include ".\inc\Window.h"
+#include ".\inc\Resources.h"
 
+const int CARD_W   = 140 *5/8;
+const int CARD_H   = 190 *5/8;
+const int CARD_PAD = 35  *5/8;
 
 CardPile::CardPile(CardPileTypes type) {
 	if(type == PILE_DECK) {
@@ -45,4 +51,38 @@ Card* CardPile::getACard() {
 	Card* tmpCard = pile[0]; // get first card
 	pile.erase(pile.begin()); // erase it
 	return tmpCard; // return the card
+}
+
+void CardPile::render() {
+	if(type == PILE_DECK) {
+		SDL_Rect pos = SDL_Rect {
+			SCRN_W/2 - CARD_W - 20,
+			SCRN_H/2 - CARD_H/2,
+			CARD_W,
+			CARD_H
+		};
+		
+		SDL_RenderCopy(
+			gWindow->getRenderer(),
+			gAssets->cardBackSheet,
+			&gAssets->cardClippingBack,
+			&pos
+		);
+	} else {
+		if(pile.size() != 0) {
+			SDL_Rect pos = SDL_Rect {
+				SCRN_W/2 + 20,
+				SCRN_H/2 - CARD_H/2,
+				CARD_W,
+				CARD_H
+			};
+			
+			SDL_RenderCopy(
+				gWindow->getRenderer(),
+				gAssets->cardsSheet,
+				&gAssets->cardClippings[GCI(pile[0]->suit, pile[0]->rank)],
+				&pos
+			);
+		}
+	}
 }

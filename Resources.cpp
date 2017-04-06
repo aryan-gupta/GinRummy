@@ -25,10 +25,12 @@
 #include ".\inc\CardPile.h"
 #include ".\inc\Window.h"
 
-static const char* CARDS_SHEET = "..\\res\\sprites\\Spritesheets\\playingCards.png";
+static const char* CARDS_SHEET      = "..\\res\\sprites\\Spritesheets\\playingCards.png";
+static const char* CARDS_SHEET_BACK = "..\\res\\sprites\\Spritesheets\\playingCardBacks.png";
 
 Resources::Resources() {
 	cardsSheet = load(CARDS_SHEET);
+	cardBackSheet = load(CARDS_SHEET_BACK);
 	
 	cardClippings = new SDL_Rect[SUIT_TOTAL * RANK_TOTAL]; // 52 cards;
 	cardClippings[GCI(SUIT_CLUBS   , RANK_ACE  )] = SDL_Rect{560,  570, 140, 190};
@@ -88,7 +90,8 @@ Resources::Resources() {
 	cardClippings[GCI(SUIT_SPADES  , RANK_KING )] = SDL_Rect{  0,    0, 140, 190};
 
 	//cardJoker.png" x="140" y="570" width="140" height="190"/>
-	
+	//x="280" y="570" width="140" height="190"
+	cardClippingBack = SDL_Rect{280, 570, 140, 190};
 }
 
 Resources::~Resources() {

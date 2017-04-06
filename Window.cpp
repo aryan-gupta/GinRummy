@@ -23,6 +23,7 @@
 #include ".\inc\main.h"
 #include ".\inc\Window.h"
 #include ".\inc\Player.h"
+#include ".\inc\CardPile.h"
 
 const int SCRN_W = 680; /// @todo Make sure that this is a good ratio
 const int SCRN_H = 510;
@@ -63,6 +64,8 @@ void Window::renderAll() {
 	
 	P1->render();
 	P2->render();
+	gDeck->render();
+	gDiscard->render();
 	
 	SDL_RenderPresent(renderer);
 }
