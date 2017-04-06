@@ -25,7 +25,9 @@
 #include ".\inc\Player.h"
 
 const int SCRN_W = 680; /// @todo Make sure that this is a good ratio
-const int SCRN_H = 480;
+const int SCRN_H = 510;
+
+const int WIN_PAD = 15;
 
 Window::Window() {
 	if( NULL ==
@@ -56,6 +58,7 @@ void Window::initWindow() {}
 
 
 void Window::renderAll() {
+	clear();
 	renderBackground();
 	
 	P1->render();
@@ -65,7 +68,12 @@ void Window::renderAll() {
 }
 
 void Window::renderBackground() {
-	SDL_SetRenderDrawColor(renderer, 0x00, 0x99, 0x00, 0xFF);
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x99, 0x00, 0xFF); // http://www.colorhexa.com/009900
 	SDL_Rect bg{0, 0, SCRN_W, SCRN_H};
 	SDL_RenderFillRect(renderer, &bg);
+}
+
+void Window::clear() {
+	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF); // Black
+	SDL_RenderClear(renderer);
 }
