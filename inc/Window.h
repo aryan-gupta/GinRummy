@@ -40,6 +40,8 @@ private:
 	SDL_Renderer* renderer; ///< Stores our main renderer
 	
 	SDL_Texture* background; ///< The background texture, Points to texture in \ref Resources
+	
+	void renderBackground();
 };
 
 

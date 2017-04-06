@@ -27,8 +27,8 @@ extern const int NUM_CARDS_PER; ///< Number of cards per player (default 10)
 extern CardPile* gDeck;    ///< The CardPile for the main deck
 extern CardPile* gDiscard; ///< The discard pile
 
-extern std::vector<Meld*> melds;      ///< The melds on the board
-extern std::vector<Player*> gPlayers; ///< The players
+extern Player* P1;
+extern Player* P2;
 
 // =========================
 /// @retval -0x101 initSDL();
