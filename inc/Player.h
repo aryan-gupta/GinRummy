@@ -35,6 +35,13 @@ struct Meld {
 	std::vector<Card*> cards; ///< The cards that are part of the meld
 };
 
+enum Players {
+	PLAYER_1,
+	PLAYER_2,
+	
+	PLAYER_TOTAL
+}
+
 /// @brief A player on the board
 class Player {
 public:
