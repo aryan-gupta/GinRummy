@@ -40,6 +40,10 @@ CardPile::CardPile(CardPileTypes type) {
 	this->type = type;
 }
 
+CardPile::~CardPile() {
+	
+}
+
 void CardPile::shuffle() {
 	std::random_shuffle(pile.begin(), pile.end());
 }

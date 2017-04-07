@@ -34,16 +34,6 @@ enum Suits {
 	SUIT_TOTAL
 };
 
-/// @brief labels for the suits (for debugging)
-static const char* Suits_Label[] {
-	"SUIT_CLUBS",
-	"SUIT_DIAMONDS",
-	"SUIT_HEARTS",
-	"SUIT_SPADES",
-	
-	"SUIT_TOTAL"
-};
-
 /// @brief The values of a card
 enum Ranks {
 	RANK_ACE,
@@ -61,25 +51,6 @@ enum Ranks {
 	RANK_KING,
 	
 	RANK_TOTAL
-};
-
-/// @brief Labels for the ranks
-static const char* Ranks_Label[] {
-	"RANK_ACE",
-	"RANK_2",
-	"RANK_3",
-	"RANK_4",
-	"RANK_5",
-	"RANK_6",
-	"RANK_7",
-	"RANK_8",
-	"RANK_9",
-	"RANK_10",
-	"RANK_JACK",
-	"RANK_QUEEN",
-	"RANK_KING",
-	
-	"RANK_TOTAL"
 };
 
 /// @brief A card

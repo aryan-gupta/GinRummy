@@ -31,9 +31,40 @@ using std::vector;
 #include ".\inc\Window.h"
 #include ".\inc\Resources.h"
 
+/// @brief labels for the suits (for debugging)
+static const char* Suits_Label[] {
+	"SUIT_CLUBS",
+	"SUIT_DIAMONDS",
+	"SUIT_HEARTS",
+	"SUIT_SPADES",
+	
+	"SUIT_TOTAL"
+};
+
+/// @brief Labels for the ranks
+static const char* Ranks_Label[] {
+	"RANK_ACE",
+	"RANK_2",
+	"RANK_3",
+	"RANK_4",
+	"RANK_5",
+	"RANK_6",
+	"RANK_7",
+	"RANK_8",
+	"RANK_9",
+	"RANK_10",
+	"RANK_JACK",
+	"RANK_QUEEN",
+	"RANK_KING",
+	
+	"RANK_TOTAL"
+};
+
 Player::Player(bool isUser) {
 	this->isUser = isUser;
 }
+
+Player::~Player() {}
 
 void Player::getMelds(vector<Meld*>& foundMelds) {
 	// FIND SETS (3 or 4 cards with the same rank/value)
