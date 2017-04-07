@@ -140,10 +140,10 @@ void Player::doTurn() {
 				int x, y;
 				SDL_GetMouseState(&x, &y);
 				
-				int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x cordinate offset from the start of the cards
+				int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x coordinate offset from the start of the cards
 				int cardi = cardx / CARD_PAD; // get the index of the card we clicked
 				
-				// Make sure the card doesnt leave the hand
+				// Make sure the card doesn't leave the hand
 				if(cardi > (int)hand.size() - 1)
 					cardi = hand.size() - 1;
 				if(cardi < 0)
@@ -163,7 +163,7 @@ void Player::doTurn() {
 					&& y < SCRN_H - WIN_PAD
 				)  {
 					isMovingCard = true;
-					int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x cordinate offset from the start of the cards
+					int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x coordinate offset from the start of the cards
 					int cardi = cardx / CARD_PAD; // get the index of the card we clicked
 					
 					if(cardi >= (int)hand.size()) // correct for the last card being the top card
@@ -179,7 +179,7 @@ void Player::doTurn() {
 					isMovingCard = false;
 					selectedCard = nullptr;
 				} else {
-					
+					/// @todo check for button presses
 				}
 			}
 		}
