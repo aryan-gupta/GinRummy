@@ -40,6 +40,9 @@ Player* P2;
 Window* gWindow;
 Resources* gAssets;
 
+Players gWho_Turn;
+bool gTurn_Finished;
+
 int main(int argc, char* argv[]) {
 	srand(time(0));
 	initSDL();
@@ -55,20 +58,32 @@ int main(int argc, char* argv[]) {
 	
 	dealCards();
 	
+	gWho_Turn = (rand() % 2)? PLAYER_1 : PLAYER_2; // randomize turn
+	
 	SDL_Event event;
+	bool isMovingCard;
 	
 	while(true) {
-		P1->doTurn();
-		P2->doTurn();
+		if(gWho_Turn == PLAYER_1) // if players 1 turn, do player 1 turn
+			P1->doTurn();
+		if(gWho_Turn == PLAYER_2) // if players 2 turn, do player 2 turn
+			P2->doTurn();
+		
+		if(gTurn_Finished) {
+			gWho_Turn = (gWho_Turn == PLAYER_1)? PLAYER_2 : PLAYER_1; // swap whos turn it is
+			gTurn_Finished = false;
+		}
+		// EVERYTHING GOES IN HERE
 		
 		gWindow->renderAll();
-		
 		while(SDL_PollEvent(&event)) {
 			if(event.type == SDL_QUIT) {
 				quit(0x01);
 			}
 			
-			//if(even)
+			if(isMovingCard) {
+				
+			}
 		}
 	}
 	
