@@ -43,5 +43,5 @@ int main(int argc, char* argv[]); ///< Program Entry (if anyone wants to elabora
 void initSDL();       ///< Inits the graphics
 void createPlayers(); ///< creates the players
 void dealCards();     ///< Deals the cards
-
+void quit(int code);  ///< Deletes variables and exits
 #endif // MAIN_H_INCLUDED
