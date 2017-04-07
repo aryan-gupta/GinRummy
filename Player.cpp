@@ -114,24 +114,38 @@ void Player::takeCard(Card* card) {
 }
 
 void Player::doTurn() {
-	printHand();
+	bool turnFinished = false;
+	while(!turnFinished) {
+		printHand();
 	
-	vector<Meld*> foundMelds;
-	getMelds(foundMelds);
-	
-	if(foundMelds.size() == 0) {
-		cout << "NO MELDS FOUND" << endl;
-	} else {
-		for(auto tmpMeld : foundMelds) {
-			cout << tmpMeld->type << " " << endl;
-			for(auto tmpCard : tmpMeld->cards) {
-				cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+		vector<Meld*> foundMelds;
+		getMelds(foundMelds);
+		
+		if(foundMelds.size() == 0) {
+			cout << "NO MELDS FOUND" << endl;
+		} else {
+			for(auto tmpMeld : foundMelds) {
+				cout << tmpMeld->type << " " << endl;
+				for(auto tmpCard : tmpMeld->cards) {
+					cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+				}
+			}
+		}
+		
+		if(isUser) {} else {}
+		cout << endl;
+		
+		gWindow->renderAll();
+		while(SDL_PollEvent(&event)) {
+			if(event.type == SDL_QUIT) {
+				quit(0x01);
+			}
+			
+			if(isMovingCard) {
+				
 			}
 		}
 	}
-	
-	if(isUser) {} else {}
-	cout << endl;
 }
 
 void Player::printHand() {
