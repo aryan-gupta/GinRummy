@@ -55,13 +55,24 @@ int main(int argc, char* argv[]) {
 	
 	dealCards();
 	
-	P1->doTurn();
-	P2->doTurn();
+	SDL_Event event;
 	
-	gWindow->renderAll();
+	while(true) {
+		P1->doTurn();
+		P2->doTurn();
+		
+		gWindow->renderAll();
+		
+		while(SDL_PollEvent(&event)) {
+			if(event.type == SDL_QUIT) {
+				quit(0x01);
+			}
+			
+			//if(even)
+		}
+	}
 	
-	std::cin.get();
-	return 0;
+	return 0x00;
 }
 
 void initSDL() {
@@ -91,4 +102,15 @@ void dealCards() {
 		P1->takeCard(gDeck->getACard());
 		P2->takeCard(gDeck->getACard());
 	}
+}
+
+void quit(int code) {
+	delete gWindow;
+	delete gAssets;
+	delete gDeck;
+	delete gDiscard;
+	delete P1;
+	delete P2;
+	
+	exit(code);
 }
