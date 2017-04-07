@@ -60,13 +60,16 @@ static const char* Ranks_Label[] {
 	"RANK_TOTAL"
 };
 
+
 Player::Player(bool isUser) {
 	this->isUser = isUser;
 }
 
+
 Player::~Player() {}
 
-void Player::getMelds(vector<Meld*>& foundMelds) {
+
+void Player::getMelds() {
 	// FIND SETS (3 or 4 cards with the same rank/value)
 	for(unsigned i = 0; i < hand.size(); ++i) {
 		for(unsigned j = i + 1; j < hand.size(); ++j) {
@@ -74,7 +77,7 @@ void Player::getMelds(vector<Meld*>& foundMelds) {
 				if(    (hand[i]->rank == hand[j]->rank) // see if the ranks are the same
 					&& (hand[j]->rank == hand[k]->rank)
 				) {
-					foundMelds.push_back( new Meld{
+					melds.push_back( new Meld{
 						MELD_SET,
 						{hand[i], hand[j], hand[k]}
 					});
@@ -102,39 +105,31 @@ void Player::getMelds(vector<Meld*>& foundMelds) {
 					
 					if(    tmpCards[0]->rank == tmpCards[1]->rank - 1 // see if the ranks are incrementing
 						&& tmpCards[1]->rank == tmpCards[2]->rank - 1
-					) { foundMelds.push_back( new Meld{MELD_RUN, tmpCards} ); }
+					) { melds.push_back( new Meld{MELD_RUN, tmpCards} ); }
 				}
 			}
 		}
 	}
 }
 
+
 void Player::takeCard(Card* card) {
 	hand.push_back(card);
 }
 
+
 void Player::doTurn() {
-	bool turnFinished = false;
-	while(!turnFinished) {
-		printHand();
+	getMelds();
+	printHand();
 	
-		vector<Meld*> foundMelds;
-		getMelds(foundMelds);
-		
-		if(foundMelds.size() == 0) {
-			cout << "NO MELDS FOUND" << endl;
-		} else {
-			for(auto tmpMeld : foundMelds) {
-				cout << tmpMeld->type << " " << endl;
-				for(auto tmpCard : tmpMeld->cards) {
-					cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
-				}
-			}
-		}
-		
-		if(isUser) {} else {}
-		cout << endl;
-		
+	SDL_Event event;
+	bool finished = false;
+	bool isMovingCard = false;
+	Card* selectedCard = nullptr;
+	
+	/// @todo First we want to ask the user to pick a deck to pull cards from
+	while(!finished) {
+		// DO STUFF HERE
 		gWindow->renderAll();
 		while(SDL_PollEvent(&event)) {
 			if(event.type == SDL_QUIT) {
@@ -142,20 +137,94 @@ void Player::doTurn() {
 			}
 			
 			if(isMovingCard) {
+				int x, y;
+				SDL_GetMouseState(&x, &y);
 				
+				int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x cordinate offset from the start of the cards
+				int cardi = cardx / CARD_PAD; // get the index of the card we clicked
+				
+				// Make sure the card doesnt leave the hand
+				if(cardi > (int)hand.size() - 1)
+					cardi = hand.size() - 1;
+				if(cardi < 0)
+					cardi = 0;
+				
+				moveCard(selectedCard, cardi);
+			}
+			
+			if(event.type == SDL_MOUSEBUTTONDOWN) {
+				/// @todo get card that the user selected
+				int x, y;
+				SDL_GetMouseState( &x, &y );
+				
+				if(    x > SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2
+					&& x < SCRN_W/2 + (CARD_PAD*9 + CARD_W)/2
+					&& y > SCRN_H - WIN_PAD - CARD_H
+					&& y < SCRN_H - WIN_PAD
+				)  {
+					isMovingCard = true;
+					int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x cordinate offset from the start of the cards
+					int cardi = cardx / CARD_PAD; // get the index of the card we clicked
+					
+					if(cardi >= (int)hand.size()) // correct for the last card being the top card
+						cardi = hand.size() - 1;
+					
+					selectedCard = hand[cardi];
+				}
+			}
+			
+			if(event.type == SDL_MOUSEBUTTONUP) {
+				/// @todo check for button presses or released the card
+				if(isMovingCard) {
+					isMovingCard = false;
+					selectedCard = nullptr;
+				} else {
+					
+				}
 			}
 		}
 	}
+	/// @todo Then we want to get the melds and organize our cards
+	
+	/// @todo Lastly we want to pick a card to discard
+
 }
+
+
+void Player::moveCard(Card* c, int idx) {
+	for(int i = 0; i < hand.size(); ++i) {
+		if(c == hand[i])
+			hand.erase(hand.begin() + i);
+	}
+	
+	hand.insert(hand.begin() + idx, c);
+}
+
 
 void Player::printHand() {
 	for(Card* tmpCard : hand)
 		cout << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+	
+	if(melds.size() == 0) {
+		cout << "NO MELDS FOUND" << endl;
+	} else {
+		for(auto tmpMeld : melds) {
+			cout << tmpMeld->type << " " << endl;
+			for(auto tmpCard : tmpMeld->cards) {
+				cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+			}
+		}
+	}
+	
+	if(isUser) {} else {}
+	cout << endl;
 }
+
 
 void Player::render() {
 	renderCards();
 }
+
 
 void Player::renderCards() {
 	// The entire card lay is going to be 140px for the top card and 40px for each
