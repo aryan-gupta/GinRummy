@@ -59,7 +59,6 @@ void Window::initWindow() {}
 
 
 void Window::renderAll() {
-	CLEAR_TERMINAL
 	clear();
 	renderBackground();
 	
