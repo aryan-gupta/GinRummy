@@ -40,7 +40,7 @@ enum Players {
 	PLAYER_2,
 	
 	PLAYER_TOTAL
-}
+};
 
 /// @brief A player on the board
 class Player {
@@ -49,8 +49,7 @@ public:
 	~Player(); /// Default destructor
 	
 	/// @brief Finds meld in player's hand
-	/// @param[out] foundMelds `std::vector<Meld*>&` The vector to store the found Melds \sa Meld
-	void getMelds(std::vector<Meld*>& foundMelds);
+	void getMelds();
 	
 	/// @brief Take a specific card
 	/// @param[in] card `Card*` The card that user should take
@@ -59,7 +58,8 @@ public:
 	void doTurn(); ///< Does a turn for the player
 	void render();
 private:
-	std::vector<Card*> hand; ///< Stores the cards in the Player's hand
+	std::vector<Card*> hand;       ///< Stores the cards in the Player's hand
+	std::vector<Meld*> melds;
 	bool isUser; ///> Is the Player a user
 	
 	void printHand(); ///< Print the hand out
