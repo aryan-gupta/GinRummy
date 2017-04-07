@@ -60,6 +60,7 @@ int main(int argc, char* argv[]) {
 	
 	gWindow->renderAll();
 	
+	
 	std::cin.get();
 	return 0;
 }
