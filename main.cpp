@@ -55,6 +55,11 @@ int main(int argc, char* argv[]) {
 	
 	dealCards();
 	
+	
+	// hey 
+	
+	
+	
 	P1->doTurn();
 	P2->doTurn();
 	
