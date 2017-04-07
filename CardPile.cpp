@@ -19,6 +19,7 @@
 #include <SDL.h>
 #include <algorithm>
 #include <vector>
+using std::vector;
 #include <random>
 
 #include ".\inc\main.h"
