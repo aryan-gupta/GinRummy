@@ -151,7 +151,7 @@ void Player::pickDeck() {
 				int x, y;
 				SDL_GetMouseState(&x, &y);
 				
-				int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x coordinate offset from the start of the cards
+				int cardx = x - (SCRN_W/2 - (CARD_PAD*(hand.size() - 1) + CARD_W)/2); // get the x coordinate offset from the start of the cards
 				int cardi = cardx / CARD_PAD; // get the index of the card we clicked
 				
 				// Make sure the card doesn't leave the hand
@@ -174,13 +174,13 @@ void Player::pickDeck() {
 					/// @todo get card that the user selected
 					SDL_GetMouseState(&x, &y);
 					
-					if(    x > SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2
-						&& x < SCRN_W/2 + (CARD_PAD*9 + CARD_W)/2
+					if(    x > SCRN_W/2 - (CARD_PAD*(hand.size() - 1) + CARD_W)/2
+						&& x < SCRN_W/2 + (CARD_PAD*(hand.size() - 1) + CARD_W)/2
 						&& y > SCRN_H - WIN_PAD - CARD_H
 						&& y < SCRN_H - WIN_PAD
 					)  {
 						isMovingCard = true;
-						int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x coordinate offset from the start of the cards
+						int cardx = x - (SCRN_W/2 - (CARD_PAD*(hand.size() - 1) + CARD_W)/2); // get the x coordinate offset from the start of the cards
 						int cardi = cardx / CARD_PAD; // get the index of the card we clicked
 						
 						if(cardi >= (int)hand.size()) // correct for the last card being the top card
@@ -233,7 +233,7 @@ void Player::pickCard() {
 				int x, y;
 				SDL_GetMouseState(&x, &y);
 				
-				int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x coordinate offset from the start of the cards
+				int cardx = x - (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2); // get the x coordinate offset from the start of the cards
 				int cardi = cardx / CARD_PAD; // get the index of the card we clicked
 				
 				// Make sure the card doesn't leave the hand
@@ -255,12 +255,12 @@ void Player::pickCard() {
 					int x, y;
 					SDL_GetMouseState( &x, &y );
 					
-					if(    x > SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2
-						&& x < SCRN_W/2 + (CARD_PAD*9 + CARD_W)/2
+					if(    x > SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
+						&& x < SCRN_W/2 + (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
 						&& y > SCRN_H - WIN_PAD - CARD_H
 						&& y < SCRN_H - WIN_PAD
 					)  {
-						int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x coordinate offset from the start of the cards
+						int cardx = x - (SCRN_W/2 - (CARD_PAD*(hand.size() - 1) + CARD_W)/2); // get the x coordinate offset from the start of the cards
 						int cardi = cardx / CARD_PAD; // get the index of the card we clicked
 						
 						if(cardi >= (int)hand.size()) // correct for the last card being the top card
@@ -338,7 +338,7 @@ void Player::renderCards() {
 	
 	if(isUser) {
 		SDL_Rect currCardPos = {
-			SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2,
+			SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2,
 			SCRN_H - WIN_PAD - CARD_H,
 			CARD_W,
 			CARD_H
@@ -356,7 +356,7 @@ void Player::renderCards() {
 		}
 	} else {
 		SDL_Rect currCardPos = {
-			SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2,
+			SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2,
 			WIN_PAD,
 			CARD_W,
 			CARD_H
