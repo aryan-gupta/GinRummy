@@ -42,7 +42,9 @@ private:
 	
 	SDL_Texture* background; ///< The background texture, Points to texture in \ref Resources
 	
-	SDL_Rect knockButton, sortButton;
+	SDL_Rect knockButton, sortButton, knockPos, sortPos;
+	SDL_Texture* knockTexture, * sortTexture;
+	SDL_Color textColor;
 	
 	void clear();
 	void renderBackground();
