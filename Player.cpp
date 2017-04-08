@@ -171,7 +171,6 @@ void Player::doTurn() {
 					&& y > SCRN_H - WIN_PAD - CARD_H
 					&& y < SCRN_H - WIN_PAD
 				)  {
-					isMovingCard = true;
 					int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x coordinate offset from the start of the cards
 					int cardi = cardx / CARD_PAD; // get the index of the card we clicked
 					
@@ -182,13 +181,20 @@ void Player::doTurn() {
 				}
 			}
 			
+			if(event.type == SDL_MOUSEMOTION && selectedCard != nullptr) {
+				isMovingCard = true;
+			}
+			
 			if(event.type == SDL_MOUSEBUTTONUP) { // we clicked up, here is where we want to select the decks and what not
 				/// @todo check for released the card
 				if(isMovingCard) {
 					isMovingCard = false;
 					selectedCard = nullptr;
+					LOGL("IS NOT MOVING CARD")
 				} else {
+					LOGL("SIMPLE CLICK")
 					/// @todo if one of the decks of cards is selected then mark finished to true
+					selectedCard = nullptr;
 				}
 			}
 		}
