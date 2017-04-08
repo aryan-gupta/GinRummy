@@ -26,22 +26,22 @@ The project is done in groups of 3. The project consists of the following milest
 
 Note: You may have to iterate over the milestones. For example, if the integration causes issues, it's possible you may need to revisit Milestone 2.
 
-*Project management:*
+**Project management:**
 You are strongly encouraged to use a version control system in the project. Version control systems are a category of software tools that help a software team manage changes to source code over time. Version control software keeps track of every modification to the code in a special kind of database. If a mistake is made, developers can turn back the clock and compare earlier versions of the code to help fix the mistake while minimizing disruption to all team members.
 
 Here are useful links on how to use the widely used Github platform
 
-*To get started on Giithub:*
+**To get started on Giithub:**
 https://guides.github.com/activities/hello-world/
 
-*To get your project on Github:*
+**To get your project on Github:**
 https://guides.github.com/introduction/getting-your-project-on-github/
 
 If you are using an IDE (Codeblocks, Netbeans etc.) use the Project features of your IDE to organize your code
 
 If you are using command line (Linux, Mac), use the make utility for project management. Here's a tutorial for make  http://www.math.tau.ac.il/~danha/courses/software1/make-intro.html
 
-*Project Evaluation:*
+**Project Evaluation:**
 The project evaluation will be done through an oral exam by the Professor or TA. You will upload all your project as a .zip file on Canvas ahead of the oral exam. The signup sheets for the oral exam will be posted later. 
 
 ## Installation
