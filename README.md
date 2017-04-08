@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="res/icon.png" alt="Drawing" style="width: 50px;"/>
+  <img src="res/icon.png" alt="Drawing" width="50"/>
 </p>
 # GinRummy
 
