@@ -42,8 +42,11 @@ private:
 	
 	SDL_Texture* background; ///< The background texture, Points to texture in \ref Resources
 	
+	SDL_Rect knockButton, sortButton;
+	
 	void clear();
 	void renderBackground();
+	void renderButtons();
 	
 	void drawAButton(SDL_Texture* tex, SDL_Rect src, int h_p, int w_p, SDL_Rect dest);
 };

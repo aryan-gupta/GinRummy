@@ -18,6 +18,9 @@
 #ifndef RESOURCES_H_INC
 #define RESOURCES_H_INC
 
+#include <SDL.h>
+#include <SDL_TTF.h>
+
 #define GCI(s, r) (s*RANK_TOTAL)+r
 
 enum UI_Colors {
@@ -41,6 +44,8 @@ struct Resources {
 	
 	SDL_Texture** uiSheets;
 	SDL_Rect*     uiClippings;
+	
+	TTF_Font* briefFont;
 private:
 	SDL_Texture* load(const char* file);
 };

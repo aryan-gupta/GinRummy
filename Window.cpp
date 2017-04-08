@@ -19,6 +19,7 @@
 #include <iostream>
 #include <SDL.h>
 #include <SDL_Image.h>
+//#include <SDL_TTF.h>
 
 #include ".\inc\main.h"
 #include ".\inc\Window.h"
@@ -61,7 +62,21 @@ Window::~Window() {
 }
 
 
-void Window::initWindow() {}
+void Window::initWindow() {
+	knockButton = SDL_Rect{
+		SCRN_W - 120 - 30,
+		SCRN_H - 45 - 15,
+		120,
+		45
+	};
+	
+	sortButton = SDL_Rect{
+		knockButton.x,
+		knockButton.y + 30,
+		knockButton.w,
+		knockButton.h
+	};
+}
 
 
 void Window::renderAll() {
@@ -72,29 +87,8 @@ void Window::renderAll() {
 	P2->render();
 	gDeck->render();
 	gDiscard->render();
+	renderButtons();
 	
-	drawAButton(
-		gAssets->uiSheets[UIC_BLUE],
-		gAssets->uiClippings[1],
-		5, 7, 
-		SDL_Rect{
-			SCRN_W - 120 - 30,
-			SCRN_H - 45 - 15,
-			120,
-			45
-		}
-	);
-	drawAButton(
-		gAssets->uiSheets[UIC_BLUE],
-		gAssets->uiClippings[1],
-		5, 7, 
-		SDL_Rect{
-			SCRN_W - 120 - 30,
-			SCRN_H - 45*2 - 15 - 30,
-			120,
-			45
-		}
-	);
 	
 	SDL_RenderPresent(renderer);
 }
@@ -111,6 +105,45 @@ void Window::clear() {
 	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF); // Black
 	SDL_RenderClear(renderer);
 }
+
+
+void Window::renderButtons() {
+	SDL_Color textColor{0x00, 0x00, 0x00, 0xFF};
+	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+		gAssets->briefFont,
+		"Hello", 
+		textColor
+	);
+	SDL_Texture* textTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
+		renderer,
+		textSurface
+	);
+	SDL_Rect textPos = SDL_Rect{
+		10,
+		10,
+		textSurface->w, 
+		textSurface->h
+	}; // Text position
+	
+	SDL_RenderCopy(gWindow->getRenderer(),textTexture , NULL, &textPos);
+	
+	drawAButton(
+		gAssets->uiSheets[UIC_BLUE],
+		gAssets->uiClippings[1],
+		5, 7, 
+		knockButton
+	);
+	
+	drawAButton(
+		gAssets->uiSheets[UIC_BLUE],
+		gAssets->uiClippings[1],
+		5, 7, 
+		sortButton
+	);
+	
+	
+}
+
 
 void Window::drawAButton(SDL_Texture* tex, SDL_Rect src, int h_p, int w_p, SDL_Rect dest) {
 	int x_i, y_i, w, h, x_f, y_f;

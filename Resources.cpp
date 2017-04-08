@@ -18,6 +18,7 @@
 
 #include <SDL.h>
 #include <SDL_Image.h>
+#include <SDL_TTF.h>
 #include <iostream>
 
 #include ".\inc\main.h"
@@ -27,7 +28,7 @@
 
 static const char* CARDS_SHEET      = "..\\res\\sprites\\Spritesheets\\playingCards.png";
 static const char* CARDS_SHEET_BACK = "..\\res\\sprites\\Spritesheets\\playingCardBacks.png";
-
+static const char* BRIEF_FONT       = "..\\res\\brief_font.ttf";
 static const char* UI_SHEETS[] = {
 	"..\\res\\sprites\\Spritesheets\\blueSheet.png",
 	"..\\res\\sprites\\Spritesheets\\greenSheet.png",
@@ -108,6 +109,10 @@ Resources::Resources() {
 	uiClippings = new SDL_Rect[2];
 	uiClippings[0] = SDL_Rect{0, 94, 190, 49};
 	uiClippings[1] = SDL_Rect{0, 49, 190, 45};
+	
+	briefFont = TTF_OpenFont(BRIEF_FONT, 19); // Load the font
+	if(briefFont == NULL)
+		EXIT("Font Opening Failed" << TTF_GetError(), -0x20A);
 }
 
 Resources::~Resources() {
