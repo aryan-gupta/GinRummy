@@ -63,6 +63,7 @@ int main(int argc, char* argv[]) {
 	return 0x00;
 }
 
+
 void initSDL() {
 	if(SDL_Init(SDL_INIT_VIDEO) < 0) // Init SDL with Video
 		EXIT("SDL Init Failed! " << SDL_GetError(), -0x101);
@@ -85,12 +86,14 @@ void initSDL() {
 	*/
 }
 
+
 void dealCards() {
 	for(int i = 0; i < NUM_CARDS_PER; ++i) {
 		P1->takeCard(gDeck->getACard());
 		P2->takeCard(gDeck->getACard());
 	}
 }
+
 
 void quit(int code) {
 	delete gWindow;

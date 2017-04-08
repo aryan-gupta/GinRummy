@@ -64,6 +64,9 @@ private:
 	
 	void printHand(); ///< Print the hand out
 	void renderCards();
+	void renderDeadwood();
+	void renderMelds();
+	void renderButtons();
 	
 	void moveCard(Card* c, int idx);
 };
