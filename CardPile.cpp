@@ -36,6 +36,21 @@ CardPile::CardPile(CardPileTypes type) {
 		for(int i = 0; i < SUIT_TOTAL; ++i)
 			for(int j = 0; j < RANK_TOTAL; ++j)
 				pile.push_back( new Card{(Suits)i, (Ranks)j} ); // create cards with combinations of Suits and Cards
+	
+		position = SDL_Rect {
+			SCRN_W/2 - CARD_W - 20,
+			SCRN_H/2 - CARD_H/2,
+			CARD_W,
+			CARD_H
+		};
+		
+	} else {
+		position = SDL_Rect {
+			SCRN_W/2 + 20,
+			SCRN_H/2 - CARD_H/2,
+			CARD_W,
+			CARD_H
+		};
 	}
 	
 	this->type = type;
@@ -64,35 +79,33 @@ Card* CardPile::getACard() {
 
 
 void CardPile::render() {
+	if(pile.size() == 0)
+		return;
+	
 	if(type == PILE_DECK) {
-		SDL_Rect pos = SDL_Rect {
-			SCRN_W/2 - CARD_W - 20,
-			SCRN_H/2 - CARD_H/2,
-			CARD_W,
-			CARD_H
-		};
-		
 		SDL_RenderCopy(
 			gWindow->getRenderer(),
 			gAssets->cardBackSheet,
 			&gAssets->cardClippingBack,
-			&pos
+			&position
 		);
 	} else {
-		if(pile.size() != 0) {
-			SDL_Rect pos = SDL_Rect {
-				SCRN_W/2 + 20,
-				SCRN_H/2 - CARD_H/2,
-				CARD_W,
-				CARD_H
-			};
-			
-			SDL_RenderCopy(
-				gWindow->getRenderer(),
-				gAssets->cardsSheet,
-				&gAssets->cardClippings[GCI(pile[0]->suit, pile[0]->rank)],
-				&pos
-			);
-		}
+		SDL_RenderCopy(
+			gWindow->getRenderer(),
+			gAssets->cardsSheet,
+			&gAssets->cardClippings[GCI(pile[0]->suit, pile[0]->rank)],
+			&position
+		);
 	}
+}
+
+
+bool CardPile::checkClick(const int x, const int y) {
+	if(    x > position.x
+		&& x < position.x + position.w
+		&& y > position.y
+		&& y < position.y + position.h
+	) return true;
+	
+	return false;
 }

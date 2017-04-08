@@ -125,7 +125,7 @@ void Player::doTurn() {
 	getMelds();
 	printHand();
 	
-	//pickDeck();
+	pickDeck();
 	pickCard();
 
 }
@@ -191,7 +191,16 @@ void Player::pickDeck() {
 						isMovingCard = false;
 						selectedCard = nullptr;
 					} else {
-						/// @todo check for button presses or picking a card, that will mean we are finished
+						SDL_GetMouseState(&x, &y);
+						
+						if(gDeck->checkClick(x, y)) {
+							LOGL("DECK") // WE CLICKED ON THE DECK
+						}
+						
+						if(gDiscard->checkClick(x, y)) {
+							LOGL("DISCARD") // WE CLICKED ON THE DISCARD
+						}
+						/// @todo if one of the decks of cards is selected then mark finished to true
 					}
 				break;
 			}
@@ -266,7 +275,7 @@ void Player::pickCard() {
 						isMovingCard = false;
 						selectedCard = nullptr;
 					} else {
-						/// @todo if one of the decks of cards is selected then mark finished to true
+						/// @todo check for button presses or picking a card, that will mean we are finished
 						selectedCard = nullptr;
 					}
 				break;

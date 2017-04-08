@@ -77,9 +77,13 @@ public:
 	void render();
 	
 	Card* getACard(); ///< Pulls a card from the deck
+	
+	bool checkClick(const int x, const int y);
 private:
 	std::vector<Card*> pile; ///< the deck/pile of cards
 	CardPileTypes type;      ///< type of CardPile @todo Convert to bool
+	
+	SDL_Rect position;
 };
 
 #endif
