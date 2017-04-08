@@ -45,7 +45,7 @@ struct Resources {
 	SDL_Texture** uiSheets;
 	SDL_Rect*     uiClippings;
 	
-	TTF_Font* briefFont;
+	TTF_Font* buttonFont, * nFont;
 private:
 	SDL_Texture* load(const char* file);
 };

@@ -79,8 +79,8 @@ void Window::initWindow() {
 	
 	textColor = SDL_Color{0x00, 0x00, 0x00, 0xFF};
 	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-		gAssets->briefFont,
-		"KNOCK", 
+		gAssets->buttonFont,
+		"Knock", 
 		textColor
 	);
 	knockTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
@@ -89,7 +89,7 @@ void Window::initWindow() {
 	);
 	knockPos = SDL_Rect{
 		knockButton.x - textSurface->w/2 + knockButton.w/2,
-		knockButton.y - textSurface->h/2 + knockButton.h/2,
+		knockButton.y - textSurface->h/2 + knockButton.h/2 + 4,
 		textSurface->w, 
 		textSurface->h
 	}; // Text position
@@ -97,8 +97,8 @@ void Window::initWindow() {
 	SDL_FreeSurface(textSurface);
 	
 	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-		gAssets->briefFont,
-		"SORT", 
+		gAssets->buttonFont,
+		"Sort", 
 		textColor
 	);
 	sortTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
@@ -107,11 +107,48 @@ void Window::initWindow() {
 	);
 	sortPos = SDL_Rect{
 		sortButton.x - textSurface->w/2 + sortButton.w/2,
-		sortButton.y - textSurface->h/2 + sortButton.h/2,
+		sortButton.y - textSurface->h/2 + sortButton.h/2 + 4,
 		textSurface->w, 
 		textSurface->h
 	}; // Text position
 	
+	SDL_FreeSurface(textSurface);
+	
+	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+		gAssets->nFont,
+		"Melds:", 
+		textColor
+	);
+	meldTextTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
+		renderer,
+		textSurface
+	);
+	meldTextPos = SDL_Rect{
+		10,
+		SCRN_H - 200 - textSurface->h/2 + knockButton.h/2 + 4,
+		textSurface->w, 
+		textSurface->h
+	}; // Text position
+	
+	SDL_FreeSurface(textSurface);
+	
+	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+		gAssets->nFont,
+		"Deadwood:", 
+		textColor
+	);
+	dwTextTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
+		renderer,
+		textSurface
+	);
+	dwTextPos = SDL_Rect{
+		10,
+		SCRN_H - 150 - textSurface->h/2 + knockButton.h/2 + 4,
+		textSurface->w, 
+		textSurface->h
+	}; // Text position
+	
+	SDL_FreeSurface(textSurface);
 }
 
 
@@ -124,7 +161,7 @@ void Window::renderAll() {
 	gDeck->render();
 	gDiscard->render();
 	renderButtons();
-	
+	renderMeldsDeadwood();
 	
 	SDL_RenderPresent(renderer);
 }
@@ -160,6 +197,12 @@ void Window::renderButtons() {
 	
 	SDL_RenderCopy(gWindow->getRenderer(), knockTexture, NULL, &knockPos);
 	SDL_RenderCopy(gWindow->getRenderer(), sortTexture, NULL, &sortPos);
+}
+
+
+void Window::renderMeldsDeadwood() {
+	SDL_RenderCopy(gWindow->getRenderer(), meldTextTexture, NULL, &meldTextPos);
+	SDL_RenderCopy(gWindow->getRenderer(), dwTextTexture, NULL, &dwTextPos);
 }
 
 

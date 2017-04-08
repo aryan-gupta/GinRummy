@@ -110,8 +110,12 @@ Resources::Resources() {
 	uiClippings[0] = SDL_Rect{0, 94, 190, 49};
 	uiClippings[1] = SDL_Rect{0, 49, 190, 45};
 	
-	briefFont = TTF_OpenFont(BRIEF_FONT, 19); // Load the font
-	if(briefFont == NULL)
+	buttonFont = TTF_OpenFont(BRIEF_FONT, 25); // Load the font
+	if(buttonFont == NULL)
+		EXIT("Font Opening Failed" << TTF_GetError(), -0x20A);
+
+	nFont = TTF_OpenFont(BRIEF_FONT, 12); // Load the font
+	if(nFont == NULL)
 		EXIT("Font Opening Failed" << TTF_GetError(), -0x20A);
 }
 
