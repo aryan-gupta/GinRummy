@@ -52,7 +52,12 @@ Window::Window() {
 }
 
 
-Window::~Window() {}
+Window::~Window() {
+	SDL_DestroyRenderer(renderer); renderer = nullptr; // Destroy our main renderer
+	SDL_DestroyWindow(window); window = nullptr; // Destroy our main window
+	
+	SDL_DestroyTexture(background);
+}
 
 
 void Window::initWindow() {}
@@ -70,11 +75,13 @@ void Window::renderAll() {
 	SDL_RenderPresent(renderer);
 }
 
+
 void Window::renderBackground() {
 	SDL_SetRenderDrawColor(renderer, 0x00, 0x99, 0x00, 0xFF); // http://www.colorhexa.com/009900
 	SDL_Rect bg{0, 0, SCRN_W, SCRN_H};
 	SDL_RenderFillRect(renderer, &bg);
 }
+
 
 void Window::clear() {
 	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF); // Black

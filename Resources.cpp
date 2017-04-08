@@ -95,7 +95,10 @@ Resources::Resources() {
 }
 
 Resources::~Resources() {
-	/// @todo Destroy texture and memory leak stuffs
+	SDL_DestroyTexture(cardsSheet); cardsSheet = nullptr;
+	SDL_DestroyTexture(cardBackSheet); cardBackSheet = nullptr;
+	
+	delete[] cardClippings;
 }
 
 SDL_Texture* Resources::load(const char* file) {

@@ -41,13 +41,17 @@ CardPile::CardPile(CardPileTypes type) {
 	this->type = type;
 }
 
+
 CardPile::~CardPile() {
-	
+	for(Card* tmpCard : pile)
+		delete tmpCard;
 }
+
 
 void CardPile::shuffle() {
 	std::random_shuffle(pile.begin(), pile.end());
 }
+
 
 Card* CardPile::getACard() {
 	if(pile.size() == 0) // If pile is empty, return null
@@ -57,6 +61,7 @@ Card* CardPile::getACard() {
 	pile.erase(pile.begin()); // erase it
 	return tmpCard; // return the card
 }
+
 
 void CardPile::render() {
 	if(type == PILE_DECK) {

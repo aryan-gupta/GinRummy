@@ -66,7 +66,10 @@ Player::Player(bool isUser) {
 }
 
 
-Player::~Player() {}
+Player::~Player() {
+	for(Card* test : hand)
+		delete test;
+}
 
 
 void Player::getMelds() {
@@ -258,7 +261,7 @@ void Player::doTurn() {
 
 
 void Player::moveCard(Card* c, int idx) {
-	for(int i = 0; i < hand.size(); ++i) {
+	for(unsigned i = 0; i < hand.size(); ++i) {
 		if(c == hand[i])
 			hand.erase(hand.begin() + i);
 	}
@@ -289,6 +292,9 @@ void Player::printHand() {
 
 void Player::render() {
 	renderCards();
+	renderDeadwood();
+	renderMelds();
+	renderButtons();
 }
 
 
@@ -334,4 +340,19 @@ void Player::renderCards() {
 			currCardPos.x += CARD_PAD;
 		}
 	}
+}
+
+
+void Player::renderDeadwood() {
+	
+}
+
+
+void Player::renderMelds() {
+	
+}
+
+
+void Player::renderButtons() {
+	
 }
