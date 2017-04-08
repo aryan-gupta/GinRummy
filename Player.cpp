@@ -72,8 +72,8 @@ Player::Player(bool isUser) {
 
 
 Player::~Player() {
-	for(Card* test : hand)
-		delete test;
+	for(Card* tmpCard : hand)
+		delete tmpCard;
 }
 
 
@@ -174,8 +174,8 @@ void Player::pickDeck() {
 					/// @todo get card that the user selected
 					SDL_GetMouseState(&x, &y);
 					
-					if(    x > SCRN_W/2 - (CARD_PAD*(hand.size() - 1) + CARD_W)/2
-						&& x < SCRN_W/2 + (CARD_PAD*(hand.size() - 1) + CARD_W)/2
+					if(    x > SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
+						&& x < SCRN_W/2 + (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
 						&& y > SCRN_H - WIN_PAD - CARD_H
 						&& y < SCRN_H - WIN_PAD
 					)  {
