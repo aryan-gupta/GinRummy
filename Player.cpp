@@ -127,19 +127,22 @@ void Player::doTurn() {
 	Card* selectedCard;
 	
 	/// @todo First we want to ask the user to pick a deck to pull cards from
-	finished = false;
+	finished = false;       // reset all tthe variables
 	isMovingCard = false;
-	Card* selectedCard = nullptr;
+	selectedCard = nullptr;
 	while(!finished) {
+		// finished stores if we have completed the step of not,
+		// in this case it is picking a deck to draw from. After we have chosen
+		// a deck to draw from, finished is set true and the loop ends
 		
-		gWindow->renderAll();
+		gWindow->renderAll(); // render everything
 		
-		while(SDL_PollEvent(&event)) {
-			if(event.type == SDL_QUIT) {
+		while(SDL_PollEvent(&event)) {   // get all the events from the window
+			if(event.type == SDL_QUIT) { // quit if we hit the 'x' button
 				quit(0x01);
 			}
 			
-			if(isMovingCard) {
+			if(isMovingCard) { // If we have clicked on a card and we are moving it
 				int x, y;
 				SDL_GetMouseState(&x, &y);
 				
@@ -155,7 +158,7 @@ void Player::doTurn() {
 				moveCard(selectedCard, cardi);
 			}
 			
-			if(event.type == SDL_MOUSEBUTTONDOWN) {
+			if(event.type == SDL_MOUSEBUTTONDOWN) { // If we clicked down (Only thing here is moving the card)
 				/// @todo get card that the user selected
 				int x, y;
 				SDL_GetMouseState( &x, &y );
@@ -176,7 +179,7 @@ void Player::doTurn() {
 				}
 			}
 			
-			if(event.type == SDL_MOUSEBUTTONUP) {
+			if(event.type == SDL_MOUSEBUTTONUP) { // we clicked up, here is where we want to select the decks and what not
 				/// @todo check for released the card
 				if(isMovingCard) {
 					isMovingCard = false;
@@ -189,13 +192,13 @@ void Player::doTurn() {
 	}
 	
 	
-	/// @todo Then we want to get the melds and organize our cards
-	finished = false;
+	/// @todo Then we want to get the melds and organize our cards and pick a card to discard
+	finished = false;     // Reset everything
 	isMovingCard = false;
-	Card* selectedCard = nullptr;
+	selectedCard = nullptr;
 	while(!finished) {
 		
-		gWindow->renderAll();
+		gWindow->renderAll(); // render everything
 		
 		while(SDL_PollEvent(&event)) {
 			if(event.type == SDL_QUIT) {
@@ -219,6 +222,7 @@ void Player::doTurn() {
 			}
 			
 			if(event.type == SDL_MOUSEBUTTONDOWN) {
+				/// @todo If next event is mouse movement then THEN move the card. 
 				/// @todo get card that the user selected
 				int x, y;
 				SDL_GetMouseState( &x, &y );
@@ -245,27 +249,8 @@ void Player::doTurn() {
 					isMovingCard = false;
 					selectedCard = nullptr;
 				} else {
-					/// @todo check for button presses
+					/// @todo check for button presses or picking a card, that will mean we are finished
 				}
-			}
-		}
-	}
-	
-	/// @todo Lastly we want to pick a card to discard
-	finished = false;
-	isMovingCard = false;
-	Card* selectedCard = nullptr;
-	while(!finished) {
-		
-		gWindow->renderAll();
-		
-		while(SDL_PollEvent(&event)) {
-			if(event.type == SDL_QUIT) {
-				quit(0x01);
-			}
-			
-			if(event.type == SDL_MOUSEBUTTONUP) {
-				/// @todo check for button presses or card selected
 			}
 		}
 	}
