@@ -287,6 +287,13 @@ void Player::pickCard() {
 							if(selectedCard == hand[i])
 								LOGL("CLICKED ON " << i << " Card")
 						selectedCard = nullptr;
+						
+						int x, y;
+						SDL_GetMouseState(&x, &y);
+						if(gWindow->checkKnockClick(x, y))
+							LOGL("WE KNOCKED")
+						if(gWindow->checkSortClick(x, y))
+							LOGL("WE SORTED")
 					}
 				} break;
 			}
