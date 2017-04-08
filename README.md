@@ -1,3 +1,4 @@
+![img icon](https://raw.githubusercontent.com/Kuantum-Freak/GinRummy/master/res/icon.png)
 # GinRummy
 
 A graphical game of Gin Rummy. This game was created for our ECGR 2104 class as
