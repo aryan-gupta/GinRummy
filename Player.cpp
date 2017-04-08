@@ -141,10 +141,7 @@ void Player::doTurn() {
 		gWindow->renderAll(); // render everything
 		
 		while(SDL_PollEvent(&event)) {   // get all the events from the window
-			if(event.type == SDL_QUIT) { // quit if we hit the 'x' button
-				quit(0x01);
-			}
-			
+		
 			if(isMovingCard) { // If we have clicked on a card and we are moving it
 				int x, y;
 				SDL_GetMouseState(&x, &y);
@@ -161,41 +158,45 @@ void Player::doTurn() {
 				moveCard(selectedCard, cardi);
 			}
 			
-			if(event.type == SDL_MOUSEBUTTONDOWN) { // If we clicked down (Only thing here is moving the card)
-				/// @todo get card that the user selected
-				int x, y;
-				SDL_GetMouseState( &x, &y );
+			switch(event.type) {
+				case SDL_QUIT: // quit if we hit the 'x' button
+					quit(0x01);
+				break;
 				
-				if(    x > SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2
-					&& x < SCRN_W/2 + (CARD_PAD*9 + CARD_W)/2
-					&& y > SCRN_H - WIN_PAD - CARD_H
-					&& y < SCRN_H - WIN_PAD
-				)  {
-					int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x coordinate offset from the start of the cards
-					int cardi = cardx / CARD_PAD; // get the index of the card we clicked
+				case SDL_MOUSEBUTTONDOWN: // If we clicked down (Only thing here is moving the card)
+					/// @todo get card that the user selected
+					int x, y;
+					SDL_GetMouseState( &x, &y );
 					
-					if(cardi >= (int)hand.size()) // correct for the last card being the top card
-						cardi = hand.size() - 1;
-					
-					selectedCard = hand[cardi];
-				}
-			}
-			
-			if(event.type == SDL_MOUSEMOTION && selectedCard != nullptr) {
-				isMovingCard = true;
-			}
-			
-			if(event.type == SDL_MOUSEBUTTONUP) { // we clicked up, here is where we want to select the decks and what not
-				/// @todo check for released the card
-				if(isMovingCard) {
-					isMovingCard = false;
-					selectedCard = nullptr;
-					LOGL("IS NOT MOVING CARD")
-				} else {
-					LOGL("SIMPLE CLICK")
-					/// @todo if one of the decks of cards is selected then mark finished to true
-					selectedCard = nullptr;
-				}
+					if(    x > SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2
+						&& x < SCRN_W/2 + (CARD_PAD*9 + CARD_W)/2
+						&& y > SCRN_H - WIN_PAD - CARD_H
+						&& y < SCRN_H - WIN_PAD
+					)  {
+						int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x coordinate offset from the start of the cards
+						int cardi = cardx / CARD_PAD; // get the index of the card we clicked
+						
+						if(cardi >= (int)hand.size()) // correct for the last card being the top card
+							cardi = hand.size() - 1;
+						
+						selectedCard = hand[cardi];
+					}
+				break;
+				
+				case SDL_MOUSEMOTION:
+					if(selectedCard != nullptr) isMovingCard = true;
+				break;
+				
+				case SDL_MOUSEBUTTONUP: // we clicked up, here is where we want to select the decks and what not
+					/// @todo check for released the card
+					if(isMovingCard) {
+						isMovingCard = false;
+						selectedCard = nullptr;
+					} else {
+						/// @todo if one of the decks of cards is selected then mark finished to true
+						selectedCard = nullptr;
+					}
+				break;
 			}
 		}
 	}
