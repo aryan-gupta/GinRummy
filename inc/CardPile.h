@@ -20,6 +20,10 @@
 
 #include <vector>
 
+extern const int CARD_W;
+extern const int CARD_H;
+extern const int CARD_PAD;
+
 /// @brief the Suits of a card
 enum Suits {
 	SUIT_CLUBS,
@@ -28,15 +32,6 @@ enum Suits {
 	SUIT_SPADES,
 	
 	SUIT_TOTAL
-};
-
-static const char* Suits_Label[] {
-	"SUIT_CLUBS",
-	"SUIT_DIAMONDS",
-	"SUIT_HEARTS",
-	"SUIT_SPADES",
-	
-	"SUIT_TOTAL"
 };
 
 /// @brief The values of a card
@@ -56,24 +51,6 @@ enum Ranks {
 	RANK_KING,
 	
 	RANK_TOTAL
-};/// @brief The values of a card
-
-static const char* Ranks_Label[] {
-	"RANK_ACE",
-	"RANK_2",
-	"RANK_3",
-	"RANK_4",
-	"RANK_5",
-	"RANK_6",
-	"RANK_7",
-	"RANK_8",
-	"RANK_9",
-	"RANK_10",
-	"RANK_JACK",
-	"RANK_QUEEN",
-	"RANK_KING",
-	
-	"RANK_TOTAL"
 };
 
 /// @brief A card
@@ -82,6 +59,7 @@ struct Card {
 	Ranks rank;
 };
 
+/// @brief The card pile types
 enum CardPileTypes {
 	PILE_DECK,
 	PILE_DISCARD,
@@ -89,17 +67,19 @@ enum CardPileTypes {
 	PILE_TOTAL
 };
 
+/// @brief A card pile
 class CardPile {
 public:
 	CardPile(CardPileTypes type);
 	~CardPile();
 	
-	void shuffle();
+	void shuffle(); ///< Suffle the deck
+	void render();
 	
-	Card* getACard();
+	Card* getACard(); ///< Pulls a card from the deck
 private:
-	std::vector<Card*> pile;
-	CardPileTypes type;
+	std::vector<Card*> pile; ///< the deck/pile of cards
+	CardPileTypes type;      ///< type of CardPile @todo Convert to bool
 };
 
 #endif

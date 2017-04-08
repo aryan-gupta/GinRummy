@@ -17,28 +17,31 @@
 
 #ifndef MAIN_H_INCLUDED
 #define MAIN_H_INCLUDED
-
+// Forward Declarations
 class CardPile;
 class Player;
-struct Meld;
+class Window;
+class Resources;
 
-extern const int NUM_PLAYERS;
-extern const int NUM_CARDS_PER;
+extern const int NUM_CARDS_PER; ///< Number of cards per player (default 10)
 
-extern CardPile* gDeck;
-extern CardPile* gDiscard;
+extern CardPile* gDeck;    ///< The CardPile for the main deck
+extern CardPile* gDiscard; ///< The discard pile
 
-extern std::vector<Meld*> melds;
-extern std::vector<Player*> gPlayers;
+extern Player* P1;
+extern Player* P2;
+
+extern Window* gWindow;
+extern Resources* gAssets;
+
 
 // =========================
+/// @retval -0x101 initSDL();
+/// @retval -0x102 Window::Window();
+int main(int argc, char* argv[]); ///< Program Entry (if anyone wants to elaborate, feel free to)
 
-int main(int argc, char* argv[]);
-
-void initSDL();
-
-void createPlayers();
-
-void dealCards();
-
+void initSDL();       ///< Inits the graphics
+void createPlayers(); ///< creates the players
+void dealCards();     ///< Deals the cards
+void quit(int code);  ///< Deletes variables and exits
 #endif // MAIN_H_INCLUDED

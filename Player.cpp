@@ -23,23 +23,61 @@ using std::endl;
 #include <vector>
 using std::vector;
 #include <algorithm>
+#include <SDL.h>
 
 #include ".\inc\main.h"
 #include ".\inc\Player.h"
 #include ".\inc\CardPile.h"
+#include ".\inc\Window.h"
+#include ".\inc\Resources.h"
+
+/// @brief labels for the suits (for debugging)
+static const char* Suits_Label[] {
+	"SUIT_CLUBS",
+	"SUIT_DIAMONDS",
+	"SUIT_HEARTS",
+	"SUIT_SPADES",
+	
+	"SUIT_TOTAL"
+};
+
+/// @brief Labels for the ranks
+static const char* Ranks_Label[] {
+	"RANK_ACE",
+	"RANK_2",
+	"RANK_3",
+	"RANK_4",
+	"RANK_5",
+	"RANK_6",
+	"RANK_7",
+	"RANK_8",
+	"RANK_9",
+	"RANK_10",
+	"RANK_JACK",
+	"RANK_QUEEN",
+	"RANK_KING",
+	
+	"RANK_TOTAL"
+};
+
 
 Player::Player(bool isUser) {
 	this->isUser = isUser;
 }
 
-void Player::getMelds(vector<Meld*>& foundMelds) {	
+
+Player::~Player() {}
+
+
+void Player::getMelds() {
+	// FIND SETS (3 or 4 cards with the same rank/value)
 	for(unsigned i = 0; i < hand.size(); ++i) {
 		for(unsigned j = i + 1; j < hand.size(); ++j) {
 			for(unsigned k = j + 1; k < hand.size(); ++k) {
 				if(    (hand[i]->rank == hand[j]->rank) // see if the ranks are the same
 					&& (hand[j]->rank == hand[k]->rank)
 				) {
-					foundMelds.push_back( new Meld {
+					melds.push_back( new Meld{
 						MELD_SET,
 						{hand[i], hand[j], hand[k]}
 					});
@@ -49,6 +87,7 @@ void Player::getMelds(vector<Meld*>& foundMelds) {
 	}
 	///@todo Check for a 4 card set
 	
+	// FIND RUNS (3 cards in the same suit that go in order)
 	for(unsigned i = 0; i < hand.size(); ++i) {
 		for(unsigned j = i + 1; j < hand.size(); ++j) {
 			for(unsigned k = j + 1; k < hand.size(); ++k) { // go through sets of 3 cards
@@ -66,31 +105,195 @@ void Player::getMelds(vector<Meld*>& foundMelds) {
 					
 					if(    tmpCards[0]->rank == tmpCards[1]->rank - 1 // see if the ranks are incrementing
 						&& tmpCards[1]->rank == tmpCards[2]->rank - 1
-					) { foundMelds.push_back( new Meld{MELD_RUN, tmpCards} ); }
+					) { melds.push_back( new Meld{MELD_RUN, tmpCards} ); }
 				}
 			}
 		}
 	}
 }
 
+
 void Player::takeCard(Card* card) {
 	hand.push_back(card);
 }
 
+
 void Player::doTurn() {
+	getMelds();
 	printHand();
 	
-	vector<Meld*> foundMelds;
-	getMelds(foundMelds);
+	SDL_Event event;
+	bool finished, isMovingCard;
+	Card* selectedCard;
 	
-	if(foundMelds.size() == 0) {
+	/// @todo First we want to ask the user to pick a deck to pull cards from
+	finished = false;
+	isMovingCard = false;
+	Card* selectedCard = nullptr;
+	while(!finished) {
+		
+		gWindow->renderAll();
+		
+		while(SDL_PollEvent(&event)) {
+			if(event.type == SDL_QUIT) {
+				quit(0x01);
+			}
+			
+			if(isMovingCard) {
+				int x, y;
+				SDL_GetMouseState(&x, &y);
+				
+				int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x coordinate offset from the start of the cards
+				int cardi = cardx / CARD_PAD; // get the index of the card we clicked
+				
+				// Make sure the card doesn't leave the hand
+				if(cardi > (int)hand.size() - 1)
+					cardi = hand.size() - 1;
+				if(cardi < 0)
+					cardi = 0;
+				
+				moveCard(selectedCard, cardi);
+			}
+			
+			if(event.type == SDL_MOUSEBUTTONDOWN) {
+				/// @todo get card that the user selected
+				int x, y;
+				SDL_GetMouseState( &x, &y );
+				
+				if(    x > SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2
+					&& x < SCRN_W/2 + (CARD_PAD*9 + CARD_W)/2
+					&& y > SCRN_H - WIN_PAD - CARD_H
+					&& y < SCRN_H - WIN_PAD
+				)  {
+					isMovingCard = true;
+					int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x coordinate offset from the start of the cards
+					int cardi = cardx / CARD_PAD; // get the index of the card we clicked
+					
+					if(cardi >= (int)hand.size()) // correct for the last card being the top card
+						cardi = hand.size() - 1;
+					
+					selectedCard = hand[cardi];
+				}
+			}
+			
+			if(event.type == SDL_MOUSEBUTTONUP) {
+				/// @todo check for released the card
+				if(isMovingCard) {
+					isMovingCard = false;
+					selectedCard = nullptr;
+				} else {
+					/// @todo if one of the decks of cards is selected then mark finished to true
+				}
+			}
+		}
+	}
+	
+	
+	/// @todo Then we want to get the melds and organize our cards
+	finished = false;
+	isMovingCard = false;
+	Card* selectedCard = nullptr;
+	while(!finished) {
+		
+		gWindow->renderAll();
+		
+		while(SDL_PollEvent(&event)) {
+			if(event.type == SDL_QUIT) {
+				quit(0x01);
+			}
+			
+			if(isMovingCard) {
+				int x, y;
+				SDL_GetMouseState(&x, &y);
+				
+				int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x coordinate offset from the start of the cards
+				int cardi = cardx / CARD_PAD; // get the index of the card we clicked
+				
+				// Make sure the card doesn't leave the hand
+				if(cardi > (int)hand.size() - 1)
+					cardi = hand.size() - 1;
+				if(cardi < 0)
+					cardi = 0;
+				
+				moveCard(selectedCard, cardi);
+			}
+			
+			if(event.type == SDL_MOUSEBUTTONDOWN) {
+				/// @todo get card that the user selected
+				int x, y;
+				SDL_GetMouseState( &x, &y );
+				
+				if(    x > SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2
+					&& x < SCRN_W/2 + (CARD_PAD*9 + CARD_W)/2
+					&& y > SCRN_H - WIN_PAD - CARD_H
+					&& y < SCRN_H - WIN_PAD
+				)  {
+					isMovingCard = true;
+					int cardx = x - (SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2); // get the x coordinate offset from the start of the cards
+					int cardi = cardx / CARD_PAD; // get the index of the card we clicked
+					
+					if(cardi >= (int)hand.size()) // correct for the last card being the top card
+						cardi = hand.size() - 1;
+					
+					selectedCard = hand[cardi];
+				}
+			}
+			
+			if(event.type == SDL_MOUSEBUTTONUP) {
+				/// @todo check for button presses or released the card
+				if(isMovingCard) {
+					isMovingCard = false;
+					selectedCard = nullptr;
+				} else {
+					/// @todo check for button presses
+				}
+			}
+		}
+	}
+	
+	/// @todo Lastly we want to pick a card to discard
+	finished = false;
+	isMovingCard = false;
+	Card* selectedCard = nullptr;
+	while(!finished) {
+		
+		gWindow->renderAll();
+		
+		while(SDL_PollEvent(&event)) {
+			if(event.type == SDL_QUIT) {
+				quit(0x01);
+			}
+			
+			if(event.type == SDL_MOUSEBUTTONUP) {
+				/// @todo check for button presses or card selected
+			}
+		}
+	}
+}
+
+
+void Player::moveCard(Card* c, int idx) {
+	for(int i = 0; i < hand.size(); ++i) {
+		if(c == hand[i])
+			hand.erase(hand.begin() + i);
+	}
+	
+	hand.insert(hand.begin() + idx, c);
+}
+
+
+void Player::printHand() {
+	for(Card* tmpCard : hand)
+		cout << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+	
+	if(melds.size() == 0) {
 		cout << "NO MELDS FOUND" << endl;
 	} else {
-		for(auto tmpMeld : foundMelds) {
+		for(auto tmpMeld : melds) {
 			cout << tmpMeld->type << " " << endl;
-			// for(auto tmpCard : tmpMeld->cards) {
-				// cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
-			// }
+			for(auto tmpCard : tmpMeld->cards) {
+				cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+			}
 		}
 	}
 	
@@ -98,7 +301,52 @@ void Player::doTurn() {
 	cout << endl;
 }
 
-void Player::printHand() {
-	for(Card* tmpCard : hand)
-		cout << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+
+void Player::render() {
+	renderCards();
+}
+
+
+void Player::renderCards() {
+	// The entire card lay is going to be 140px for the top card and 40px for each
+	// card behind, But we are shrinking the card by a factor of 0.25 so its 35px
+	// for the top card and 10px for the sequential cards. Total of 125px
+	
+	if(isUser) {
+		SDL_Rect currCardPos = {
+			SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2,
+			SCRN_H - WIN_PAD - CARD_H,
+			CARD_W,
+			CARD_H
+		};
+		
+		for(Card* tmpCard : hand) {
+			SDL_RenderCopy(
+				gWindow->getRenderer(),
+				gAssets->cardsSheet,
+				&gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)],
+				&currCardPos
+			);
+			
+			currCardPos.x += CARD_PAD;
+		}
+	} else {
+		SDL_Rect currCardPos = {
+			SCRN_W/2 - (CARD_PAD*9 + CARD_W)/2,
+			WIN_PAD,
+			CARD_W,
+			CARD_H
+		};
+		
+		for(unsigned i = 0; i < hand.size(); ++i) {
+			SDL_RenderCopy(
+				gWindow->getRenderer(),
+				gAssets->cardBackSheet,
+				&gAssets->cardClippingBack,
+				&currCardPos
+			);
+			
+			currCardPos.x += CARD_PAD;
+		}
+	}
 }

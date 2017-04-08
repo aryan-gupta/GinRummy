@@ -26,32 +26,41 @@
 #include ".\inc\main.h"
 #include ".\inc\CardPile.h"
 #include ".\inc\Player.h"
+#include ".\inc\Window.h"
+#include ".\inc\Resources.h"
 
-const int NUM_PLAYERS = 4;
-const int NUM_CARDS_PER = 7;
+const int NUM_CARDS_PER = 10;
 
 CardPile* gDeck;
 CardPile* gDiscard;
 
-std::vector<Meld*> melds;
-std::vector<Player*> gPlayers;
+Player* P1;
+Player* P2;
+
+Window* gWindow;
+Resources* gAssets;
 
 int main(int argc, char* argv[]) {
 	srand(time(0));
 	initSDL();
 	
-	gDeck = new CardPile(PILE_DECK);
+	gWindow  = new Window();
+	gAssets  = new Resources();
+	gDeck    = new CardPile(PILE_DECK);
+	gDiscard = new CardPile(PILE_DISCARD);
+	P1       = new Player(true);
+	P2       = new Player(false);
+	
 	gDeck->shuffle();
 	
-	gDiscard = new CardPile(PILE_DISCARD);
-	createPlayers();
 	dealCards();
 	
-	for(Player* tmpPlayer : gPlayers)
-		tmpPlayer->doTurn();
+	while(true) {
+		P1->doTurn();
+		P2->doTurn();
+	}
 	
-	system("pause");
-	return 0;
+	return 0x00;
 }
 
 void initSDL() {
@@ -76,17 +85,20 @@ void initSDL() {
 	*/
 }
 
-void createPlayers() {
-	gPlayers.push_back(new Player(true));
-	for(int i = 1; i < NUM_PLAYERS; ++i) {
-		gPlayers.push_back(new Player());
+void dealCards() {
+	for(int i = 0; i < NUM_CARDS_PER; ++i) {
+		P1->takeCard(gDeck->getACard());
+		P2->takeCard(gDeck->getACard());
 	}
 }
 
-void dealCards() {
-	for(int i = 0; i < NUM_CARDS_PER; ++i) {
-		for(Player* tmp : gPlayers) {
-			tmp->takeCard(gDeck->getACard());
-		}
-	}
+void quit(int code) {
+	delete gWindow;
+	delete gAssets;
+	delete gDeck;
+	delete gDiscard;
+	delete P1;
+	delete P2;
+	
+	exit(code);
 }
