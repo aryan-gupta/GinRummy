@@ -393,8 +393,3 @@ void Player::renderDeadwood() {
 void Player::renderMelds() {
 	
 }
-
-
-void Player::renderButtons() {
-	
-}

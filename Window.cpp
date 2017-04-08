@@ -275,6 +275,7 @@ bool Window::checkKnockClick(const int x, const int y) {
 	return false;
 }
 
+
 bool Window::checkSortClick(const int x, const int y) {
 	if(    x > sortButton.x
 		&& x < sortButton.x + sortButton.w
