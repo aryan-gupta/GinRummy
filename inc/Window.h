@@ -44,6 +44,8 @@ private:
 	
 	void clear();
 	void renderBackground();
+	
+	void drawAButton(SDL_Texture* tex, SDL_Rect src, int h_p, int w_p, SDL_Rect dest);
 };
 
 

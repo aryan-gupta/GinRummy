@@ -20,6 +20,16 @@
 
 #define GCI(s, r) (s*RANK_TOTAL)+r
 
+enum UI_Colors {
+	UIC_BLUE,
+	UIC_GREEN,
+	UIC_GREY,
+	UIC_RED,
+	UIC_YELLOW,
+	
+	UIC_TOTAL
+};
+
 struct Resources {
 	Resources();
 	~Resources();
@@ -29,6 +39,8 @@ struct Resources {
 	SDL_Rect*    cardClippings;
 	SDL_Rect     cardClippingBack;
 	
+	SDL_Texture** uiSheets;
+	SDL_Rect*     uiClippings;
 private:
 	SDL_Texture* load(const char* file);
 };
