@@ -263,3 +263,24 @@ void Window::drawAButton(SDL_Texture* tex, SDL_Rect src, int h_p, int w_p, SDL_R
 	
 	SDL_RenderCopy(renderer, tex, &clip_center, &pos_center);
 }
+
+
+bool Window::checkKnockClick(const int x, const int y) {
+	if(    x > knockButton.x
+		&& x < knockButton.x + knockButton.w
+		&& y > knockButton.y
+		&& y < knockButton.y + knockButton.h
+	) return true;
+	
+	return false;
+}
+
+bool Window::checkSortClick(const int x, const int y) {
+	if(    x > sortButton.x
+		&& x < sortButton.x + sortButton.w
+		&& y > sortButton.y
+		&& y < sortButton.y + sortButton.h
+	) return true;
+	
+	return false;
+}
