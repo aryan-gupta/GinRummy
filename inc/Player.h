@@ -69,6 +69,9 @@ private:
 	void renderButtons();
 	
 	void moveCard(Card* c, int idx);
+	
+	void pickDeck();
+	void pickCard();
 };
 
 #endif
