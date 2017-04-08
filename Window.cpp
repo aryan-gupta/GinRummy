@@ -24,6 +24,7 @@
 #include ".\inc\Window.h"
 #include ".\inc\Player.h"
 #include ".\inc\CardPile.h"
+#include ".\inc\Resources.h"
 
 const int SCRN_W = 680; /// @todo Make sure that this is a good ratio
 const int SCRN_H = 510;
@@ -72,6 +73,29 @@ void Window::renderAll() {
 	gDeck->render();
 	gDiscard->render();
 	
+	drawAButton(
+		gAssets->uiSheets[UIC_BLUE],
+		gAssets->uiClippings[1],
+		5, 7, 
+		SDL_Rect{
+			SCRN_W - 120 - 30,
+			SCRN_H - 45 - 15,
+			120,
+			45
+		}
+	);
+	drawAButton(
+		gAssets->uiSheets[UIC_BLUE],
+		gAssets->uiClippings[1],
+		5, 7, 
+		SDL_Rect{
+			SCRN_W - 120 - 30,
+			SCRN_H - 45*2 - 15 - 30,
+			120,
+			45
+		}
+	);
+	
 	SDL_RenderPresent(renderer);
 }
 
@@ -86,4 +110,60 @@ void Window::renderBackground() {
 void Window::clear() {
 	SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xFF); // Black
 	SDL_RenderClear(renderer);
+}
+
+void Window::drawAButton(SDL_Texture* tex, SDL_Rect src, int h_p, int w_p, SDL_Rect dest) {
+	int x_i, y_i, w, h, x_f, y_f;
+	
+	x_i = src.x;
+	y_i = src.y;
+	w = src.w;
+	h = src.h;
+	
+	x_f = x_i + w;
+	y_f = y_i + h;
+	
+	SDL_Rect clip_topleft     = SDL_Rect{x_i, y_i, w_p, h_p};
+	SDL_Rect clip_topright    = SDL_Rect{x_f - w_p, y_i, w_p, h_p};
+	SDL_Rect clip_bottomleft  = SDL_Rect{x_i, y_f - h_p, w_p, h_p};
+	SDL_Rect clip_bottomright = SDL_Rect{x_f - w_p, y_f - h_p, w_p, h_p};
+	
+	SDL_Rect clip_top    = SDL_Rect{x_i + w_p, y_i, w - 2*w_p, h_p};
+	SDL_Rect clip_left   = SDL_Rect{x_i, y_i + h_p, w_p, h - 2*h_p};
+	SDL_Rect clip_right  = SDL_Rect{x_f - w_p, y_i + h_p, w_p, h - 2*h_p};
+	SDL_Rect clip_bottom = SDL_Rect{x_i + w_p, y_f - h_p, w - 2*w_p, h_p};
+	
+	SDL_Rect clip_center = SDL_Rect{x_i + w_p, y_i + h_p, w - 2*w_p, h - 2*h_p};
+
+	x_i = dest.x;
+	y_i = dest.y;
+	w = dest.w;
+	h = dest.h;
+	
+	x_f = x_i + w;
+	y_f = y_i + h;
+	
+	SDL_Rect pos_topleft     = SDL_Rect{x_i, y_i, w_p, h_p};
+	SDL_Rect pos_topright    = SDL_Rect{x_f - w_p, y_i, w_p, h_p};
+	SDL_Rect pos_bottomleft  = SDL_Rect{x_i, y_f - h_p, w_p, h_p};
+	SDL_Rect pos_bottomright = SDL_Rect{x_f - w_p, y_f - h_p, w_p, h_p};
+	
+	SDL_Rect pos_top    = SDL_Rect{x_i + w_p, y_i, w - 2*w_p, h_p};
+	SDL_Rect pos_left   = SDL_Rect{x_i, y_i + h_p, w_p, h - 2*h_p};
+	SDL_Rect pos_right  = SDL_Rect{x_f - w_p, y_i + h_p, w_p, h - 2*h_p};
+	SDL_Rect pos_bottom = SDL_Rect{x_i + w_p, y_f - h_p, w - 2*w_p, h_p};
+	
+	SDL_Rect pos_center = SDL_Rect{x_i + w_p, y_i + h_p, w - 2*w_p, h - 2*h_p};
+	
+	SDL_RenderCopy(renderer, tex, &clip_topleft, &pos_topleft);
+	SDL_RenderCopy(renderer, tex, &clip_topright, &pos_topright);
+	SDL_RenderCopy(renderer, tex, &clip_bottomleft, &pos_bottomleft);
+	SDL_RenderCopy(renderer, tex, &clip_bottomright, &pos_bottomright);
+	
+	SDL_RenderCopy(renderer, tex, &clip_top, &pos_top);
+	SDL_RenderCopy(renderer, tex, &clip_left, &pos_left);
+	SDL_RenderCopy(renderer, tex, &clip_right, &pos_right);
+	SDL_RenderCopy(renderer, tex, &clip_bottom, &pos_bottom);
+	
+	SDL_RenderCopy(renderer, tex, &clip_center, &pos_center);
 }

@@ -28,24 +28,32 @@
 static const char* CARDS_SHEET      = "..\\res\\sprites\\Spritesheets\\playingCards.png";
 static const char* CARDS_SHEET_BACK = "..\\res\\sprites\\Spritesheets\\playingCardBacks.png";
 
+static const char* UI_SHEETS[] = {
+	"..\\res\\sprites\\Spritesheets\\blueSheet.png",
+	"..\\res\\sprites\\Spritesheets\\greenSheet.png",
+	"..\\res\\sprites\\Spritesheets\\greySheet.png",
+	"..\\res\\sprites\\Spritesheets\\redSheet.png",
+	"..\\res\\sprites\\Spritesheets\\yellowSheet.png",
+};
+
 Resources::Resources() {
 	cardsSheet = load(CARDS_SHEET);
 	cardBackSheet = load(CARDS_SHEET_BACK);
 	
 	cardClippings = new SDL_Rect[SUIT_TOTAL * RANK_TOTAL]; // 52 cards;
-	cardClippings[GCI(SUIT_CLUBS   , RANK_ACE  )] = SDL_Rect{560,  570, 140, 190};
-	cardClippings[GCI(SUIT_CLUBS   , RANK_2    )] = SDL_Rect{280, 1140, 140, 190};
-	cardClippings[GCI(SUIT_CLUBS   , RANK_3    )] = SDL_Rect{700,  190, 140, 190};
-	cardClippings[GCI(SUIT_CLUBS   , RANK_4    )] = SDL_Rect{700,    0, 140, 190};
-	cardClippings[GCI(SUIT_CLUBS   , RANK_5    )] = SDL_Rect{560, 1710, 140, 190};
-	cardClippings[GCI(SUIT_CLUBS   , RANK_6    )] = SDL_Rect{560, 1520, 140, 190};
-	cardClippings[GCI(SUIT_CLUBS   , RANK_7    )] = SDL_Rect{560, 1330, 140, 190};
-	cardClippings[GCI(SUIT_CLUBS   , RANK_8    )] = SDL_Rect{560, 1140, 140, 190};
-	cardClippings[GCI(SUIT_CLUBS   , RANK_9    )] = SDL_Rect{560,  950, 140, 190};
-	cardClippings[GCI(SUIT_CLUBS   , RANK_10   )] = SDL_Rect{560,  760, 140, 190};
-	cardClippings[GCI(SUIT_CLUBS   , RANK_JACK )] = SDL_Rect{560,  380, 140, 190};
-	cardClippings[GCI(SUIT_CLUBS   , RANK_QUEEN)] = SDL_Rect{560,  190, 140, 190};
-	cardClippings[GCI(SUIT_CLUBS   , RANK_KING )] = SDL_Rect{560,    0, 140, 190};
+	cardClippings[GCI(SUIT_CLUBS,    RANK_ACE  )] = SDL_Rect{560,  570, 140, 190};
+	cardClippings[GCI(SUIT_CLUBS,    RANK_2    )] = SDL_Rect{280, 1140, 140, 190};
+	cardClippings[GCI(SUIT_CLUBS,    RANK_3    )] = SDL_Rect{700,  190, 140, 190};
+	cardClippings[GCI(SUIT_CLUBS,    RANK_4    )] = SDL_Rect{700,    0, 140, 190};
+	cardClippings[GCI(SUIT_CLUBS,    RANK_5    )] = SDL_Rect{560, 1710, 140, 190};
+	cardClippings[GCI(SUIT_CLUBS,    RANK_6    )] = SDL_Rect{560, 1520, 140, 190};
+	cardClippings[GCI(SUIT_CLUBS,    RANK_7    )] = SDL_Rect{560, 1330, 140, 190};
+	cardClippings[GCI(SUIT_CLUBS,    RANK_8    )] = SDL_Rect{560, 1140, 140, 190};
+	cardClippings[GCI(SUIT_CLUBS,    RANK_9    )] = SDL_Rect{560,  950, 140, 190};
+	cardClippings[GCI(SUIT_CLUBS,    RANK_10   )] = SDL_Rect{560,  760, 140, 190};
+	cardClippings[GCI(SUIT_CLUBS,    RANK_JACK )] = SDL_Rect{560,  380, 140, 190};
+	cardClippings[GCI(SUIT_CLUBS,    RANK_QUEEN)] = SDL_Rect{560,  190, 140, 190};
+	cardClippings[GCI(SUIT_CLUBS,    RANK_KING )] = SDL_Rect{560,    0, 140, 190};
 
 	cardClippings[GCI(SUIT_DIAMONDS, RANK_ACE  )] = SDL_Rect{420,    0, 140, 190};
 	cardClippings[GCI(SUIT_DIAMONDS, RANK_2    )] = SDL_Rect{420, 1710, 140, 190};
@@ -61,37 +69,45 @@ Resources::Resources() {
 	cardClippings[GCI(SUIT_DIAMONDS, RANK_QUEEN)] = SDL_Rect{280, 1520, 140, 190};
 	cardClippings[GCI(SUIT_DIAMONDS, RANK_KING )] = SDL_Rect{280, 1330, 140, 190};
 	
-	cardClippings[GCI(SUIT_HEARTS  , RANK_ACE  )] = SDL_Rect{140, 1330, 140, 190};
-	cardClippings[GCI(SUIT_HEARTS  , RANK_2    )] = SDL_Rect{700,  380, 140, 190};
-	cardClippings[GCI(SUIT_HEARTS  , RANK_3    )] = SDL_Rect{280,  950, 140, 190};
-	cardClippings[GCI(SUIT_HEARTS  , RANK_4    )] = SDL_Rect{280,  760, 140, 190};
-	cardClippings[GCI(SUIT_HEARTS  , RANK_5    )] = SDL_Rect{280,  570, 140, 190};
-	cardClippings[GCI(SUIT_HEARTS  , RANK_6    )] = SDL_Rect{280,  380, 140, 190};
-	cardClippings[GCI(SUIT_HEARTS  , RANK_7    )] = SDL_Rect{280,  190, 140, 190};
-	cardClippings[GCI(SUIT_HEARTS  , RANK_8    )] = SDL_Rect{280,    0, 140, 190};
-	cardClippings[GCI(SUIT_HEARTS  , RANK_9    )] = SDL_Rect{140, 1710, 140, 190};
-	cardClippings[GCI(SUIT_HEARTS  , RANK_10   )] = SDL_Rect{140, 1520, 140, 190};
-	cardClippings[GCI(SUIT_HEARTS  , RANK_JACK )] = SDL_Rect{140, 1140, 140, 190};
-	cardClippings[GCI(SUIT_HEARTS  , RANK_QUEEN)] = SDL_Rect{140,  950, 140, 190};
-	cardClippings[GCI(SUIT_HEARTS  , RANK_KING )] = SDL_Rect{140,  760, 140, 190};
+	cardClippings[GCI(SUIT_HEARTS,   RANK_ACE  )] = SDL_Rect{140, 1330, 140, 190};
+	cardClippings[GCI(SUIT_HEARTS,   RANK_2    )] = SDL_Rect{700,  380, 140, 190};
+	cardClippings[GCI(SUIT_HEARTS,   RANK_3    )] = SDL_Rect{280,  950, 140, 190};
+	cardClippings[GCI(SUIT_HEARTS,   RANK_4    )] = SDL_Rect{280,  760, 140, 190};
+	cardClippings[GCI(SUIT_HEARTS,   RANK_5    )] = SDL_Rect{280,  570, 140, 190};
+	cardClippings[GCI(SUIT_HEARTS,   RANK_6    )] = SDL_Rect{280,  380, 140, 190};
+	cardClippings[GCI(SUIT_HEARTS,   RANK_7    )] = SDL_Rect{280,  190, 140, 190};
+	cardClippings[GCI(SUIT_HEARTS,   RANK_8    )] = SDL_Rect{280,    0, 140, 190};
+	cardClippings[GCI(SUIT_HEARTS,   RANK_9    )] = SDL_Rect{140, 1710, 140, 190};
+	cardClippings[GCI(SUIT_HEARTS,   RANK_10   )] = SDL_Rect{140, 1520, 140, 190};
+	cardClippings[GCI(SUIT_HEARTS,   RANK_JACK )] = SDL_Rect{140, 1140, 140, 190};
+	cardClippings[GCI(SUIT_HEARTS,   RANK_QUEEN)] = SDL_Rect{140,  950, 140, 190};
+	cardClippings[GCI(SUIT_HEARTS,   RANK_KING )] = SDL_Rect{140,  760, 140, 190};
 	
-	cardClippings[GCI(SUIT_SPADES  , RANK_ACE  )] = SDL_Rect{  0,  570, 140, 190};
-	cardClippings[GCI(SUIT_SPADES  , RANK_2    )] = SDL_Rect{140,  380, 140, 190};
-	cardClippings[GCI(SUIT_SPADES  , RANK_3    )] = SDL_Rect{140,  190, 140, 190};
-	cardClippings[GCI(SUIT_SPADES  , RANK_4    )] = SDL_Rect{140,    0, 140, 190};
-	cardClippings[GCI(SUIT_SPADES  , RANK_5    )] = SDL_Rect{  0, 1710, 140, 190};
-	cardClippings[GCI(SUIT_SPADES  , RANK_6    )] = SDL_Rect{  0, 1520, 140, 190};
-	cardClippings[GCI(SUIT_SPADES  , RANK_7    )] = SDL_Rect{  0, 1330, 140, 190};
-	cardClippings[GCI(SUIT_SPADES  , RANK_8    )] = SDL_Rect{  0, 1140, 140, 190};
-	cardClippings[GCI(SUIT_SPADES  , RANK_9    )] = SDL_Rect{  0,  950, 140, 190};
-	cardClippings[GCI(SUIT_SPADES  , RANK_10   )] = SDL_Rect{  0,  760, 140, 190};
-	cardClippings[GCI(SUIT_SPADES  , RANK_JACK )] = SDL_Rect{  0,  380, 140, 190};
-	cardClippings[GCI(SUIT_SPADES  , RANK_QUEEN)] = SDL_Rect{  0,  190, 140, 190};
-	cardClippings[GCI(SUIT_SPADES  , RANK_KING )] = SDL_Rect{  0,    0, 140, 190};
+	cardClippings[GCI(SUIT_SPADES,   RANK_ACE  )] = SDL_Rect{  0,  570, 140, 190};
+	cardClippings[GCI(SUIT_SPADES,   RANK_2    )] = SDL_Rect{140,  380, 140, 190};
+	cardClippings[GCI(SUIT_SPADES,   RANK_3    )] = SDL_Rect{140,  190, 140, 190};
+	cardClippings[GCI(SUIT_SPADES,   RANK_4    )] = SDL_Rect{140,    0, 140, 190};
+	cardClippings[GCI(SUIT_SPADES,   RANK_5    )] = SDL_Rect{  0, 1710, 140, 190};
+	cardClippings[GCI(SUIT_SPADES,   RANK_6    )] = SDL_Rect{  0, 1520, 140, 190};
+	cardClippings[GCI(SUIT_SPADES,   RANK_7    )] = SDL_Rect{  0, 1330, 140, 190};
+	cardClippings[GCI(SUIT_SPADES,   RANK_8    )] = SDL_Rect{  0, 1140, 140, 190};
+	cardClippings[GCI(SUIT_SPADES,   RANK_9    )] = SDL_Rect{  0,  950, 140, 190};
+	cardClippings[GCI(SUIT_SPADES,   RANK_10   )] = SDL_Rect{  0,  760, 140, 190};
+	cardClippings[GCI(SUIT_SPADES,   RANK_JACK )] = SDL_Rect{  0,  380, 140, 190};
+	cardClippings[GCI(SUIT_SPADES,   RANK_QUEEN)] = SDL_Rect{  0,  190, 140, 190};
+	cardClippings[GCI(SUIT_SPADES,   RANK_KING )] = SDL_Rect{  0,    0, 140, 190};
 
 	//cardJoker.png" x="140" y="570" width="140" height="190"/>
 	//x="280" y="570" width="140" height="190"
 	cardClippingBack = SDL_Rect{280, 570, 140, 190};
+	
+	uiSheets = new SDL_Texture*[UIC_TOTAL];
+	for(int i = 0; i < UIC_TOTAL; ++i)
+		uiSheets[i] = load(UI_SHEETS[i]);
+	
+	uiClippings = new SDL_Rect[2];
+	uiClippings[0] = SDL_Rect{0, 94, 190, 49};
+	uiClippings[1] = SDL_Rect{0, 49, 190, 45};
 }
 
 Resources::~Resources() {
