@@ -60,6 +60,11 @@ static const char* Ranks_Label[] {
 	"RANK_TOTAL"
 };
 
+static const char* Meld_Label[] {
+	"MELD_SET",
+	"MELD_RUN"
+};
+
 
 Player::Player(bool isUser) {
 	this->isUser = isUser;
@@ -306,7 +311,7 @@ void Player::printHand() {
 		cout << "NO MELDS FOUND" << endl;
 	} else {
 		for(auto tmpMeld : melds) {
-			cout << tmpMeld->type << " " << endl;
+			cout << Meld_Label[tmpMeld->type] << " " << endl;
 			for(auto tmpCard : tmpMeld->cards) {
 				cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
 			}
