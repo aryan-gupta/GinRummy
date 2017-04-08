@@ -58,20 +58,20 @@ public:
 	void doTurn(); ///< Does a turn for the player
 	void render();
 private:
-	std::vector<Card*> hand;       ///< Stores the cards in the Player's hand
-	std::vector<Meld*> melds;
+	std::vector<Card*> hand;  ///< Stores the cards in the Player's hand
+	std::vector<Meld*> melds; ///< Stores the melds
 	bool isUser; ///> Is the Player a user
 	
-	void printHand(); ///< Print the hand out
-	void renderCards();
-	void renderDeadwood();
-	void renderMelds();
-	void renderButtons();
+	void printHand();      ///< Print the hand out
+	void renderCards();    ///< Render all the cards
+	void renderDeadwood(); ///< Render deadwood
+	void renderMelds();    ///< Render melds
+	void renderButtons();  ///< Render Buttons
 	
-	void moveCard(Card* c, int idx);
+	void moveCard(Card* c, int idx); /// Move a card in your hand
 	
-	void pickDeck();
-	void pickCard();
+	void pickDeck(); ///< Pick a deck to draw from
+	void pickCard(); ///< Pick a card to put into discard
 };
 
 #endif

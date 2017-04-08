@@ -46,6 +46,7 @@ int main(int argc, char* argv[]) {
 	srand(time(0));
 	initSDL();
 	
+	// Create our variables
 	gWindow  = new Window();
 	gAssets  = new Resources();
 	gDeck    = new CardPile(PILE_DECK);
@@ -53,12 +54,12 @@ int main(int argc, char* argv[]) {
 	P1       = new Player(true);
 	P2       = new Player(false);
 	
-	gWindow->initWindow();
-	gDeck->shuffle();
+	gWindow->initWindow(); // Init our window class
+	gDeck->shuffle();      // Shuffle our main deck
 	
-	dealCards();
+	dealCards(); // Deal the cards
 	
-	while(true) {
+	while(true) { // Loop through turns (Will change as we progress through our game)
 		P1->doTurn();
 		P2->doTurn();
 	}
@@ -91,7 +92,7 @@ void initSDL() {
 
 
 void dealCards() {
-	for(int i = 0; i < NUM_CARDS_PER; ++i) {
+	for(int i = 0; i < NUM_CARDS_PER; ++i) { // Give each player 10 cards
 		P1->takeCard(gDeck->getACard());
 		P2->takeCard(gDeck->getACard());
 	}
@@ -99,6 +100,7 @@ void dealCards() {
 
 
 void quit(int code) {
+	// Delete all of our global variables
 	delete gWindow;
 	delete gAssets;
 	delete gDeck;
@@ -106,6 +108,7 @@ void quit(int code) {
 	delete P1;
 	delete P2;
 	
+	// exit
 	exit(code);
 }
 
