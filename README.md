@@ -1,4 +1,4 @@
-<img src="res/icon.png" alt="Drawing" style="width: 50px;"/>
+<img src="res/icon.png" alt="Drawing" width="50"/>
 # GinRummy
 
 A graphical game of Gin Rummy. This game was created for our ECGR 2104 class as
