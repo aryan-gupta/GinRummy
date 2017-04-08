@@ -63,21 +63,21 @@ Window::~Window() {
 
 
 void Window::initWindow() {
-	knockButton = SDL_Rect{
+	knockButton = SDL_Rect{ // location of our knock button
 		SCRN_W - 120 - 45,
 		SCRN_H - 45*2 - 45,
 		120,
 		45
 	};
 	
-	sortButton = SDL_Rect{
+	sortButton = SDL_Rect{ // location of our sort button
 		knockButton.x,
 		knockButton.y + knockButton.h + 30,
 		knockButton.w,
 		knockButton.h
 	};
 	
-	textColor = SDL_Color{0x00, 0x00, 0x00, 0xFF};
+	textColor = SDL_Color{0x00, 0x00, 0x00, 0xFF}; // black text color
 	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->buttonFont,
 		"Knock", 
@@ -87,14 +87,14 @@ void Window::initWindow() {
 		renderer,
 		textSurface
 	);
-	knockPos = SDL_Rect{
+	knockPos = SDL_Rect{ // Text position
 		knockButton.x - textSurface->w/2 + knockButton.w/2,
 		knockButton.y - textSurface->h/2 + knockButton.h/2 + 4,
 		textSurface->w, 
 		textSurface->h
-	}; // Text position
+	};
 	
-	SDL_FreeSurface(textSurface);
+	SDL_FreeSurface(textSurface); // free the memory
 	
 	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->buttonFont,
@@ -182,10 +182,10 @@ void Window::clear() {
 
 void Window::renderButtons() {
 	drawAButton(
-		gAssets->uiSheets[UIC_BLUE],
-		gAssets->uiClippings[1],
-		5, 7, 
-		knockButton
+		gAssets->uiSheets[UIC_BLUE], // sprite sheet
+		gAssets->uiClippings[1], // clipping
+		5, 7, // border
+		knockButton // location
 	);
 	
 	drawAButton(
@@ -207,6 +207,8 @@ void Window::renderMeldsDeadwood() {
 
 
 void Window::drawAButton(SDL_Texture* tex, SDL_Rect src, int h_p, int w_p, SDL_Rect dest) {
+	// Im way to lazy to comment this algorithm. I created it a long time ago,
+	// and im just copying it from an older project
 	int x_i, y_i, w, h, x_f, y_f;
 	
 	x_i = src.x;

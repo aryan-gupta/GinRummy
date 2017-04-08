@@ -60,6 +60,7 @@ static const char* Ranks_Label[] {
 	"RANK_TOTAL"
 };
 
+/// @brief Labels for the melds
 static const char* Meld_Label[] {
 	"MELD_SET",
 	"MELD_RUN"
@@ -73,7 +74,7 @@ Player::Player(bool isUser) {
 
 Player::~Player() {
 	for(Card* tmpCard : hand)
-		delete tmpCard;
+		delete tmpCard; // Delete the cards in our hands
 }
 
 
@@ -147,7 +148,7 @@ void Player::pickDeck() {
 		gWindow->renderAll(); // render everything
 		
 		while(SDL_PollEvent(&event)) {
-			if(isMovingCard) {
+			if(isMovingCard) { // if we are moving a card
 				int x, y;
 				SDL_GetMouseState(&x, &y);
 				
@@ -160,18 +161,18 @@ void Player::pickDeck() {
 				if(cardi < 0)
 					cardi = 0;
 				
-				moveCard(selectedCard, cardi);
+				moveCard(selectedCard, cardi); // move the card
 			}
 			
-			int x, y; // you have to declare variables outside the switch, annoying, i know
 			switch(event.type) {
 				case SDL_QUIT:
 					quit(0x01);
 				break;
 				
-				case SDL_MOUSEBUTTONDOWN:
+				case SDL_MOUSEBUTTONDOWN: {
 					/// @todo If next event is mouse movement then THEN move the card. 
 					/// @todo get card that the user selected
+					int x, y;
 					SDL_GetMouseState(&x, &y);
 					
 					if(    x > SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
@@ -188,15 +189,16 @@ void Player::pickDeck() {
 						
 						selectedCard = hand[cardi];
 					}
-				break;
+				} break;
 				
-				case SDL_MOUSEBUTTONUP:
+				case SDL_MOUSEBUTTONUP: {
 					/// @todo check for button presses or released the card
 					if(isMovingCard) {
 						isMovingCard = false;
 						selectedCard = nullptr;
 					} else {
 						/// @todo if one of the decks of cards is selected then mark finished to true
+						int x, y;
 						SDL_GetMouseState(&x, &y);
 						
 						if(gDeck->checkClick(x, y)) {
@@ -207,7 +209,7 @@ void Player::pickDeck() {
 							LOGL("DISCARD") // WE CLICKED ON THE DISCARD
 						}
 					}
-				break;
+				} break;
 			}
 		}
 	}
@@ -250,7 +252,7 @@ void Player::pickCard() {
 					quit(0x01);
 				break;
 				
-				case SDL_MOUSEBUTTONDOWN: // If we clicked down (Only thing here is moving the card)
+				case SDL_MOUSEBUTTONDOWN: { // If we clicked down (Only thing here is moving the card)
 					/// @todo get card that the user selected
 					int x, y;
 					SDL_GetMouseState( &x, &y );
@@ -268,13 +270,13 @@ void Player::pickCard() {
 						
 						selectedCard = hand[cardi];
 					}
-				break;
+				} break;
 				
 				case SDL_MOUSEMOTION:
 					if(selectedCard != nullptr) isMovingCard = true;
 				break;
 				
-				case SDL_MOUSEBUTTONUP: // we clicked up, here is where we want to select the decks and what not
+				case SDL_MOUSEBUTTONUP: { // we clicked up, here is where we want to select the decks and what not
 					/// @todo check for released the card
 					if(isMovingCard) {
 						isMovingCard = false;
@@ -286,7 +288,7 @@ void Player::pickCard() {
 								LOGL("CLICKED ON " << i << " Card")
 						selectedCard = nullptr;
 					}
-				break;
+				} break;
 			}
 		}
 	}
@@ -296,13 +298,13 @@ void Player::pickCard() {
 void Player::moveCard(Card* c, int idx) {
 	for(unsigned i = 0; i < hand.size(); ++i) {
 		if(c == hand[i])
-			hand.erase(hand.begin() + i);
+			hand.erase(hand.begin() + i); // remove the selected card
 	}
 	
-	hand.insert(hand.begin() + idx, c);
+	hand.insert(hand.begin() + idx, c); // move it to the new location
 }
 
-
+// WILL BE REMOVED IN FINAL GAME
 void Player::printHand() {
 	for(Card* tmpCard : hand)
 		cout << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
@@ -337,7 +339,7 @@ void Player::renderCards() {
 	// for the top card and 10px for the sequential cards. Total of 125px
 	
 	if(isUser) {
-		SDL_Rect currCardPos = {
+		SDL_Rect currCardPos = { // get the first card location
 			SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2,
 			SCRN_H - WIN_PAD - CARD_H,
 			CARD_W,
@@ -345,17 +347,17 @@ void Player::renderCards() {
 		};
 		
 		for(Card* tmpCard : hand) {
-			SDL_RenderCopy(
+			SDL_RenderCopy( // render it
 				gWindow->getRenderer(),
 				gAssets->cardsSheet,
 				&gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)],
 				&currCardPos
 			);
 			
-			currCardPos.x += CARD_PAD;
+			currCardPos.x += CARD_PAD; // move to the next card
 		}
 	} else {
-		SDL_Rect currCardPos = {
+		SDL_Rect currCardPos = { // Get the first card loaction
 			SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2,
 			WIN_PAD,
 			CARD_W,
@@ -363,14 +365,14 @@ void Player::renderCards() {
 		};
 		
 		for(unsigned i = 0; i < hand.size(); ++i) {
-			SDL_RenderCopy(
+			SDL_RenderCopy( // render it
 				gWindow->getRenderer(),
 				gAssets->cardBackSheet,
 				&gAssets->cardClippingBack,
 				&currCardPos
 			);
 			
-			currCardPos.x += CARD_PAD;
+			currCardPos.x += CARD_PAD; // move the pos to the next card
 		}
 	}
 }
