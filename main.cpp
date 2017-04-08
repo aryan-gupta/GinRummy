@@ -20,6 +20,7 @@
 #include <SDL_Image.h>
 #include <iostream>
 #include <vector>
+using std::vector;
 #include <algorithm>
 #include <time.h>
 
@@ -104,4 +105,10 @@ void quit(int code) {
 	delete P2;
 	
 	exit(code);
+}
+
+
+unsigned getDeadwood(const vector<Card*> &cards) {
+	/// @todo this function should return a non negative number that is the
+	/// number of deadwood we have.
 }

@@ -17,11 +17,15 @@
 
 #ifndef MAIN_H_INCLUDED
 #define MAIN_H_INCLUDED
+
+#include <vector>
+
 // Forward Declarations
 class CardPile;
 class Player;
 class Window;
 class Resources;
+struct Card;
 
 extern const int NUM_CARDS_PER; ///< Number of cards per player (default 10)
 
@@ -44,4 +48,7 @@ void initSDL();       ///< Inits the graphics
 void createPlayers(); ///< creates the players
 void dealCards();     ///< Deals the cards
 void quit(int code);  ///< Deletes variables and exits
+
+unsigned getDeadwood(const std::vector<Card*> &cards);
+
 #endif // MAIN_H_INCLUDED
