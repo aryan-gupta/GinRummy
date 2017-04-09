@@ -334,7 +334,7 @@ void Player::printHand() {
 
 void Player::render() {
 	renderCards();
-	//renderDeadwood();
+	renderDeadwood();
 	renderMelds();
 }
 
@@ -390,9 +390,9 @@ void Player::renderDeadwood() {
 	if(isUser) {
 		SDL_SetRenderDrawColor(gWindow->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_Rect bg = SDL_Rect{
-			WIN_PAD - 2,
+			WIN_PAD - 3,
 			SCRN_H - 150 + WIN_PAD,
-			(SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2) - WIN_PAD - 5,
+			(SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2) - WIN_PAD*3,
 			(55 *5/8)*2 + WIN_PAD + 5
 		};
 		
@@ -421,7 +421,7 @@ void Player::renderDeadwood() {
 			);
 			
 			pos.x += pos.w + 5;
-			if(pos.x + pos.w > SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - 10) {
+			if(pos.x + pos.w > SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD) {
 				pos.x = WIN_PAD;
 				pos.y += pos.h + WIN_PAD;
 			}
@@ -437,9 +437,9 @@ void Player::renderMelds() {
 		SDL_SetRenderDrawColor(gWindow->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_Rect bg = SDL_Rect{
 			WIN_PAD - 2,
-			SCRN_H - 150 + WIN_PAD,
+			SCRN_H - 200 + WIN_PAD,
 			(SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2) - WIN_PAD - 5,
-			(55 *5/8)*2 + WIN_PAD + 5
+			(55 *5/8) + WIN_PAD + 5
 		};
 		
 		//SDL_RenderFillRect(gWindow->getRenderer(), &bg);
@@ -468,11 +468,10 @@ void Player::renderMelds() {
 				);
 				
 				pos.x += pos.w + 5;
-				if(pos.x + pos.w > SCRN_W/2 - (CARD_PAD*((int)melds.size() - 1) + CARD_W)/2 - 10) {
-					pos.x = WIN_PAD;
-					pos.y += pos.h + WIN_PAD;
-				}
 			}
+			
+			pos.x = WIN_PAD;
+			pos.y += pos.h + WIN_PAD;
 		}
 	}
 }
