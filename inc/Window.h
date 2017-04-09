@@ -35,6 +35,9 @@ public:
 	
 	void renderAll(); ///< Renders all of the objects on the screen
 	
+	bool checkKnockClick(const int x, const int y);
+	bool checkSortClick(const int x, const int y);
+	
 	inline SDL_Renderer*  getRenderer(); ///< Get the current Window's renderer
 private:
 	SDL_Window* window;     ///< Stores our main Window

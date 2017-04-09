@@ -124,8 +124,8 @@ void Window::initWindow() {
 		textSurface
 	);
 	meldTextPos = SDL_Rect{
-		10,
-		SCRN_H - 200 - textSurface->h/2 + knockButton.h/2 + 4,
+		WIN_PAD,
+		SCRN_H - 200, /// @todo Make this y pos relative, It works for now tho
 		textSurface->w, 
 		textSurface->h
 	}; // Text position
@@ -142,8 +142,8 @@ void Window::initWindow() {
 		textSurface
 	);
 	dwTextPos = SDL_Rect{
-		10,
-		SCRN_H - 150 - textSurface->h/2 + knockButton.h/2 + 4,
+		WIN_PAD,
+		SCRN_H - 150, /// @todo Make this y pos relative, It works for now tho
 		textSurface->w, 
 		textSurface->h
 	}; // Text position
@@ -262,4 +262,26 @@ void Window::drawAButton(SDL_Texture* tex, SDL_Rect src, int h_p, int w_p, SDL_R
 	SDL_RenderCopy(renderer, tex, &clip_bottom, &pos_bottom);
 	
 	SDL_RenderCopy(renderer, tex, &clip_center, &pos_center);
+}
+
+
+bool Window::checkKnockClick(const int x, const int y) {
+	if(    x > knockButton.x
+		&& x < knockButton.x + knockButton.w
+		&& y > knockButton.y
+		&& y < knockButton.y + knockButton.h
+	) return true;
+	
+	return false;
+}
+
+
+bool Window::checkSortClick(const int x, const int y) {
+	if(    x > sortButton.x
+		&& x < sortButton.x + sortButton.w
+		&& y > sortButton.y
+		&& y < sortButton.y + sortButton.h
+	) return true;
+	
+	return false;
 }
