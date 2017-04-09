@@ -124,8 +124,8 @@ void Window::initWindow() {
 		textSurface
 	);
 	meldTextPos = SDL_Rect{
-		10,
-		SCRN_H - 200 - textSurface->h/2 + knockButton.h/2 + 4,
+		WIN_PAD,
+		SCRN_H - 200,
 		textSurface->w, 
 		textSurface->h
 	}; // Text position
@@ -142,8 +142,8 @@ void Window::initWindow() {
 		textSurface
 	);
 	dwTextPos = SDL_Rect{
-		10,
-		SCRN_H - 150 - textSurface->h/2 + knockButton.h/2 + 4,
+		WIN_PAD,
+		SCRN_H - 150,
 		textSurface->w, 
 		textSurface->h
 	}; // Text position

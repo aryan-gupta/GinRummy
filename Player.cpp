@@ -334,9 +334,8 @@ void Player::printHand() {
 
 void Player::render() {
 	renderCards();
-	renderDeadwood();
+	//renderDeadwood();
 	renderMelds();
-	renderButtons();
 }
 
 
@@ -386,10 +385,94 @@ void Player::renderCards() {
 
 
 void Player::renderDeadwood() {
-	
+	/// @todo Dude I really need to do some clean up on this. It is terrible,
+	/// but it works. Dont mess with it
+	if(isUser) {
+		SDL_SetRenderDrawColor(gWindow->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_Rect bg = SDL_Rect{
+			WIN_PAD - 2,
+			SCRN_H - 150 + WIN_PAD,
+			(SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2) - WIN_PAD - 5,
+			(55 *5/8)*2 + WIN_PAD + 5
+		};
+		
+		SDL_RenderFillRect(gWindow->getRenderer(), &bg);
+		
+		SDL_Rect clipping;
+		
+		SDL_Rect pos = SDL_Rect{
+			WIN_PAD,
+			SCRN_H - 150 + WIN_PAD,
+			CARD_PAD,
+			55 *5/8
+		};
+		
+		for(Card* tmpCard : hand) {
+			clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5;
+			clipping.y = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].y + 5;
+			clipping.w = 30;
+			clipping.h = 55;
+			
+			SDL_RenderCopy(
+				gWindow->getRenderer(),
+				gAssets->cardsSheet,
+				&clipping,
+				&pos
+			);
+			
+			pos.x += pos.w + 5;
+			if(pos.x + pos.w > SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - 10) {
+				pos.x = WIN_PAD;
+				pos.y += pos.h + WIN_PAD;
+			}
+		}
+	}
 }
 
 
 void Player::renderMelds() {
-	
+	/// @todo Dude I really need to do some clean up on this. It is terrible,
+	/// but it works. Dont mess with it
+	if(isUser) {
+		SDL_SetRenderDrawColor(gWindow->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
+		SDL_Rect bg = SDL_Rect{
+			WIN_PAD - 2,
+			SCRN_H - 150 + WIN_PAD,
+			(SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2) - WIN_PAD - 5,
+			(55 *5/8)*2 + WIN_PAD + 5
+		};
+		
+		//SDL_RenderFillRect(gWindow->getRenderer(), &bg);
+		
+		SDL_Rect clipping;
+		
+		SDL_Rect pos = SDL_Rect{
+			WIN_PAD,
+			SCRN_H - 200 + WIN_PAD,
+			CARD_PAD,
+			55 *5/8
+		};
+		
+		for(Meld* tmpMeld : melds) {
+			for(Card* tmpCard : tmpMeld->cards) {
+				clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5;
+				clipping.y = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].y + 5;
+				clipping.w = 30;
+				clipping.h = 55;
+				
+				SDL_RenderCopy(
+					gWindow->getRenderer(),
+					gAssets->cardsSheet,
+					&clipping,
+					&pos
+				);
+				
+				pos.x += pos.w + 5;
+				if(pos.x + pos.w > SCRN_W/2 - (CARD_PAD*((int)melds.size() - 1) + CARD_W)/2 - 10) {
+					pos.x = WIN_PAD;
+					pos.y += pos.h + WIN_PAD;
+				}
+			}
+		}
+	}
 }
