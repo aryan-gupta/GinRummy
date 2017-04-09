@@ -39,7 +39,7 @@ CardPile::CardPile(CardPileTypes type) {
 	
 		position = SDL_Rect {
 			SCRN_W/2 - CARD_W - 20,
-			SCRN_H/2 - CARD_H/2,
+			SCRN_H/2 - CARD_H/2 - WIN_PAD*3,
 			CARD_W,
 			CARD_H
 		};
@@ -47,7 +47,7 @@ CardPile::CardPile(CardPileTypes type) {
 	} else {
 		position = SDL_Rect {
 			SCRN_W/2 + 20,
-			SCRN_H/2 - CARD_H/2,
+			SCRN_H/2 - CARD_H - WIN_PAD*3,
 			CARD_W,
 			CARD_H
 		};
