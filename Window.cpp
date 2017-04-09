@@ -77,6 +77,19 @@ void Window::initWindow() {
 		knockButton.h
 	};
 	
+	deadwoodPanel = SDL_Rect{
+		WIN_PAD - 5,
+		SCRN_H - MCARD_H*2 - WIN_PAD*3 - 5,
+		SCRN_W/2 - (CARD_PAD*(9) + CARD_W)/2 - WIN_PAD*3 + 5,
+		MCARD_H*2 + WIN_PAD*2 + 5
+	};
+	meldsPanel = SDL_Rect{
+		WIN_PAD - 5,
+		SCRN_H - MCARD_H*5 - WIN_PAD*7 - 5,
+		SCRN_W/2 - (CARD_PAD*(9) + CARD_W)/2 - WIN_PAD*3 + 5,
+		MCARD_H*3 + WIN_PAD*2 + 5
+	};
+	
 	textColor = SDL_Color{0x00, 0x00, 0x00, 0xFF}; // black text color
 	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->buttonFont,
@@ -216,6 +229,20 @@ void Window::renderButtons() {
 
 
 void Window::renderMeldsDeadwood() {
+	drawAButton(
+		gAssets->uiSheets[UIC_GREY],
+		gAssets->uiClippings[1],
+		8, 7,
+		deadwoodPanel
+	);
+
+	drawAButton(
+		gAssets->uiSheets[UIC_GREY],
+		gAssets->uiClippings[1],
+		8, 7,
+		meldsPanel
+	);
+	
 	SDL_RenderCopy(gWindow->getRenderer(), meldTextTexture, NULL, &meldTextPos);
 	SDL_RenderCopy(gWindow->getRenderer(), dwTextTexture, NULL, &dwTextPos);
 }

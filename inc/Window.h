@@ -47,6 +47,8 @@ private:
 	
 	SDL_Rect knockButton, ///< Knock button position
 	         sortButton,  ///< Sort button position
+	         deadwoodPanel,
+	         meldsPanel,
 			 knockPos,    ///< Knock text position
 			 sortPos,     ///< Sort text position
 			 meldTextPos, ///< Meld text position

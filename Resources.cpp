@@ -46,7 +46,7 @@ Resources::Resources() {
 	
 	uiClippings = new SDL_Rect[2];
 	uiClippings[0] = SDL_Rect{0, 49, 190, 45};
-	uiClippings[1] = SDL_Rect{0, 49, 190, 45};
+	uiClippings[1] = SDL_Rect{190, 98, 100, 100}; //x="190" y="98" width="100" height="100"
 	
 	buttonFont = TTF_OpenFont(BRIEF_FONT, 25); // Load the font
 	if(buttonFont == NULL)
