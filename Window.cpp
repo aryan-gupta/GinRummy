@@ -80,13 +80,13 @@ void Window::initWindow() {
 	deadwoodPanel = SDL_Rect{
 		WIN_PAD - 5,
 		SCRN_H - MCARD_H*2 - WIN_PAD*3 - 5,
-		SCRN_W/2 - (CARD_PAD*(9) + CARD_W)/2 - WIN_PAD*3 + 5,
+		SCRN_W/2 - (CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
 		MCARD_H*2 + WIN_PAD*2 + 5
 	};
 	meldsPanel = SDL_Rect{
 		WIN_PAD - 5,
 		SCRN_H - MCARD_H*5 - WIN_PAD*7 - 5,
-		SCRN_W/2 - (CARD_PAD*(9) + CARD_W)/2 - WIN_PAD*3 + 5,
+		SCRN_W/2 - (CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
 		MCARD_H*3 + WIN_PAD*2 + 5
 	};
 	
@@ -156,7 +156,7 @@ void Window::initWindow() {
 	);
 	dwTextPos = SDL_Rect{
 		WIN_PAD + 5,
-		SCRN_H - MCARD_H*2 - WIN_PAD*3, /// @todo Make this y pos relative, It works for now tho
+		SCRN_H - MCARD_H*2 - WIN_PAD*3,
 		textSurface->w, 
 		textSurface->h
 	}; // Text position
@@ -184,12 +184,13 @@ void Window::renderAll() {
 	clear();
 	renderBackground();
 	
-	P1->render();
-	P2->render();
 	gDeck->render();
 	gDiscard->render();
 	renderButtons();
 	renderMeldsDeadwood();
+	
+	P1->render();
+	P2->render();
 	
 	SDL_RenderPresent(renderer);
 }
