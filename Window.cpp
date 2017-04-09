@@ -80,7 +80,7 @@ void Window::initWindow() {
 	textColor = SDL_Color{0x00, 0x00, 0x00, 0xFF}; // black text color
 	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->buttonFont,
-		"Knock", 
+		"knock", 
 		textColor
 	);
 	knockTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
@@ -98,7 +98,7 @@ void Window::initWindow() {
 	
 	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->buttonFont,
-		"Sort", 
+		"sort", 
 		textColor
 	);
 	sortTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
@@ -154,7 +154,7 @@ void Window::initWindow() {
 	textColor = SDL_Color{0xFF, 0x00, 0x00, 0xFF}; // black text color
 	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->buttonFont,
-		"Knock", 
+		"knock", 
 		textColor
 	);
 	knockTextureST = SDL_CreateTextureFromSurface( // Convert it to a texture
