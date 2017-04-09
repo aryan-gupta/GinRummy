@@ -396,17 +396,7 @@ void Player::renderDeadwood() {
 			return GCI(a->suit, a->rank) < GCI(b->suit, b->rank);
 		}
 	);
-	if(isUser) {
-		SDL_SetRenderDrawColor(gWindow->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
-		SDL_Rect bg = SDL_Rect{
-			WIN_PAD - 5,
-			SCRN_H - MCARD_H*2 - WIN_PAD*3 - 5,
-			SCRN_W/2 - (CARD_PAD*((int)tmpHand.size() - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
-			MCARD_H*2 + WIN_PAD*2 + 5
-		};
-		
-		SDL_RenderFillRect(gWindow->getRenderer(), &bg);
-		
+	if(isUser) {		
 		SDL_Rect clipping = SDL_Rect{0, 0, 30, 55};
 		
 		SDL_Rect pos = SDL_Rect{
@@ -441,16 +431,6 @@ void Player::renderMelds() {
 	/// @todo Dude I really need to do some clean up on this. It is terrible,
 	/// but it works, I dont know why, but it does. Dont mess with it
 	if(isUser) {
-		SDL_SetRenderDrawColor(gWindow->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
-		SDL_Rect bg = SDL_Rect{
-			WIN_PAD - 5,
-			SCRN_H - MCARD_H*5 - WIN_PAD*7 - 5,
-			SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
-			MCARD_H*3 + WIN_PAD*2 + 5
-		};
-		
-		SDL_RenderFillRect(gWindow->getRenderer(), &bg);
-		
 		SDL_Rect clipping = SDL_Rect{0, 0, 30, 55};
 		
 		SDL_Rect pos = SDL_Rect{
