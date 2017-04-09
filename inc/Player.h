@@ -65,6 +65,8 @@ private:
 	
 	void moveCard(Card* c, int idx); /// Move a card in your hand
 	
+	unsigned getNumDeadwood();
+	
 	void pickDeck(); ///< Pick a deck to draw from
 	void pickCard(); ///< Pick a card to put into discard
 };

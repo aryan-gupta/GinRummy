@@ -25,6 +25,7 @@ using std::vector;
 #include <algorithm>
 using std::sort;
 #include <SDL.h>
+#include <string.h>
 
 #include ".\inc\main.h"
 #include ".\inc\Player.h"
@@ -130,6 +131,10 @@ void Player::takeCard(Card* card) {
 	hand.push_back(card);
 }
 
+
+unsigned Player::getNumDeadwood() {
+	return 0;
+}
 
 void Player::doTurn() {
 	getMelds();
@@ -389,6 +394,27 @@ void Player::renderCards() {
 void Player::renderDeadwood() {
 	/// @todo Dude I really need to do some clean up on this. It is terrible,
 	/// but it works. Dont mess with it
+	
+	// First render the number of deadwood
+	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+		gAssets->nFont,
+		("(" + std::to_string(getNumDeadwood()) + ")").c_str(), 
+		SDL_Color{0x00, 0x00, 0x00, 0xFF}
+	);
+	SDL_Texture* dwTextTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
+		gWindow->getRenderer(),
+		textSurface
+	);
+	SDL_Rect dwTextPos = SDL_Rect{
+		WIN_PAD + 76,
+		SCRN_H - MCARD_H*2 - WIN_PAD*3,
+		textSurface->w, 
+		textSurface->h
+	}; // Text position
+	SDL_FreeSurface(textSurface);
+	SDL_RenderCopy(gWindow->getRenderer(), dwTextTexture, NULL, &dwTextPos);
+	SDL_DestroyTexture(dwTextTexture);
+	
 	vector<Card*> tmpHand(hand);
 	sort(
 		tmpHand.begin(), tmpHand.end(),
