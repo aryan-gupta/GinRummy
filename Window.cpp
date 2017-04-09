@@ -149,6 +149,21 @@ void Window::initWindow() {
 	}; // Text position
 	
 	SDL_FreeSurface(textSurface);
+	
+	TTF_SetFontStyle(gAssets->buttonFont, TTF_STYLE_STRIKETHROUGH);
+	textColor = SDL_Color{0xFF, 0x00, 0x00, 0xFF}; // black text color
+	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+		gAssets->buttonFont,
+		"Knock", 
+		textColor
+	);
+	knockTextureST = SDL_CreateTextureFromSurface( // Convert it to a texture
+		renderer,
+		textSurface
+	);
+	
+	SDL_FreeSurface(textSurface); // free the memory
+	
 }
 
 
@@ -195,7 +210,7 @@ void Window::renderButtons() {
 		sortButton
 	);
 	
-	SDL_RenderCopy(gWindow->getRenderer(), knockTexture, NULL, &knockPos);
+	SDL_RenderCopy(gWindow->getRenderer(), knockTextureST, NULL, &knockPos);
 	SDL_RenderCopy(gWindow->getRenderer(), sortTexture, NULL, &sortPos);
 }
 

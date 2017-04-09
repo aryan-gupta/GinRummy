@@ -53,6 +53,7 @@ private:
 			 dwTextPos;   ///< Deadwood text position
 			 
 	SDL_Texture* knockTexture,    ///< Knock text texture
+	           * knockTextureST,  ///< 
 	           * sortTexture,     ///< Sort text texture
 			   * meldTextTexture, ///< Meld text texture
 			   * dwTextTexture;   ///< Deadwood text texture
