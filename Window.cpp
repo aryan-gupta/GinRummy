@@ -198,14 +198,14 @@ void Window::clear() {
 void Window::renderButtons() {
 	drawAButton(
 		gAssets->uiSheets[UIC_BLUE], // sprite sheet
-		gAssets->uiClippings[1], // clipping
+		gAssets->uiClippings[0], // clipping
 		5, 7, // border
 		knockButton // location
 	);
 	
 	drawAButton(
 		gAssets->uiSheets[UIC_BLUE],
-		gAssets->uiClippings[1],
+		gAssets->uiClippings[0],
 		5, 7, 
 		sortButton
 	);
