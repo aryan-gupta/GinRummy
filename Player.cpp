@@ -192,7 +192,6 @@ void Player::pickDeck() {
 				} break;
 				
 				case SDL_MOUSEBUTTONUP: {
-					/// @todo check for button presses or released the card
 					if(isMovingCard) {
 						isMovingCard = false;
 						selectedCard = nullptr;
@@ -391,9 +390,9 @@ void Player::renderDeadwood() {
 		SDL_SetRenderDrawColor(gWindow->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_Rect bg = SDL_Rect{
 			WIN_PAD - 3,
-			SCRN_H - 150 + WIN_PAD,
+			SCRN_H - 150 - 2,// + WIN_PAD,
 			(SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2) - WIN_PAD*3,
-			(55 *5/8)*2 + WIN_PAD + 5
+			(55 *5/8)*2 + WIN_PAD*2 + 5
 		};
 		
 		SDL_RenderFillRect(gWindow->getRenderer(), &bg);
