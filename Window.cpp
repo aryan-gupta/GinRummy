@@ -124,8 +124,8 @@ void Window::initWindow() {
 		textSurface
 	);
 	meldTextPos = SDL_Rect{
-		WIN_PAD,
-		SCRN_H - 200, /// @todo Make this y pos relative, It works for now tho
+		WIN_PAD + 5,
+		SCRN_H - MCARD_H*5 - WIN_PAD*7, /// @todo Make this y pos relative, It works for now tho
 		textSurface->w, 
 		textSurface->h
 	}; // Text position
@@ -142,8 +142,8 @@ void Window::initWindow() {
 		textSurface
 	);
 	dwTextPos = SDL_Rect{
-		WIN_PAD,
-		SCRN_H - 150, /// @todo Make this y pos relative, It works for now tho
+		WIN_PAD + 5,
+		SCRN_H - MCARD_H*2 - WIN_PAD*3, /// @todo Make this y pos relative, It works for now tho
 		textSurface->w, 
 		textSurface->h
 	}; // Text position

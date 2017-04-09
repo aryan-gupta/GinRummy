@@ -66,6 +66,9 @@ static const char* Meld_Label[] {
 	"MELD_RUN"
 };
 
+const int MCARD_W = 35 *5/8;
+const int MCARD_H = 55 *5/8;
+
 
 Player::Player(bool isUser) {
 	this->isUser = isUser;
@@ -389,28 +392,26 @@ void Player::renderDeadwood() {
 	if(isUser) {
 		SDL_SetRenderDrawColor(gWindow->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_Rect bg = SDL_Rect{
-			WIN_PAD - 3,
-			SCRN_H - 150 - 2,// + WIN_PAD,
-			(SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2) - WIN_PAD*3,
-			(55 *5/8)*2 + WIN_PAD*2 + 5
+			WIN_PAD - 5,
+			SCRN_H - MCARD_H*2 - WIN_PAD*3 - 5,
+			SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
+			MCARD_H*2 + WIN_PAD*2 + 5
 		};
 		
 		SDL_RenderFillRect(gWindow->getRenderer(), &bg);
 		
-		SDL_Rect clipping;
+		SDL_Rect clipping = SDL_Rect{0, 0, 30, 55};
 		
 		SDL_Rect pos = SDL_Rect{
 			WIN_PAD,
-			SCRN_H - 150 + WIN_PAD,
-			CARD_PAD,
-			55 *5/8
+			SCRN_H - MCARD_H*2 - WIN_PAD*2,
+			MCARD_W,
+			MCARD_H
 		};
 		
 		for(Card* tmpCard : hand) {
 			clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5;
 			clipping.y = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].y + 5;
-			clipping.w = 30;
-			clipping.h = 55;
 			
 			SDL_RenderCopy(
 				gWindow->getRenderer(),
@@ -419,10 +420,10 @@ void Player::renderDeadwood() {
 				&pos
 			);
 			
-			pos.x += pos.w + 5;
-			if(pos.x + pos.w > SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD) {
+			pos.x += pos.w;
+			if(pos.x + pos.w > (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*3 + 5)) {
 				pos.x = WIN_PAD;
-				pos.y += pos.h + WIN_PAD;
+				pos.y += pos.h + WIN_PAD/2;
 			}
 		}
 	}
@@ -431,33 +432,31 @@ void Player::renderDeadwood() {
 
 void Player::renderMelds() {
 	/// @todo Dude I really need to do some clean up on this. It is terrible,
-	/// but it works. Dont mess with it
+	/// but it works, I dont know why, but it does. Dont mess with it
 	if(isUser) {
 		SDL_SetRenderDrawColor(gWindow->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_Rect bg = SDL_Rect{
-			WIN_PAD - 2,
-			SCRN_H - 200 + WIN_PAD,
-			(SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2) - WIN_PAD - 5,
-			(55 *5/8) + WIN_PAD + 5
+			WIN_PAD - 5,
+			SCRN_H - MCARD_H*5 - WIN_PAD*7 - 5,
+			SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
+			MCARD_H*3 + WIN_PAD*2 + 5
 		};
 		
-		//SDL_RenderFillRect(gWindow->getRenderer(), &bg);
+		SDL_RenderFillRect(gWindow->getRenderer(), &bg);
 		
-		SDL_Rect clipping;
+		SDL_Rect clipping = SDL_Rect{0, 0, 30, 55};
 		
 		SDL_Rect pos = SDL_Rect{
 			WIN_PAD,
-			SCRN_H - 200 + WIN_PAD,
-			CARD_PAD,
-			55 *5/8
+			SCRN_H - MCARD_H*5 - WIN_PAD*6,
+			MCARD_W,
+			MCARD_H
 		};
 		
 		for(Meld* tmpMeld : melds) {
 			for(Card* tmpCard : tmpMeld->cards) {
 				clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5;
 				clipping.y = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].y + 5;
-				clipping.w = 30;
-				clipping.h = 55;
 				
 				SDL_RenderCopy(
 					gWindow->getRenderer(),
@@ -466,11 +465,11 @@ void Player::renderMelds() {
 					&pos
 				);
 				
-				pos.x += pos.w + 5;
+				pos.x += pos.w;
 			}
 			
 			pos.x = WIN_PAD;
-			pos.y += pos.h + WIN_PAD;
+			pos.y += pos.h + WIN_PAD/2;
 		}
 	}
 }
