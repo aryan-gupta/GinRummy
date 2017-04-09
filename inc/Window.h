@@ -49,6 +49,7 @@ private:
 	         sortButton,  ///< Sort button position
 	         deadwoodPanel,
 	         meldsPanel,
+	         helpPanel,
 			 knockPos,    ///< Knock text position
 			 sortPos,     ///< Sort text position
 			 meldTextPos, ///< Meld text position
@@ -66,6 +67,7 @@ private:
 	void renderBackground();    ///< Render the background
 	void renderButtons();       ///< Render the buttons
 	void renderMeldsDeadwood(); ///< Render the meld/deadwood texts
+	void renderHelp();
 	
 	/// @brief draws a button
 	/// @param [in] tex `SDL_Texture*` The texture to use when rendering

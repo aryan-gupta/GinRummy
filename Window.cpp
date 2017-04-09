@@ -90,6 +90,13 @@ void Window::initWindow() {
 		MCARD_H*3 + WIN_PAD*2 + 5
 	};
 	
+	helpPanel = SDL_Rect{
+		SCRN_W/2 - (CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W)/2,
+		SCRN_H/2 + WIN_PAD*3/2,
+		CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W,
+		MCARD_H*5/2
+	};
+	
 	textColor = SDL_Color{0x00, 0x00, 0x00, 0xFF}; // black text color
 	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->buttonFont,
@@ -188,6 +195,7 @@ void Window::renderAll() {
 	gDiscard->render();
 	renderButtons();
 	renderMeldsDeadwood();
+	renderHelp();
 	
 	P1->render();
 	P2->render();
@@ -248,6 +256,15 @@ void Window::renderMeldsDeadwood() {
 	SDL_RenderCopy(gWindow->getRenderer(), dwTextTexture, NULL, &dwTextPos);
 }
 
+
+void Window::renderHelp() {
+	drawAButton(
+		gAssets->uiSheets[UIC_GREY],
+		gAssets->uiClippings[1],
+		8, 7,
+		helpPanel
+	);
+}
 
 void Window::drawAButton(SDL_Texture* tex, SDL_Rect src, int h_p, int w_p, SDL_Rect dest) {
 	// Im way to lazy to comment this algorithm. I created it a long time ago,
