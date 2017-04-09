@@ -136,6 +136,7 @@ unsigned Player::getNumDeadwood() {
 	return 0;
 }
 
+
 void Player::doTurn() {
 	getMelds();
 	printHand();
