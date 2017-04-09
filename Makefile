@@ -40,16 +40,16 @@ OBJ = $(OBJDIR)\main.o $(OBJDIR)\res.o $(OBJDIR)\Player.o $(OBJDIR)\CardPile.o $
 $(OBJDIR)\main.o: .\main.cpp $(INCDIR)\main.h $(INCDIR)\Player.h $(INCDIR)\CardPile.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
 	$(CC) .\main.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
-$(OBJDIR)\Player.o: .\Player.cpp $(INCDIR)\Player.h $(INCDIR)\main.h $(INCDIR)\CardPile.h
+$(OBJDIR)\Player.o: .\Player.cpp $(INCDIR)\Player.h $(INCDIR)\main.h $(INCDIR)\CardPile.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
 	$(CC) .\Player.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
-$(OBJDIR)\CardPile.o: .\CardPile.cpp $(INCDIR)\CardPile.h $(INCDIR)\main.h
+$(OBJDIR)\CardPile.o: .\CardPile.cpp $(INCDIR)\CardPile.h $(INCDIR)\main.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
 	$(CC) .\CardPile.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
-$(OBJDIR)\Window.o: .\Window.cpp $(INCDIR)\Window.h $(INCDIR)\main.h
+$(OBJDIR)\Window.o: .\Window.cpp $(INCDIR)\Window.h $(INCDIR)\main.h $(INCDIR)\Player.h $(INCDIR)\CardPile.h $(INCDIR)\Resources.h
 	$(CC) .\Window.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 	
-$(OBJDIR)\Resources.o: .\Resources.cpp $(INCDIR)\Resources.h $(INCDIR)\main.h
+$(OBJDIR)\Resources.o: .\Resources.cpp $(INCDIR)\Resources.h $(INCDIR)\main.h $(INCDIR)\CardPile.h
 	$(CC) .\Resources.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
 $(OBJDIR)\%.o: .\%.cpp
