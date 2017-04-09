@@ -15,9 +15,33 @@
  * =============================================================================
  */
 
-#ifndef _
-#define _
+#ifndef HUMAN_H_INC
+#define HUMAN_H_INC
 
+class Human : public Player {
+public:
+
+	Human();
+	virtual ~Human() {};
+	
+	virtual void doTurn(); ///< Does a turn for the player
+	virtual void render();
+	
+private:
+
+	void pickDeck(); ///< Pick a deck to draw from
+	void pickCard(); ///< Pick a card to put into discard
+	
+	void printHand();      ///< Print the hand out
+	
+	void renderDeadwood(); ///< Render deadwood
+	void renderMelds();    ///< Render melds
+	
+	void moveCard(Card* c, int idx); /// Move a card in your hand
+	
+	virtual void renderCards();    ///< Render all the cards
+	
+}
 
 
 #endif
