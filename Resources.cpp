@@ -38,6 +38,24 @@ static const char* UI_SHEETS[] = {
 };
 
 Resources::Resources() {
+	cardClippingBack = SDL_Rect{280, 570, 140, 190};
+	
+	uiSheets = new SDL_Texture*[UIC_TOTAL];
+	for(int i = 0; i < UIC_TOTAL; ++i)
+		uiSheets[i] = load(UI_SHEETS[i]);
+	
+	uiClippings = new SDL_Rect[2];
+	uiClippings[0] = SDL_Rect{0, 49, 190, 45};
+	uiClippings[1] = SDL_Rect{190, 98, 100, 100}; //x="190" y="98" width="100" height="100"
+	
+	buttonFont = TTF_OpenFont(BRIEF_FONT, 25); // Load the font
+	if(buttonFont == NULL)
+		EXIT("Font Opening Failed" << TTF_GetError(), -0x20A);
+
+	nFont = TTF_OpenFont(BRIEF_FONT, 12); // Load the font
+	if(nFont == NULL)
+		EXIT("Font Opening Failed" << TTF_GetError(), -0x20A);
+	
 	cardsSheet = load(CARDS_SHEET);
 	cardBackSheet = load(CARDS_SHEET_BACK);
 	
@@ -98,25 +116,18 @@ Resources::Resources() {
 	cardClippings[GCI(SUIT_SPADES,   RANK_QUEEN)] = SDL_Rect{  0,  190, 140, 190};
 	cardClippings[GCI(SUIT_SPADES,   RANK_KING )] = SDL_Rect{  0,    0, 140, 190};
 
-	//cardJoker.png" x="140" y="570" width="140" height="190"/>
-	//x="280" y="570" width="140" height="190"
-	cardClippingBack = SDL_Rect{280, 570, 140, 190};
+	SDL_Surface* tmpSurface = IMG_Load(CARDS_SHEET);
+	if(tmpSurface == nullptr)
+		EXIT("Could not load " << CARDS_SHEET << IMG_GetError(), -0x101)
 	
-	uiSheets = new SDL_Texture*[UIC_TOTAL];
-	for(int i = 0; i < UIC_TOTAL; ++i)
-		uiSheets[i] = load(UI_SHEETS[i]);
+	SDL_SetColorKey(tmpSurface, SDL_TRUE, SDL_MapRGB(tmpSurface->format, 0xFF, 0xFF, 0xFF));
 	
-	uiClippings = new SDL_Rect[2];
-	uiClippings[0] = SDL_Rect{0, 94, 190, 49};
-	uiClippings[1] = SDL_Rect{0, 49, 190, 45};
+	cardsSheetT = SDL_CreateTextureFromSurface ( // Set the Player's texture
+		gWindow->getRenderer(),
+		tmpSurface
+	);
 	
-	buttonFont = TTF_OpenFont(BRIEF_FONT, 25); // Load the font
-	if(buttonFont == NULL)
-		EXIT("Font Opening Failed" << TTF_GetError(), -0x20A);
-
-	nFont = TTF_OpenFont(BRIEF_FONT, 12); // Load the font
-	if(nFont == NULL)
-		EXIT("Font Opening Failed" << TTF_GetError(), -0x20A);
+	SDL_FreeSurface(tmpSurface); tmpSurface = nullptr;
 }
 
 Resources::~Resources() {

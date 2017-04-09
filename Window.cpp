@@ -77,10 +77,23 @@ void Window::initWindow() {
 		knockButton.h
 	};
 	
+	deadwoodPanel = SDL_Rect{
+		WIN_PAD - 5,
+		SCRN_H - MCARD_H*2 - WIN_PAD*3 - 5,
+		SCRN_W/2 - (CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
+		MCARD_H*2 + WIN_PAD*2 + 5
+	};
+	meldsPanel = SDL_Rect{
+		WIN_PAD - 5,
+		SCRN_H - MCARD_H*5 - WIN_PAD*7 - 5,
+		SCRN_W/2 - (CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
+		MCARD_H*3 + WIN_PAD*2 + 5
+	};
+	
 	textColor = SDL_Color{0x00, 0x00, 0x00, 0xFF}; // black text color
 	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->buttonFont,
-		"Knock", 
+		"knock", 
 		textColor
 	);
 	knockTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
@@ -98,7 +111,7 @@ void Window::initWindow() {
 	
 	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->buttonFont,
-		"Sort", 
+		"sort", 
 		textColor
 	);
 	sortTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
@@ -143,7 +156,7 @@ void Window::initWindow() {
 	);
 	dwTextPos = SDL_Rect{
 		WIN_PAD + 5,
-		SCRN_H - MCARD_H*2 - WIN_PAD*3, /// @todo Make this y pos relative, It works for now tho
+		SCRN_H - MCARD_H*2 - WIN_PAD*3,
 		textSurface->w, 
 		textSurface->h
 	}; // Text position
@@ -154,7 +167,7 @@ void Window::initWindow() {
 	textColor = SDL_Color{0xFF, 0x00, 0x00, 0xFF}; // black text color
 	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->buttonFont,
-		"Knock", 
+		"knock", 
 		textColor
 	);
 	knockTextureST = SDL_CreateTextureFromSurface( // Convert it to a texture
@@ -171,12 +184,13 @@ void Window::renderAll() {
 	clear();
 	renderBackground();
 	
-	P1->render();
-	P2->render();
 	gDeck->render();
 	gDiscard->render();
 	renderButtons();
 	renderMeldsDeadwood();
+	
+	P1->render();
+	P2->render();
 	
 	SDL_RenderPresent(renderer);
 }
@@ -198,14 +212,14 @@ void Window::clear() {
 void Window::renderButtons() {
 	drawAButton(
 		gAssets->uiSheets[UIC_BLUE], // sprite sheet
-		gAssets->uiClippings[1], // clipping
+		gAssets->uiClippings[0], // clipping
 		5, 7, // border
 		knockButton // location
 	);
 	
 	drawAButton(
 		gAssets->uiSheets[UIC_BLUE],
-		gAssets->uiClippings[1],
+		gAssets->uiClippings[0],
 		5, 7, 
 		sortButton
 	);
@@ -216,6 +230,20 @@ void Window::renderButtons() {
 
 
 void Window::renderMeldsDeadwood() {
+	drawAButton(
+		gAssets->uiSheets[UIC_GREY],
+		gAssets->uiClippings[1],
+		8, 7,
+		deadwoodPanel
+	);
+
+	drawAButton(
+		gAssets->uiSheets[UIC_GREY],
+		gAssets->uiClippings[1],
+		8, 7,
+		meldsPanel
+	);
+	
 	SDL_RenderCopy(gWindow->getRenderer(), meldTextTexture, NULL, &meldTextPos);
 	SDL_RenderCopy(gWindow->getRenderer(), dwTextTexture, NULL, &dwTextPos);
 }
