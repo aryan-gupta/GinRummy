@@ -23,6 +23,7 @@ using std::endl;
 #include <vector>
 using std::vector;
 #include <algorithm>
+using std::sort;
 #include <SDL.h>
 
 #include ".\inc\main.h"
@@ -107,7 +108,7 @@ void Player::getMelds() {
 					&& hand[j]->suit == hand[k]->suit
 				) {
 					vector<Card*> tmpCards{hand[i], hand[j], hand[k]}; // create vector to sort 
-					std::sort( // sort the 3 cards by rank
+					sort( // sort the 3 cards by rank
 						tmpCards.begin(), tmpCards.end(),
 						[](Card* a, Card* b) { return a->rank < b->rank; }
 					);
@@ -134,7 +135,7 @@ void Player::doTurn() {
 	getMelds();
 	printHand();
 	
-	//pickDeck();
+	pickDeck();
 	pickCard();
 
 }
@@ -345,7 +346,6 @@ void Player::renderCards() {
 	// The entire card lay is going to be 140px for the top card and 40px for each
 	// card behind, But we are shrinking the card by a factor of 0.25 so its 35px
 	// for the top card and 10px for the sequential cards. Total of 125px
-	
 	if(isUser) {
 		SDL_Rect currCardPos = { // get the first card location
 			SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2,
@@ -389,12 +389,19 @@ void Player::renderCards() {
 void Player::renderDeadwood() {
 	/// @todo Dude I really need to do some clean up on this. It is terrible,
 	/// but it works. Dont mess with it
+	vector<Card*> tmpHand(hand);
+	sort(
+		tmpHand.begin(), tmpHand.end(),
+		[](Card* a, Card* b) {
+			return GCI(a->suit, a->rank) < GCI(b->suit, b->rank);
+		}
+	);
 	if(isUser) {
 		SDL_SetRenderDrawColor(gWindow->getRenderer(), 0xFF, 0xFF, 0xFF, 0xFF);
 		SDL_Rect bg = SDL_Rect{
 			WIN_PAD - 5,
 			SCRN_H - MCARD_H*2 - WIN_PAD*3 - 5,
-			SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
+			SCRN_W/2 - (CARD_PAD*((int)tmpHand.size() - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
 			MCARD_H*2 + WIN_PAD*2 + 5
 		};
 		
@@ -409,7 +416,7 @@ void Player::renderDeadwood() {
 			MCARD_H
 		};
 		
-		for(Card* tmpCard : hand) {
+		for(Card* tmpCard : tmpHand) {
 			clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5;
 			clipping.y = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].y + 5;
 			
