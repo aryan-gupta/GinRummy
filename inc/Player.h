@@ -35,6 +35,9 @@ struct Meld {
 	std::vector<Card*> cards; ///< The cards that are part of the meld
 };
 
+extern const int MCARD_W;
+extern const int MCARD_H;
+
 /// @brief A player on the board
 class Player {
 public:

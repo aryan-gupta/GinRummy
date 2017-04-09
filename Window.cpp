@@ -124,8 +124,8 @@ void Window::initWindow() {
 		textSurface
 	);
 	meldTextPos = SDL_Rect{
-		WIN_PAD,
-		SCRN_H - 200, /// @todo Make this y pos relative, It works for now tho
+		WIN_PAD + 5,
+		SCRN_H - MCARD_H*5 - WIN_PAD*7, /// @todo Make this y pos relative, It works for now tho
 		textSurface->w, 
 		textSurface->h
 	}; // Text position
@@ -142,13 +142,28 @@ void Window::initWindow() {
 		textSurface
 	);
 	dwTextPos = SDL_Rect{
-		WIN_PAD,
-		SCRN_H - 150, /// @todo Make this y pos relative, It works for now tho
+		WIN_PAD + 5,
+		SCRN_H - MCARD_H*2 - WIN_PAD*3, /// @todo Make this y pos relative, It works for now tho
 		textSurface->w, 
 		textSurface->h
 	}; // Text position
 	
 	SDL_FreeSurface(textSurface);
+	
+	TTF_SetFontStyle(gAssets->buttonFont, TTF_STYLE_STRIKETHROUGH);
+	textColor = SDL_Color{0xFF, 0x00, 0x00, 0xFF}; // black text color
+	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+		gAssets->buttonFont,
+		"Knock", 
+		textColor
+	);
+	knockTextureST = SDL_CreateTextureFromSurface( // Convert it to a texture
+		renderer,
+		textSurface
+	);
+	
+	SDL_FreeSurface(textSurface); // free the memory
+	
 }
 
 
@@ -195,7 +210,7 @@ void Window::renderButtons() {
 		sortButton
 	);
 	
-	SDL_RenderCopy(gWindow->getRenderer(), knockTexture, NULL, &knockPos);
+	SDL_RenderCopy(gWindow->getRenderer(), knockTextureST, NULL, &knockPos);
 	SDL_RenderCopy(gWindow->getRenderer(), sortTexture, NULL, &sortPos);
 }
 
