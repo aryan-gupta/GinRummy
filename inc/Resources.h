@@ -40,6 +40,7 @@ struct Resources {
 	~Resources(); ///< Destroy our assets
 	
 	SDL_Texture* cardsSheet;       ///< The texture for our cards
+	SDL_Texture* cardsSheetT;
 	SDL_Texture* cardBackSheet;    ///< The texture for our backs
 	SDL_Rect*    cardClippings;    ///< The card clippings
 	SDL_Rect     cardClippingBack; ///< The clippings for our backs

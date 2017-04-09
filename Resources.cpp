@@ -116,8 +116,18 @@ Resources::Resources() {
 	cardClippings[GCI(SUIT_SPADES,   RANK_QUEEN)] = SDL_Rect{  0,  190, 140, 190};
 	cardClippings[GCI(SUIT_SPADES,   RANK_KING )] = SDL_Rect{  0,    0, 140, 190};
 
-	//cardJoker.png" x="140" y="570" width="140" height="190"/>
-	//x="280" y="570" width="140" height="190"
+	SDL_Surface* tmpSurface = IMG_Load(CARDS_SHEET);
+	if(tmpSurface == nullptr)
+		EXIT("Could not load " << CARDS_SHEET << IMG_GetError(), -0x101)
+	
+	SDL_SetColorKey(tmpSurface, SDL_TRUE, SDL_MapRGB(tmpSurface->format, 0xFF, 0xFF, 0xFF));
+	
+	cardsSheetT = SDL_CreateTextureFromSurface ( // Set the Player's texture
+		gWindow->getRenderer(),
+		tmpSurface
+	);
+	
+	SDL_FreeSurface(tmpSurface); tmpSurface = nullptr;
 }
 
 Resources::~Resources() {

@@ -412,7 +412,7 @@ void Player::renderDeadwood() {
 			
 			SDL_RenderCopy(
 				gWindow->getRenderer(),
-				gAssets->cardsSheet,
+				gAssets->cardsSheetT,
 				&clipping,
 				&pos
 			);
@@ -447,7 +447,7 @@ void Player::renderMelds() {
 				
 				SDL_RenderCopy(
 					gWindow->getRenderer(),
-					gAssets->cardsSheet,
+					gAssets->cardsSheetT,
 					&clipping,
 					&pos
 				);
