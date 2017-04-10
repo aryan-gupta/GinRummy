@@ -29,7 +29,7 @@ GRAPHICS = -w -Wl,-subsystem,windows
 # Standard SDL libs
 L_SDLC = -I./SDL/include 
 L_SDLL = -L./SDL/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL2_image
-L_SDLLM = -L./SDL/lib -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL2_image
+L_SDLLM = -framework SDL -framework Cocoa -framework SDL_mixer -framework SDL_ttf -framework SDL_image
 
 # ==============================  MACROS  ======================================
 CFLAGS = $(DEBUG) -Wall -std=c++11 -c
