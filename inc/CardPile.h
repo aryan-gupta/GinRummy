@@ -80,6 +80,7 @@ public:
 	void takeACard(Card* card);
 	
 	bool checkClick(const int x, const int y);
+	
 private:
 	std::vector<Card*> pile; ///< the deck/pile of cards
 	CardPileTypes type;      ///< type of CardPile @todo Convert to bool

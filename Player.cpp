@@ -147,6 +147,11 @@ Card* Player::getCard(Card* card) {  // remove card from hand
 	return card; 					
 }		
 
+/*
+unsigned Player::getKnockPoints() {
+	
+}
+*/
 
 unsigned Player::getGin() {
 	
