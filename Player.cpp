@@ -112,7 +112,6 @@ void Player::getDeadwood() {
 
 
 
-
 unsigned Player::getNumDeadwood() {
 	// FIND how many deadwood do we have in our hand  
 	int sum =0; 
