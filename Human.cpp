@@ -146,11 +146,14 @@ void Human::pickDeck() {
 						SDL_GetMouseState(&x, &y);
 						
 						if(gDeck->checkClick(x, y)) {
-							LOGL("DECK") // WE CLICKED ON THE DECK
+						
+							takeCard(gDeck->getACard()); // WE CLICKED ON THE DECK 
+							
 						}
 						
 						if(gDiscard->checkClick(x, y)) {
-							LOGL("DISCARD") // WE CLICKED ON THE DISCARD
+							
+							takeCard(gDiscard->getACard()); // WE CLICKED ON THE DISCARD
 						}
 					}
 				} break;
@@ -229,7 +232,10 @@ void Human::pickCard() {
 						/// @todo check for button presses or picking a card, that will mean we are finished
 						for(unsigned i = 0; i < hand.size(); ++i)
 							if(selectedCard == hand[i])
-								LOGL("CLICKED ON " << i << " Card")
+								hand.erase(hand.begin() + i); 
+							gDiscard->takeACard(selectedCard); 
+						
+					
 						selectedCard = nullptr;
 						
 						int x, y;
