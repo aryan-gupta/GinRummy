@@ -18,10 +18,12 @@
 #ifndef HUMAN_H_INC
 #define HUMAN_H_INC
 
+#include ".\Player.h"
+
 class Human : public Player {
 public:
 
-	Human();
+	Human() {};
 	virtual ~Human() {};
 	
 	virtual void doTurn(); ///< Does a turn for the player
@@ -41,7 +43,6 @@ private:
 	
 	virtual void renderCards();    ///< Render all the cards
 	
-}
-
+};
 
 #endif
