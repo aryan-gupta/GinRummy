@@ -112,10 +112,3 @@ void quit(int code) {
 	// exit
 	exit(code);
 }
-
-
-unsigned getDeadwood(const vector<Card*> &cards) {
-	/// @todo this function should return a non negative number that is the
-	/// number of deadwood we have.
-	return 0;
-}
