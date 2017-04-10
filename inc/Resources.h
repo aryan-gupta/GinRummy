@@ -34,6 +34,22 @@ enum UI_Colors {
 	UIC_TOTAL
 };
 
+enum HelpTextItems {
+	HTI_PICK_DECK,
+	HTI_PICK_DECK_ERR,
+	HTI_PICK_CARD,
+	HTI_PICK_CARD_ERR,
+	HTI_NOT_YOUR_TURN
+};
+
+const char* HELP_TEXT[] = {
+	"Its your turn. Pick a deck to pick from...",
+	"You MUST draw from either the discard or the stock",
+	"Now you must discard a card, or knock if you can",
+	"You MUST click on a card, or knock",
+	"Its your Opponent's turn"	
+};
+
 /// @brief Stores all of our assets
 struct Resources {
 	Resources();  ///< Load all of our assets
@@ -51,7 +67,8 @@ struct Resources {
 	TTF_Font* buttonFont, ///< Our button font
 	        * nFont;      ///< Our normal font
 			
-
+	SDL_Texture** helpTexts;
+	
 	SDL_Rect knockButton, ///< Knock button position
 	         sortButton,  ///< Sort button position
 	         deadwoodPanel,
