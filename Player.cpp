@@ -81,7 +81,7 @@ void Player::getMelds() {
 					);
 					
 					// for(Card* tmpCard : tmpCards)
-						// cout << "/t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+						// cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
 					
 					if(    tmpCards[0]->rank == tmpCards[1]->rank - 1 // see if the ranks are incrementing
 						&& tmpCards[1]->rank == tmpCards[2]->rank - 1
@@ -95,17 +95,14 @@ void Player::getMelds() {
 
 void Player::getDeadwood() {
 	// FIND anycard in our hand that not part of meld 
-	deadwood.erase(deadwood.begin(), deadwood.end());
-	
-	for(unsigned i = 0; i < hand.size(); i++) { 	
+	deadwood = hand;
+
+	for(int i = deadwood.size() - 1; i >= 0; --i) { 	
 		for(unsigned j = 0; j < melds.size(); j++) { 
 			for(unsigned k = 0; k < melds[j]->cards.size(); k++) { 
-				if(    hand[i]->suit != melds[j]->cards[k]->suit
-					&& hand[i]->rank != melds[j]->cards[k]->rank
-				) { // get cards inside melds
-					
-					deadwood.push_back(hand[i]);
-				}
+				if(    deadwood[i]->suit == melds[j]->cards[k]->suit
+					&& deadwood[i]->rank == melds[j]->cards[k]->rank
+				) deadwood.erase(deadwood.begin() + i);
 			}			
 		}	
 	}

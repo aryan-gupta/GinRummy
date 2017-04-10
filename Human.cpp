@@ -76,7 +76,6 @@ void Human::doTurn() {
 	getDeadwood();
 	printHand();
 	
-	
 	pickDeck();
 	pickCard();
 
@@ -267,7 +266,7 @@ void Human::printHand() {
 		for(auto tmpMeld : melds) {
 			cout << Meld_Label[tmpMeld->type] << " " << endl;
 			for(auto tmpCard : tmpMeld->cards) {
-				cout << "/t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+				cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
 			}
 		}
 	}
