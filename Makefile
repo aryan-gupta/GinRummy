@@ -33,7 +33,7 @@ L_SDLL = -L.\SDL\lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL
 # ==============================  MACROS  ======================================
 CFLAGS = $(DEBUG) -Wall -std=c++17 -c
 LFLAGS = $(DEBUG) -Wall
-OBJ = $(OBJDIR)\main.o $(OBJDIR)\res.o $(OBJDIR)\Player.o $(OBJDIR)\CardPile.o $(OBJDIR)\Window.o $(OBJDIR)\Resources.o $(OBJDIR)\Human.o
+OBJ = $(OBJDIR)\main.o $(OBJDIR)\res.o $(OBJDIR)\Player.o $(OBJDIR)\CardPile.o $(OBJDIR)\Window.o $(OBJDIR)\Resources.o $(OBJDIR)\Human.o $(OBJDIR)\Opponent.o
 
 # ============================ RECEPIES ========================================
 
@@ -45,6 +45,9 @@ $(OBJDIR)\Player.o: .\Player.cpp $(INCDIR)\Player.h $(INCDIR)\main.h $(INCDIR)\C
 
 $(OBJDIR)\Human.o: .\Human.cpp $(INCDIR)\Human.h $(INCDIR)\main.h $(INCDIR)\CardPile.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
 	$(CC) .\Human.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
+
+$(OBJDIR)\Opponent.o: .\Opponent.cpp $(INCDIR)\Opponent.h $(INCDIR)\main.h $(INCDIR)\CardPile.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
+	$(CC) .\Opponent.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
 $(OBJDIR)\CardPile.o: .\CardPile.cpp $(INCDIR)\CardPile.h $(INCDIR)\main.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
 	$(CC) .\CardPile.cpp -o .\$@ $(CFLAGS) $(L_SDLC)

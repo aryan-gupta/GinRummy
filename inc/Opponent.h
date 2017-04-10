@@ -15,9 +15,21 @@
  * =============================================================================
  */
 
-#ifndef _
-#define _
+#ifndef OPPONENT_H_INC
+#define OPPONENT_H_INC
 
+#include ".\Player.h"
 
+class Opponent : public Player {
+public:
+	Opponent() {};
+	virtual ~Opponent() {};
+
+	virtual void doTurn(); ///< Does a turn for the player
+	virtual void render();
+private:
+
+	virtual void renderCards();    ///< Render all the cards
+};
 
 #endif

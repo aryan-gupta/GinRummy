@@ -306,25 +306,6 @@ void Human::renderCards() {
 		
 		currCardPos.x += CARD_PAD; // move to the next card
 	}
-	// } else {
-		// SDL_Rect currCardPos = { // Get the first card loaction
-			// SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2,
-			// WIN_PAD,
-			// CARD_W,
-			// CARD_H
-		// };
-		
-		// for(unsigned i = 0; i < hand.size(); ++i) {
-			// SDL_RenderCopy( // render it
-				// gWindow->getRenderer(),
-				// gAssets->cardBackSheet,
-				// &gAssets->cardClippingBack,
-				// &currCardPos
-			// );
-			
-			// currCardPos.x += CARD_PAD; // move the pos to the next card
-		// }
-	// }
 }
 
 
