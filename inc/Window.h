@@ -35,6 +35,9 @@ public:
 	
 	void renderAll(); ///< Renders all of the objects on the screen
 	
+	bool checkKnockClick(const int x, const int y);
+	bool checkSortClick(const int x, const int y);
+	
 	inline SDL_Renderer*  getRenderer(); ///< Get the current Window's renderer
 private:
 	SDL_Window* window;     ///< Stores our main Window
@@ -44,12 +47,16 @@ private:
 	
 	SDL_Rect knockButton, ///< Knock button position
 	         sortButton,  ///< Sort button position
+	         deadwoodPanel,
+	         meldsPanel,
+	         helpPanel,
 			 knockPos,    ///< Knock text position
 			 sortPos,     ///< Sort text position
 			 meldTextPos, ///< Meld text position
 			 dwTextPos;   ///< Deadwood text position
 			 
 	SDL_Texture* knockTexture,    ///< Knock text texture
+	           * knockTextureST,  ///< 
 	           * sortTexture,     ///< Sort text texture
 			   * meldTextTexture, ///< Meld text texture
 			   * dwTextTexture;   ///< Deadwood text texture
@@ -60,6 +67,7 @@ private:
 	void renderBackground();    ///< Render the background
 	void renderButtons();       ///< Render the buttons
 	void renderMeldsDeadwood(); ///< Render the meld/deadwood texts
+	void renderHelp();
 	
 	/// @brief draws a button
 	/// @param [in] tex `SDL_Texture*` The texture to use when rendering

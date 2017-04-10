@@ -33,23 +33,29 @@ L_SDLL = -L.\SDL\lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL
 # ==============================  MACROS  ======================================
 CFLAGS = $(DEBUG) -Wall -std=c++17 -c
 LFLAGS = $(DEBUG) -Wall
-OBJ = $(OBJDIR)\main.o $(OBJDIR)\res.o $(OBJDIR)\Player.o $(OBJDIR)\CardPile.o $(OBJDIR)\Window.o $(OBJDIR)\Resources.o
+OBJ = $(OBJDIR)\main.o $(OBJDIR)\res.o $(OBJDIR)\Player.o $(OBJDIR)\CardPile.o $(OBJDIR)\Window.o $(OBJDIR)\Resources.o $(OBJDIR)\Human.o $(OBJDIR)\Opponent.o
 
 # ============================ RECEPIES ========================================
 
-$(OBJDIR)\main.o: .\main.cpp $(INCDIR)\main.h $(INCDIR)\Player.h $(INCDIR)\CardPile.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
+$(OBJDIR)\main.o: .\main.cpp $(INCDIR)\main.h $(INCDIR)\CardPile.h $(INCDIR)\Player.h $(INCDIR)\Human.h $(INCDIR)\Opponent.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
 	$(CC) .\main.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
-$(OBJDIR)\Player.o: .\Player.cpp $(INCDIR)\Player.h $(INCDIR)\main.h $(INCDIR)\CardPile.h
+$(OBJDIR)\Player.o: .\Player.cpp $(INCDIR)\Player.h $(INCDIR)\main.h $(INCDIR)\CardPile.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
 	$(CC) .\Player.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
-$(OBJDIR)\CardPile.o: .\CardPile.cpp $(INCDIR)\CardPile.h $(INCDIR)\main.h
+$(OBJDIR)\Human.o: .\Human.cpp $(INCDIR)\Human.h $(INCDIR)\main.h $(INCDIR)\CardPile.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
+	$(CC) .\Human.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
+
+$(OBJDIR)\Opponent.o: .\Opponent.cpp $(INCDIR)\Opponent.h $(INCDIR)\main.h $(INCDIR)\CardPile.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
+	$(CC) .\Opponent.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
+
+$(OBJDIR)\CardPile.o: .\CardPile.cpp $(INCDIR)\CardPile.h $(INCDIR)\main.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
 	$(CC) .\CardPile.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
-$(OBJDIR)\Window.o: .\Window.cpp $(INCDIR)\Window.h $(INCDIR)\main.h
+$(OBJDIR)\Window.o: .\Window.cpp $(INCDIR)\Window.h $(INCDIR)\main.h $(INCDIR)\Player.h $(INCDIR)\Human.h $(INCDIR)\Opponent.h $(INCDIR)\CardPile.h $(INCDIR)\Resources.h
 	$(CC) .\Window.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 	
-$(OBJDIR)\Resources.o: .\Resources.cpp $(INCDIR)\Resources.h $(INCDIR)\main.h
+$(OBJDIR)\Resources.o: .\Resources.cpp $(INCDIR)\Resources.h $(INCDIR)\main.h $(INCDIR)\CardPile.h
 	$(CC) .\Resources.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
 $(OBJDIR)\%.o: .\%.cpp
