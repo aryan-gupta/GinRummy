@@ -18,11 +18,12 @@
 #ifndef RESOURCES_H_INC
 #define RESOURCES_H_INC
 
-#include <SDL.h>
-#include <SDL_TTF.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_TTF.h>
 
 #define GCI(s, r) (s*RANK_TOTAL)+r
 
+/// @brief The different UI colors
 enum UI_Colors {
 	UIC_BLUE,
 	UIC_GREEN,
@@ -33,20 +34,26 @@ enum UI_Colors {
 	UIC_TOTAL
 };
 
+/// @brief Stores all of our assets
 struct Resources {
-	Resources();
-	~Resources();
+	Resources();  ///< Load all of our assets
+	~Resources(); ///< Destroy our assets
 	
-	SDL_Texture* cardsSheet;
-	SDL_Texture* cardBackSheet;
-	SDL_Rect*    cardClippings;
-	SDL_Rect     cardClippingBack;
+	SDL_Texture* cardsSheet;       ///< The texture for our cards
+	SDL_Texture* cardsSheetT;
+	SDL_Texture* cardBackSheet;    ///< The texture for our backs
+	SDL_Rect*    cardClippings;    ///< The card clippings
+	SDL_Rect     cardClippingBack; ///< The clippings for our backs
 	
-	SDL_Texture** uiSheets;
-	SDL_Rect*     uiClippings;
+	SDL_Texture** uiSheets;    ///< Our array of UI buttons textures
+	SDL_Rect*     uiClippings; ///< Our UI button clippings
 	
-	TTF_Font* buttonFont, * nFont;
+	TTF_Font* buttonFont, ///< Our button font
+	        * nFont;      ///< Our normal font
 private:
+	/// @brief loads an image into a texture
+	/// @param [in] file `const char*` The file to load
+	/// @return SDL_Texture* The pointer to our texture for the image
 	SDL_Texture* load(const char* file);
 };
 

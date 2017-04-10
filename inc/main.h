@@ -24,7 +24,7 @@
 class CardPile;
 class Player;
 class Window;
-class Resources;
+struct Resources;
 struct Card;
 
 extern const int NUM_CARDS_PER; ///< Number of cards per player (default 10)
@@ -36,7 +36,7 @@ extern Player* P1;
 extern Player* P2;
 
 extern Window* gWindow;
-extern Resources* gAssets;
+extern const Resources* gAssets;
 
 
 // =========================

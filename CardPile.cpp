@@ -16,16 +16,16 @@
  */
 #include "info.h"
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <algorithm>
 #include <vector>
 using std::vector;
 #include <random>
 
-#include ".\inc\main.h"
-#include ".\inc\CardPile.h"
-#include ".\inc\Window.h"
-#include ".\inc\Resources.h"
+#include "./inc/main.h"
+#include "./inc/CardPile.h"
+#include "./inc/Window.h"
+#include "./inc/Resources.h"
 
 const int CARD_W   = 140 *5/8;
 const int CARD_H   = 190 *5/8;
@@ -39,7 +39,7 @@ CardPile::CardPile(CardPileTypes type) {
 	
 		position = SDL_Rect {
 			SCRN_W/2 - CARD_W - 20,
-			SCRN_H/2 - CARD_H/2,
+			SCRN_H/2 - CARD_H/2 - WIN_PAD*3,
 			CARD_W,
 			CARD_H
 		};
@@ -47,7 +47,7 @@ CardPile::CardPile(CardPileTypes type) {
 	} else {
 		position = SDL_Rect {
 			SCRN_W/2 + 20,
-			SCRN_H/2 - CARD_H/2,
+			SCRN_H/2 - CARD_H/2 - WIN_PAD*3,
 			CARD_W,
 			CARD_H
 		};
@@ -61,6 +61,11 @@ CardPile::~CardPile() {
 	for(Card* tmpCard : pile)
 		delete tmpCard;
 }
+
+
+void CardPile::takeACard(Card* card) {  // each player put card face up after get card from cardpile gdeck 
+	pile.insert(pile.begin(), card); 
+} 
 
 
 void CardPile::shuffle() {

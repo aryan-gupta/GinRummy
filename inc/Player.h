@@ -31,47 +31,48 @@ enum MeldTypes {
 
 /// @brief A complete meld
 struct Meld {
-	MeldTypes type;           ///< Type of meld \sa MeldTypes
+	MeldTypes type;           ///< Type of meld /sa MeldTypes
 	std::vector<Card*> cards; ///< The cards that are part of the meld
 };
 
-enum Players {
-	PLAYER_1,
-	PLAYER_2,
-	
-	PLAYER_TOTAL
-};
+extern const int MCARD_W;
+extern const int MCARD_H;
 
 /// @brief A player on the board
 class Player {
-public:
-	Player(bool isUser = false);
-	~Player(); /// Default destructor
-	
-	/// @brief Finds meld in player's hand
-	void getMelds();
+public: 
+
+	Player() {};
+	virtual ~Player(); /// Default destructor
 	
 	/// @brief Take a specific card
 	/// @param[in] card `Card*` The card that user should take
 	void takeCard(Card* card);
 	
-	void doTurn(); ///< Does a turn for the player
-	void render();
+	unsigned getPoints();
+	
+	bool canWeKnock();
+	
+	virtual void doTurn() = 0;
+	virtual void render() = 0;
+	
+protected:
+	std::vector<Card*> hand;  ///< Stores the cards in the Player's hand
+	std::vector<Meld*> melds; ///< Stores the melds
+	std::vector<Card*> deadwood; ///< Stores the melds
+	
+	Card* getCard(Card* card); 
+	/// @brief Finds meld in player's hand
+	void getMelds();
+	void getDeadwood();
+	unsigned getNumDeadwood();
+	
+	virtual void renderCards() = 0;
+	virtual void pickDeck() = 0;
+	virtual void pickCard() = 0;
 private:
-	std::vector<Card*> hand;       ///< Stores the cards in the Player's hand
-	std::vector<Meld*> melds;
-	bool isUser; ///> Is the Player a user
-	
-	void printHand(); ///< Print the hand out
-	void renderCards();
-	void renderDeadwood();
-	void renderMelds();
-	void renderButtons();
-	
-	void moveCard(Card* c, int idx);
-	
-	void pickDeck();
-	void pickCard();
+	unsigned getGin();
+	unsigned getBigGin();
 };
 
 #endif

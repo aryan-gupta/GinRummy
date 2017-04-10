@@ -16,20 +16,22 @@
  */
 #include "info.h"
 
-#include <SDL.h>
-#include <SDL_Image.h>
-#include <SDL_TTF.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_Image.h>
+#include <SDL2/SDL_TTF.h>
 #include <iostream>
 #include <vector>
 using std::vector;
 #include <algorithm>
 #include <time.h>
 
-#include ".\inc\main.h"
-#include ".\inc\CardPile.h"
-#include ".\inc\Player.h"
-#include ".\inc\Window.h"
-#include ".\inc\Resources.h"
+#include "./inc/main.h"
+#include "./inc/CardPile.h"
+#include "./inc/Player.h"
+#include "./inc/Human.h"
+#include "./inc/Opponent.h"
+#include "./inc/Window.h"
+#include "./inc/Resources.h"
 
 const int NUM_CARDS_PER = 10;
 
@@ -40,25 +42,27 @@ Player* P1;
 Player* P2;
 
 Window* gWindow;
-Resources* gAssets;
+const Resources* gAssets;
 
 int main(int argc, char* argv[]) {
 	srand(time(0));
 	initSDL();
 	
+	// Create our variables
 	gWindow  = new Window();
 	gAssets  = new Resources();
+	gWindow->initWindow(); // Init our window class
+	
 	gDeck    = new CardPile(PILE_DECK);
 	gDiscard = new CardPile(PILE_DISCARD);
-	P1       = new Player(true);
-	P2       = new Player(false);
+	P1       = new Human();
+	P2       = new Opponent();
 	
-	gWindow->initWindow();
-	gDeck->shuffle();
+	gDeck->shuffle(); // Shuffle our main deck
 	
-	dealCards();
+	dealCards(); // Deal the cards
 	
-	while(true) {
+	while(true) { // Loop through turns (Will change as we progress through our game)
 		P1->doTurn();
 		P2->doTurn();
 	}
@@ -91,7 +95,7 @@ void initSDL() {
 
 
 void dealCards() {
-	for(int i = 0; i < NUM_CARDS_PER; ++i) {
+	for(int i = 0; i < NUM_CARDS_PER; ++i) { // Give each player 10 cards
 		P1->takeCard(gDeck->getACard());
 		P2->takeCard(gDeck->getACard());
 	}
@@ -99,6 +103,7 @@ void dealCards() {
 
 
 void quit(int code) {
+	// Delete all of our global variables
 	delete gWindow;
 	delete gAssets;
 	delete gDeck;
@@ -106,12 +111,6 @@ void quit(int code) {
 	delete P1;
 	delete P2;
 	
+	// exit
 	exit(code);
-}
-
-
-unsigned getDeadwood(const vector<Card*> &cards) {
-	/// @todo this function should return a non negative number that is the
-	/// number of deadwood we have.
-	return 0;
 }

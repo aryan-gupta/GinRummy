@@ -15,63 +15,74 @@
 # ==============================================================================
 .DEFAULT_GOAL := all
 # ==========================  CONST MACROS  ====================================
-CC = "g++.exe"
-RES = "windres.exe"
-OBJDIR = .\obj
-BINDIR = .\bin
-DATDIR = .\dat
-INCDIR = .\inc
+CC = "g++"
+RES = "windres"
+OBJDIR = ./obj
+BINDIR = ./bin
+DATDIR = ./dat
+INCDIR = ./inc
 
 DEBUG = -g -DDEBUG=true
 
 # ============================  SDL LIBS  ======================================
 GRAPHICS = -w -Wl,-subsystem,windows
 # Standard SDL libs
-L_SDLC = -I.\SDL\include\SDL2 
-L_SDLL = -L.\SDL\lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL2_image
+L_SDLC = -I./SDL/include 
+L_SDLL = -L./SDL/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL2_image
+L_SDLLM = -framework SDL -framework Cocoa -framework SDL_mixer -framework SDL_ttf -framework SDL_image
 
 # ==============================  MACROS  ======================================
-CFLAGS = $(DEBUG) -Wall -std=c++17 -c
+CFLAGS = $(DEBUG) -Wall -std=c++11 -c
 LFLAGS = $(DEBUG) -Wall
-OBJ = $(OBJDIR)\main.o $(OBJDIR)\res.o $(OBJDIR)\Player.o $(OBJDIR)\CardPile.o $(OBJDIR)\Window.o $(OBJDIR)\Resources.o
+OBJ = $(OBJDIR)/main.o $(OBJDIR)/Player.o $(OBJDIR)/CardPile.o $(OBJDIR)/Window.o $(OBJDIR)/Resources.o $(OBJDIR)/Human.o $(OBJDIR)/Opponent.o
 
 # ============================ RECEPIES ========================================
 
-$(OBJDIR)\main.o: .\main.cpp $(INCDIR)\main.h $(INCDIR)\Player.h $(INCDIR)\CardPile.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
-	$(CC) .\main.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
+$(OBJDIR)/main.o: ./main.cpp $(INCDIR)/main.h $(INCDIR)/CardPile.h $(INCDIR)/Player.h $(INCDIR)/Human.h $(INCDIR)/Opponent.h $(INCDIR)/Window.h $(INCDIR)/Resources.h
+	$(CC) ./main.cpp -o ./$@ $(CFLAGS) $(L_SDLC)
 
-$(OBJDIR)\Player.o: .\Player.cpp $(INCDIR)\Player.h $(INCDIR)\main.h $(INCDIR)\CardPile.h
-	$(CC) .\Player.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
+$(OBJDIR)/Player.o: ./Player.cpp $(INCDIR)/Player.h $(INCDIR)/main.h $(INCDIR)/CardPile.h $(INCDIR)/Window.h $(INCDIR)/Resources.h
+	$(CC) ./Player.cpp -o ./$@ $(CFLAGS) $(L_SDLC)
 
-$(OBJDIR)\CardPile.o: .\CardPile.cpp $(INCDIR)\CardPile.h $(INCDIR)\main.h
-	$(CC) .\CardPile.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
+$(OBJDIR)/Human.o: ./Human.cpp $(INCDIR)/Human.h $(INCDIR)/main.h $(INCDIR)/CardPile.h $(INCDIR)/Window.h $(INCDIR)/Resources.h
+	$(CC) ./Human.cpp -o ./$@ $(CFLAGS) $(L_SDLC)
 
-$(OBJDIR)\Window.o: .\Window.cpp $(INCDIR)\Window.h $(INCDIR)\main.h
-	$(CC) .\Window.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
+$(OBJDIR)/Opponent.o: ./Opponent.cpp $(INCDIR)/Opponent.h $(INCDIR)/main.h $(INCDIR)/CardPile.h $(INCDIR)/Window.h $(INCDIR)/Resources.h
+	$(CC) ./Opponent.cpp -o ./$@ $(CFLAGS) $(L_SDLC)
+
+$(OBJDIR)/CardPile.o: ./CardPile.cpp $(INCDIR)/CardPile.h $(INCDIR)/main.h $(INCDIR)/Window.h $(INCDIR)/Resources.h
+	$(CC) ./CardPile.cpp -o ./$@ $(CFLAGS) $(L_SDLC)
+
+$(OBJDIR)/Window.o: ./Window.cpp $(INCDIR)/Window.h $(INCDIR)/main.h $(INCDIR)/Player.h $(INCDIR)/Human.h $(INCDIR)/Opponent.h $(INCDIR)/CardPile.h $(INCDIR)/Resources.h
+	$(CC) ./Window.cpp -o ./$@ $(CFLAGS) $(L_SDLC)
 	
-$(OBJDIR)\Resources.o: .\Resources.cpp $(INCDIR)\Resources.h $(INCDIR)\main.h
-	$(CC) .\Resources.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
+$(OBJDIR)/Resources.o: ./Resources.cpp $(INCDIR)/Resources.h $(INCDIR)/main.h $(INCDIR)/CardPile.h
+	$(CC) ./Resources.cpp -o ./$@ $(CFLAGS) $(L_SDLC)
 
-$(OBJDIR)\%.o: .\%.cpp
-	$(CC) .\$^ -o .\$@ $(CFLAGS) $(L_SDLC)
+$(OBJDIR)/%.o: ./%.cpp
+	$(CC) ./$^ -o ./$@ $(CFLAGS) $(L_SDLC)
 
-$(OBJDIR)\res.o: .\res.rc .\info.h
-	$(RES) .\res.rc  .\$@
+$(OBJDIR)/res.o: ./res.rc ./info.h
+	$(RES) ./res.rc  ./$@
 	
 # Link	
-$(BINDIR)\main.exe: $(OBJ)
-	$(CC) .\$^ -o .\$@ $(LFLAGS) $(L_SDLL)
+$(BINDIR)/main.exe: $(OBJ)
+	$(CC) ./$^ -o ./$@ $(LFLAGS) $(L_SDLL)
+	
+# Link	
+$(BINDIR)/main: $(OBJ)
+	$(CC) ./$^ -o ./$@ $(LFLAGS) $(L_SDLLM)
 
 # ============================= PHONY RECEPIES =================================
 .PHONY: all
 all: clean $(OBJ)
-	$(CC) $(OBJ) $(LFLAGS) $(LSDLL) $(LSDLIL) $(LSDLTL) -o $(BINDIR)\final.exe
+	$(CC) $(OBJ) $(LFLAGS) $(LSDLL) $(LSDLIL) $(LSDLTL) -o $(BINDIR)/final.exe
 
 .PHONY: link
 link:
-	$(CC) .\$^ $(LFLAGS) $(LSDLL) $(LSDLIL) $(LSDLTL) -o $(BINDIR)\main.exe	
+	$(CC) ./$^ $(LFLAGS) $(LSDLL) $(LSDLIL) $(LSDLTL) -o $(BINDIR)/main.exe	
 	
 .PHONY: clean
 clean:
-	del $(OBJDIR)\*.o
-	del $(BINDIR)\*.exe
+	del $(OBJDIR)/*.o
+	del $(BINDIR)/*.exe

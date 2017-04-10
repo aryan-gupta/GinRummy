@@ -77,6 +77,7 @@ public:
 	void render();
 	
 	Card* getACard(); ///< Pulls a card from the deck
+	void takeACard(Card* card);
 	
 	bool checkClick(const int x, const int y);
 private:
