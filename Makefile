@@ -67,6 +67,10 @@ $(OBJDIR)\res.o: .\res.rc .\info.h
 # Link	
 $(BINDIR)\main.exe: $(OBJ)
 	$(CC) .\$^ -o .\$@ $(LFLAGS) $(L_SDLL)
+	
+# Link	
+$(BINDIR)\main: $(OBJ)
+	$(CC) .\$^ -o .\$@ $(LFLAGS) $(L_SDLL)
 
 # ============================= PHONY RECEPIES =================================
 .PHONY: all
