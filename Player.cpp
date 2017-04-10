@@ -49,6 +49,10 @@ void Player::takeCard(Card* card) {
 }
 
 
+ 
+ 
+ 
+
 void Player::getMelds() {
 	// FIND SETS (3 or 4 cards with the same rank/value)
 	for(unsigned i = 0; i < hand.size(); ++i) {
@@ -94,7 +98,16 @@ void Player::getMelds() {
 
 
 void Player::getDeadwood() {
+	// check anycard in your hand that not part of meld 
 	
+	for(unsigned i = 0; i < hand.size(); i++) { 	
+		for(unsigned j = 0; j < hand.size(); j++) { 
+			if(hand[i]->suit == melds[j]->cards->suit) { // get cards inside melds
+				deadwood.push_back(hand[i]); 
+				
+			}	
+		}	
+	}
 }
 
 
