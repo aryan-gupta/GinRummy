@@ -27,11 +27,11 @@ using std::sort;
 #include <SDL.h>
 #include <string.h>
 
-#include ".\inc\main.h"
-#include ".\inc\Opponent.h"
-#include ".\inc\CardPile.h"
-#include ".\inc\Window.h"
-#include ".\inc\Resources.h"
+#include "./inc/main.h"
+#include "./inc/Opponent.h"
+#include "./inc/CardPile.h"
+#include "./inc/Window.h"
+#include "./inc/Resources.h"
 
 void Opponent::doTurn() {
 

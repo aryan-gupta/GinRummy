@@ -15,20 +15,27 @@
  * =============================================================================
  */
 #include "info.h"
+
 #include <SDL.h>
 #include <algorithm>
 #include <vector>
 using std::vector;
 #include <random>
 
-#include ".\inc\main.h"
-#include ".\inc\CardPile.h"
-#include ".\inc\Window.h"
-#include ".\inc\Resources.h"
+#include "./inc/main.h"
+#include "./inc/CardPile.h"
+#include "./inc/Window.h"
+#include "./inc/Resources.h"
 
 const int CARD_W   = 140 *5/8;
 const int CARD_H   = 190 *5/8;
 const int CARD_PAD = 35  *5/8;
+
+
+bool operator == (Card* lhs, Card* rhs) {
+	return    lhs->rank == rhs->rank
+		   && lhs->suit == rhs->suit;
+}
 
 CardPile::CardPile(CardPileTypes type) {
 	if(type == PILE_DECK) {
@@ -63,10 +70,8 @@ CardPile::~CardPile() {
 }
 
 
-void CardPile::putCards(Card* a) {  // each player put card face up after get card from cardpile gdeck 
-
-	pile.insert(pile.begin, a); 
-	
+void CardPile::takeACard(Card* card) {  // each player put card face up after get card from cardpile gdeck 
+	pile.insert(pile.begin(), card); 
 } 
 
 void CardPile::shuffle() {

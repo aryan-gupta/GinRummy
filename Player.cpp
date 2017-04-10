@@ -15,6 +15,7 @@
  * =============================================================================
  */
 #include "info.h"
+
 #include <iostream>
 using std::cout;
 using std::cin;
@@ -26,11 +27,11 @@ using std::sort;
 #include <SDL.h>
 #include <string.h>
 
-#include ".\inc\main.h"
-#include ".\inc\Player.h"
-#include ".\inc\CardPile.h"
-#include ".\inc\Window.h"
-#include ".\inc\Resources.h"
+#include "./inc/main.h"
+#include "./inc/Player.h"
+#include "./inc/CardPile.h"
+#include "./inc/Window.h"
+#include "./inc/Resources.h"
 
 
 const int MCARD_W = 35 *5/8;
@@ -47,10 +48,6 @@ void Player::takeCard(Card* card) {
 	hand.push_back(card);
 }
 
-
- 
- 
- 
 
 void Player::getMelds() {
 	// FIND SETS (3 or 4 cards with the same rank/value)
@@ -84,7 +81,7 @@ void Player::getMelds() {
 					);
 					
 					// for(Card* tmpCard : tmpCards)
-						// cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+						// cout << "/t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
 					
 					if(    tmpCards[0]->rank == tmpCards[1]->rank - 1 // see if the ranks are incrementing
 						&& tmpCards[1]->rank == tmpCards[2]->rank - 1
@@ -98,29 +95,33 @@ void Player::getMelds() {
 
 void Player::getDeadwood() {
 	// FIND anycard in our hand that not part of meld 
+	deadwood.erase(deadwood.begin(), deadwood.end());
 	
 	for(unsigned i = 0; i < hand.size(); i++) { 	
-		for(unsigned j = 0; j < hand.size(); j++) { 
-			if(hand[i]->suit == melds[j]->cards->suit) { // get cards inside melds
-				deadwood.push_back(hand[i]); 
-				
-			}	
+		for(unsigned j = 0; j < melds.size(); j++) { 
+			for(unsigned k = 0; k < melds[j]->cards.size(); k++) { 
+				if(    hand[i]->suit != melds[j]->cards[k]->suit
+					&& hand[i]->rank != melds[j]->cards[k]->rank
+				) { // get cards inside melds
+					
+					deadwood.push_back(hand[i]);
+				}
+			}			
 		}	
 	}
 }
 
 
-
 unsigned Player::getNumDeadwood() {
 	// FIND how many deadwood do we have in our hand  
-	int sum =0; 
+	int sum = 0; 
 	
 	for(unsigned i = 0; i < deadwood.size(); i++) { 
-		if(deadwood[i] -> rank > RANK_JACK) { 
+		if(deadwood[i]->rank > RANK_JACK) { 
 			sum = sum + 10;
 		}	
-		else { sum = sum + deadwood[i] + 1; } 
-		
+		else { sum = sum + deadwood[i]->rank + 1; } 
+	}
 	return sum;
 	
 }

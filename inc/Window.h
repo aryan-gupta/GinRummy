@@ -43,7 +43,7 @@ private:
 	SDL_Window* window;     ///< Stores our main Window
 	SDL_Renderer* renderer; ///< Stores our main renderer
 	
-	SDL_Texture* background; ///< The background texture, Points to texture in \ref Resources
+	SDL_Texture* background; ///< The background texture, Points to texture in /ref Resources
 	
 	SDL_Rect knockButton, ///< Knock button position
 	         sortButton,  ///< Sort button position

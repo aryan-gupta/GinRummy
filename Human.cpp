@@ -27,11 +27,11 @@ using std::sort;
 #include <SDL.h>
 #include <string.h>
 
-#include ".\inc\main.h"
-#include ".\inc\Human.h"
-#include ".\inc\CardPile.h"
-#include ".\inc\Window.h"
-#include ".\inc\Resources.h"
+#include "./inc/main.h"
+#include "./inc/Human.h"
+#include "./inc/CardPile.h"
+#include "./inc/Window.h"
+#include "./inc/Resources.h"
 
 
 
@@ -265,7 +265,7 @@ void Human::printHand() {
 		for(auto tmpMeld : melds) {
 			cout << Meld_Label[tmpMeld->type] << " " << endl;
 			for(auto tmpCard : tmpMeld->cards) {
-				cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+				cout << "/t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
 			}
 		}
 	}

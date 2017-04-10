@@ -18,7 +18,7 @@
 #ifndef HUMAN_H_INC
 #define HUMAN_H_INC
 
-#include ".\Player.h"
+#include "./Player.h"
 
 class Human : public Player {
 public:

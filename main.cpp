@@ -24,13 +24,13 @@ using std::vector;
 #include <algorithm>
 #include <time.h>
 
-#include ".\inc\main.h"
-#include ".\inc\CardPile.h"
-#include ".\inc\Player.h"
-#include ".\inc\Human.h"
-#include ".\inc\Opponent.h"
-#include ".\inc\Window.h"
-#include ".\inc\Resources.h"
+#include "./inc/main.h"
+#include "./inc/CardPile.h"
+#include "./inc/Player.h"
+#include "./inc/Human.h"
+#include "./inc/Opponent.h"
+#include "./inc/Window.h"
+#include "./inc/Resources.h"
 
 const int NUM_CARDS_PER = 10;
 
