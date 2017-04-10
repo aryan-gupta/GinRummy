@@ -59,6 +59,7 @@ protected:
 	std::vector<Meld*> melds; ///< Stores the melds
 	std::vector<Card*> deadwood; ///< Stores the melds
 	
+	Card* getCard(Card* card); 
 	bool canWeKnock();
 	/// @brief Finds meld in player's hand
 	void getMelds();

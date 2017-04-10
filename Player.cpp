@@ -127,3 +127,16 @@ unsigned Player::getNumDeadwood() {
 bool Player::canWeKnock() {
 	return getNumDeadwood() < 10;
 }
+
+
+
+
+
+
+Card* Player::getCard(Card* card) {  // remove card from hand 
+
+	for(unsigned i = 0; i < hand.size(); ++i)
+		if(card == hand[i])
+			hand.erase(hand.begin() + i);  
+	return card; 					
+}		
