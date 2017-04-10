@@ -37,10 +37,11 @@ using std::sort;
 void Human::doTurn() {
 	getMelds();
 	getDeadwood();
-	
 	pickDeck();
+	
+	getMelds();
+	getDeadwood();
 	pickCard();
-
 }
 
 
