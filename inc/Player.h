@@ -40,35 +40,33 @@ extern const int MCARD_H;
 
 /// @brief A player on the board
 class Player {
-public:
-	Player(bool isUser = false);
-	~Player(); /// Default destructor
-	
-	/// @brief Finds meld in player's hand
-	void getMelds();
+public: 
+
+	Player() {};
+	virtual ~Player(); /// Default destructor
 	
 	/// @brief Take a specific card
 	/// @param[in] card `Card*` The card that user should take
 	void takeCard(Card* card);
 	
-	void doTurn(); ///< Does a turn for the player
-	void render();
-private:
+	virtual void doTurn() = 0;
+	virtual void render() = 0;
+	
+protected:
 	std::vector<Card*> hand;  ///< Stores the cards in the Player's hand
 	std::vector<Meld*> melds; ///< Stores the melds
-	bool isUser; ///> Is the Player a user
+	std::vector<Card*> deadwood; ///< Stores the melds
 	
-	void printHand();      ///< Print the hand out
-	void renderCards();    ///< Render all the cards
-	void renderDeadwood(); ///< Render deadwood
-	void renderMelds();    ///< Render melds
+	unsigned numDeadwood;
 	
-	void moveCard(Card* c, int idx); /// Move a card in your hand
-	
+	/// @brief Finds meld in player's hand
+	void getMelds();
+	void getDeadwood();
 	unsigned getNumDeadwood();
 	
-	void pickDeck(); ///< Pick a deck to draw from
-	void pickCard(); ///< Pick a card to put into discard
+	virtual void renderCards() = 0;
+	
+private:
 };
 
 #endif

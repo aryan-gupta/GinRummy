@@ -24,6 +24,8 @@
 #include ".\inc\main.h"
 #include ".\inc\Window.h"
 #include ".\inc\Player.h"
+#include ".\inc\Human.h"
+#include ".\inc\Opponent.h"
 #include ".\inc\CardPile.h"
 #include ".\inc\Resources.h"
 
