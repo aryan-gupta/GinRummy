@@ -48,6 +48,8 @@ void Player::takeCard(Card* card) {
 
 
 void Player::getMelds() {
+	melds.clear();
+	
 	// FIND SETS (3 or 4 cards with the same rank/value)
 	for(unsigned i = 0; i < hand.size(); ++i) {
 		for(unsigned j = i + 1; j < hand.size(); ++j) {
@@ -119,4 +121,9 @@ unsigned Player::getNumDeadwood() {
 	}
 	return sum;
 	
+}
+
+
+bool Player::canWeKnock() {
+	return getNumDeadwood() < 10;
 }
