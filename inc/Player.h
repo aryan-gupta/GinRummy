@@ -69,6 +69,8 @@ protected:
 	virtual void renderCards() = 0;
 	
 private:
+	unsigned getGin();
+	unsigned getBigGin();
 };
 
 #endif
