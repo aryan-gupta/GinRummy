@@ -24,6 +24,7 @@
 #include "./inc/main.h"
 #include "./inc/Resources.h"
 #include "./inc/CardPile.h"
+#include "./inc/Player.h"
 #include "./inc/Window.h"
 
 static const char* CARDS_SHEET      = "..//res//sprites//Spritesheets//playingCards.png";
@@ -128,6 +129,128 @@ Resources::Resources() {
 	);
 	
 	SDL_FreeSurface(tmpSurface); tmpSurface = nullptr;
+	
+	knockButton = SDL_Rect{ // location of our knock button
+		SCRN_W - 120 - 45,
+		SCRN_H - 45*2 - 45,
+		120,
+		45
+	};
+	
+	sortButton = SDL_Rect{ // location of our sort button
+		knockButton.x,
+		knockButton.y + knockButton.h + 30,
+		knockButton.w,
+		knockButton.h
+	};
+	
+	deadwoodPanel = SDL_Rect{
+		WIN_PAD - 5,
+		SCRN_H - MCARD_H*2 - WIN_PAD*3 - 5,
+		SCRN_W/2 - (CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
+		MCARD_H*2 + WIN_PAD*2 + 5
+	};
+	meldsPanel = SDL_Rect{
+		WIN_PAD - 5,
+		SCRN_H - MCARD_H*5 - WIN_PAD*7 - 5,
+		SCRN_W/2 - (CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
+		MCARD_H*3 + WIN_PAD*2 + 5
+	};
+	
+	helpPanel = SDL_Rect{
+		SCRN_W/2 - (CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W)/2,
+		SCRN_H/2 + WIN_PAD*3/2,
+		CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W,
+		MCARD_H*5/2
+	};
+	
+	textColor = SDL_Color{0x00, 0x00, 0x00, 0xFF}; // black text color
+	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+		buttonFont,
+		"knock", 
+		textColor
+	);
+	knockTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
+		gWindow->getRenderer(),
+		textSurface
+	);
+	knockPos = SDL_Rect{ // Text position
+		knockButton.x - textSurface->w/2 + knockButton.w/2,
+		knockButton.y - textSurface->h/2 + knockButton.h/2 + 4,
+		textSurface->w, 
+		textSurface->h
+	};
+	
+	SDL_FreeSurface(textSurface); // free the memory
+	
+	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+		buttonFont,
+		"sort", 
+		textColor
+	);
+	sortTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
+		gWindow->getRenderer(),
+		textSurface
+	);
+	sortPos = SDL_Rect{
+		sortButton.x - textSurface->w/2 + sortButton.w/2,
+		sortButton.y - textSurface->h/2 + sortButton.h/2 + 4,
+		textSurface->w, 
+		textSurface->h
+	}; // Text position
+	
+	SDL_FreeSurface(textSurface);
+	
+	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+		nFont,
+		"Melds:", 
+		textColor
+	);
+	meldTextTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
+		gWindow->getRenderer(),
+		textSurface
+	);
+	meldTextPos = SDL_Rect{
+		WIN_PAD + 5,
+		SCRN_H - MCARD_H*5 - WIN_PAD*7, /// @todo Make this y pos relative, It works for now tho
+		textSurface->w, 
+		textSurface->h
+	}; // Text position
+	
+	SDL_FreeSurface(textSurface);
+	
+	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+		nFont,
+		"Deadwood:", 
+		textColor
+	);
+	dwTextTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
+		gWindow->getRenderer(),
+		textSurface
+	);
+	dwTextPos = SDL_Rect{
+		WIN_PAD + 5,
+		SCRN_H - MCARD_H*2 - WIN_PAD*3,
+		textSurface->w, 
+		textSurface->h
+	}; // Text position
+	
+	SDL_FreeSurface(textSurface);
+	
+	TTF_SetFontStyle(buttonFont, TTF_STYLE_STRIKETHROUGH);
+	textColor = SDL_Color{0xFF, 0x00, 0x00, 0xFF}; // black text color
+	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+		buttonFont,
+		"knock", 
+		textColor
+	);
+	knockTextureST = SDL_CreateTextureFromSurface( // Convert it to a texture
+		gWindow->getRenderer(),
+		textSurface
+	);
+	
+	SDL_FreeSurface(textSurface); // free the memory
+	
 }
 
 

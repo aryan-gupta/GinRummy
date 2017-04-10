@@ -59,132 +59,10 @@ Window::Window() {
 Window::~Window() {
 	SDL_DestroyRenderer(renderer); renderer = nullptr; // Destroy our main renderer
 	SDL_DestroyWindow(window); window = nullptr; // Destroy our main window
-	
-	SDL_DestroyTexture(background);
 }
 
 
 void Window::initWindow() {
-	knockButton = SDL_Rect{ // location of our knock button
-		SCRN_W - 120 - 45,
-		SCRN_H - 45*2 - 45,
-		120,
-		45
-	};
-	
-	sortButton = SDL_Rect{ // location of our sort button
-		knockButton.x,
-		knockButton.y + knockButton.h + 30,
-		knockButton.w,
-		knockButton.h
-	};
-	
-	deadwoodPanel = SDL_Rect{
-		WIN_PAD - 5,
-		SCRN_H - MCARD_H*2 - WIN_PAD*3 - 5,
-		SCRN_W/2 - (CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
-		MCARD_H*2 + WIN_PAD*2 + 5
-	};
-	meldsPanel = SDL_Rect{
-		WIN_PAD - 5,
-		SCRN_H - MCARD_H*5 - WIN_PAD*7 - 5,
-		SCRN_W/2 - (CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
-		MCARD_H*3 + WIN_PAD*2 + 5
-	};
-	
-	helpPanel = SDL_Rect{
-		SCRN_W/2 - (CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W)/2,
-		SCRN_H/2 + WIN_PAD*3/2,
-		CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W,
-		MCARD_H*5/2
-	};
-	
-	textColor = SDL_Color{0x00, 0x00, 0x00, 0xFF}; // black text color
-	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-		gAssets->buttonFont,
-		"knock", 
-		textColor
-	);
-	knockTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
-		renderer,
-		textSurface
-	);
-	knockPos = SDL_Rect{ // Text position
-		knockButton.x - textSurface->w/2 + knockButton.w/2,
-		knockButton.y - textSurface->h/2 + knockButton.h/2 + 4,
-		textSurface->w, 
-		textSurface->h
-	};
-	
-	SDL_FreeSurface(textSurface); // free the memory
-	
-	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-		gAssets->buttonFont,
-		"sort", 
-		textColor
-	);
-	sortTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
-		renderer,
-		textSurface
-	);
-	sortPos = SDL_Rect{
-		sortButton.x - textSurface->w/2 + sortButton.w/2,
-		sortButton.y - textSurface->h/2 + sortButton.h/2 + 4,
-		textSurface->w, 
-		textSurface->h
-	}; // Text position
-	
-	SDL_FreeSurface(textSurface);
-	
-	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-		gAssets->nFont,
-		"Melds:", 
-		textColor
-	);
-	meldTextTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
-		renderer,
-		textSurface
-	);
-	meldTextPos = SDL_Rect{
-		WIN_PAD + 5,
-		SCRN_H - MCARD_H*5 - WIN_PAD*7, /// @todo Make this y pos relative, It works for now tho
-		textSurface->w, 
-		textSurface->h
-	}; // Text position
-	
-	SDL_FreeSurface(textSurface);
-	
-	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-		gAssets->nFont,
-		"Deadwood:", 
-		textColor
-	);
-	dwTextTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
-		renderer,
-		textSurface
-	);
-	dwTextPos = SDL_Rect{
-		WIN_PAD + 5,
-		SCRN_H - MCARD_H*2 - WIN_PAD*3,
-		textSurface->w, 
-		textSurface->h
-	}; // Text position
-	
-	SDL_FreeSurface(textSurface);
-	
-	TTF_SetFontStyle(gAssets->buttonFont, TTF_STYLE_STRIKETHROUGH);
-	textColor = SDL_Color{0xFF, 0x00, 0x00, 0xFF}; // black text color
-	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-		gAssets->buttonFont,
-		"knock", 
-		textColor
-	);
-	knockTextureST = SDL_CreateTextureFromSurface( // Convert it to a texture
-		renderer,
-		textSurface
-	);
-	
-	SDL_FreeSurface(textSurface); // free the memory
 	
 }
 
@@ -224,22 +102,22 @@ void Window::renderButtons() {
 		gAssets->uiSheets[UIC_BLUE], // sprite sheet
 		gAssets->uiClippings[0], // clipping
 		5, 7, // border
-		knockButton // location
+		gAssets->knockButton // location
 	);
 	
 	drawAButton(
 		gAssets->uiSheets[UIC_BLUE],
 		gAssets->uiClippings[0],
 		5, 7, 
-		sortButton
+		gAssets->sortButton
 	);
 	
 	if(P1->canWeKnock())
-		SDL_RenderCopy(gWindow->getRenderer(), knockTexture, NULL, &knockPos);
+		SDL_RenderCopy(gWindow->getRenderer(), gAssets->knockTexture, NULL, &gAssets->knockPos);
 	else
-		SDL_RenderCopy(gWindow->getRenderer(), knockTextureST, NULL, &knockPos);
+		SDL_RenderCopy(gWindow->getRenderer(), gAssets->knockTextureST, NULL, &gAssets->knockPos);
 	
-	SDL_RenderCopy(gWindow->getRenderer(), sortTexture, NULL, &sortPos);
+	SDL_RenderCopy(gWindow->getRenderer(), gAssets->sortTexture, NULL, &gAssets->sortPos);
 }
 
 
@@ -248,18 +126,18 @@ void Window::renderMeldsDeadwood() {
 		gAssets->uiSheets[UIC_GREY],
 		gAssets->uiClippings[1],
 		8, 7,
-		deadwoodPanel
+		gAssets->deadwoodPanel
 	);
 
 	drawAButton(
 		gAssets->uiSheets[UIC_GREY],
 		gAssets->uiClippings[1],
 		8, 7,
-		meldsPanel
+		gAssets->meldsPanel
 	);
 	
-	SDL_RenderCopy(gWindow->getRenderer(), meldTextTexture, NULL, &meldTextPos);
-	SDL_RenderCopy(gWindow->getRenderer(), dwTextTexture, NULL, &dwTextPos);
+	SDL_RenderCopy(gWindow->getRenderer(), gAssets->meldTextTexture, NULL, &gAssets->meldTextPos);
+	SDL_RenderCopy(gWindow->getRenderer(), gAssets->dwTextTexture, NULL, &gAssets->dwTextPos);
 }
 
 
@@ -268,7 +146,7 @@ void Window::renderHelp() {
 		gAssets->uiSheets[UIC_GREY],
 		gAssets->uiClippings[1],
 		8, 7,
-		helpPanel
+		gAssets->helpPanel
 	);
 }
 
@@ -333,6 +211,7 @@ void Window::drawAButton(SDL_Texture* tex, SDL_Rect src, int h_p, int w_p, SDL_R
 
 
 bool Window::checkKnockClick(const int x, const int y) {
+	const SDL_Rect &knockButton = gAssets->knockButton;
 	if(    x > knockButton.x
 		&& x < knockButton.x + knockButton.w
 		&& y > knockButton.y
@@ -344,6 +223,7 @@ bool Window::checkKnockClick(const int x, const int y) {
 
 
 bool Window::checkSortClick(const int x, const int y) {
+	const SDL_Rect &sortButton = gAssets->sortButton;
 	if(    x > sortButton.x
 		&& x < sortButton.x + sortButton.w
 		&& y > sortButton.y
