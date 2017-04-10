@@ -49,6 +49,8 @@ public:
 	/// @param[in] card `Card*` The card that user should take
 	void takeCard(Card* card);
 	
+	unsigned getPoints();
+	
 	virtual void doTurn() = 0;
 	virtual void render() = 0;
 	
@@ -57,8 +59,7 @@ protected:
 	std::vector<Meld*> melds; ///< Stores the melds
 	std::vector<Card*> deadwood; ///< Stores the melds
 	
-	unsigned numDeadwood;
-	
+	bool canWeKnock();
 	/// @brief Finds meld in player's hand
 	void getMelds();
 	void getDeadwood();
