@@ -148,12 +148,13 @@ void Human::pickDeck() {
 						if(gDeck->checkClick(x, y)) {
 						
 							takeCard(gDeck->getACard()); // WE CLICKED ON THE DECK 
-							
+							finished = true; 				
 						}
 						
 						if(gDiscard->checkClick(x, y)) {
 							
 							takeCard(gDiscard->getACard()); // WE CLICKED ON THE DISCARD
+							finished = true; 
 						}
 					}
 				} break;
@@ -230,11 +231,11 @@ void Human::pickCard() {
 						selectedCard = nullptr;
 					} else {
 						/// @todo check for button presses or picking a card, that will mean we are finished
-						for(unsigned i = 0; i < hand.size(); ++i)
-							if(selectedCard == hand[i])
-								hand.erase(hand.begin() + i); 
-							gDiscard->takeACard(selectedCard); 
 						
+						if( selectedCard != nullptr ) { 
+							gDiscard->takeACard(getCard(selectedCard)); 
+							finished = true; 
+						}
 					
 						selectedCard = nullptr;
 						
@@ -242,8 +243,15 @@ void Human::pickCard() {
 						SDL_GetMouseState(&x, &y);
 						if(gWindow->checkKnockClick(x, y))
 							LOGL("WE KNOCKED")
-						if(gWindow->checkSortClick(x, y))
-							LOGL("WE SORTED")
+						if(gWindow->checkSortClick(x, y)) { 
+						
+							sort(hand.begin(), hand.end(),
+							[](Card* a, Card* b) {
+								return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
+							}); 
+							
+						}	
+					
 					}
 				} break;
 			}

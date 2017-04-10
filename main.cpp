@@ -42,7 +42,7 @@ Player* P1;
 Player* P2;
 
 Window* gWindow;
-Resources* gAssets;
+const Resources* gAssets;
 
 int main(int argc, char* argv[]) {
 	srand(time(0));
