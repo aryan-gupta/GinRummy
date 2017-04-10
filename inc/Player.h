@@ -51,6 +51,8 @@ public:
 	
 	unsigned getPoints();
 	
+	bool canWeKnock();
+	
 	virtual void doTurn() = 0;
 	virtual void render() = 0;
 	
@@ -60,7 +62,6 @@ protected:
 	std::vector<Card*> deadwood; ///< Stores the melds
 	
 	Card* getCard(Card* card); 
-	bool canWeKnock();
 	/// @brief Finds meld in player's hand
 	void getMelds();
 	void getDeadwood();
