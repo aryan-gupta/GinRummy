@@ -148,12 +148,13 @@ void Human::pickDeck() {
 						if(gDeck->checkClick(x, y)) {
 						
 							takeCard(gDeck->getACard()); // WE CLICKED ON THE DECK 
-							
+							finished = true; 				
 						}
 						
 						if(gDiscard->checkClick(x, y)) {
 							
 							takeCard(gDiscard->getACard()); // WE CLICKED ON THE DISCARD
+							finished = true; 
 						}
 					}
 				} break;
@@ -232,9 +233,13 @@ void Human::pickCard() {
 						/// @todo check for button presses or picking a card, that will mean we are finished
 						for(unsigned i = 0; i < hand.size(); ++i)
 							if(selectedCard == hand[i])
-								hand.erase(hand.begin() + i); 
-							gDiscard->takeACard(selectedCard); 
+								hand.erase(hand.begin() + i);  
 						
+						
+						if( selectedCard != nullptr ) { 
+							gDiscard->takeACard(selectedCard); 
+							finished = true; 
+						}
 					
 						selectedCard = nullptr;
 						
