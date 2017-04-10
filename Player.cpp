@@ -149,6 +149,10 @@ Card* Player::getCard(Card* card) {  // remove card from hand
 
 
 unsigned Player::getGin() {
+	
+	
+	
+	
 	return 0;
 }
 
