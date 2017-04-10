@@ -234,7 +234,11 @@ void Window::renderButtons() {
 		sortButton
 	);
 	
-	SDL_RenderCopy(gWindow->getRenderer(), knockTextureST, NULL, &knockPos);
+	if(P1->canWeKnock())
+		SDL_RenderCopy(gWindow->getRenderer(), knockTexture, NULL, &knockPos);
+	else
+		SDL_RenderCopy(gWindow->getRenderer(), knockTextureST, NULL, &knockPos);
+	
 	SDL_RenderCopy(gWindow->getRenderer(), sortTexture, NULL, &sortPos);
 }
 
