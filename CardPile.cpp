@@ -30,6 +30,12 @@ const int CARD_W   = 140 *5/8;
 const int CARD_H   = 190 *5/8;
 const int CARD_PAD = 35  *5/8;
 
+
+bool operator == (Card* lhs, Card* rhs) {
+	return    lhs->rank == rhs->rank
+		   && lhs->suit == rhs->suit;
+}
+
 CardPile::CardPile(CardPileTypes type) {
 	if(type == PILE_DECK) {
 		for(int i = 0; i < SUIT_TOTAL; ++i)
@@ -63,10 +69,8 @@ CardPile::~CardPile() {
 }
 
 
-void CardPile::putCards(Card* a) {  // each player put card face up after get card from cardpile gdeck 
-
-	pile.insert(pile.begin, a); 
-	
+void CardPile::takeACard(Card* card) {  // each player put card face up after get card from cardpile gdeck 
+	pile.insert(pile.begin(), card); 
 } 
 
 void CardPile::shuffle() {
