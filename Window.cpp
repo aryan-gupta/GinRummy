@@ -59,8 +59,6 @@ Window::Window() {
 Window::~Window() {
 	SDL_DestroyRenderer(renderer); renderer = nullptr; // Destroy our main renderer
 	SDL_DestroyWindow(window); window = nullptr; // Destroy our main window
-	
-	SDL_DestroyTexture(background);
 }
 
 
@@ -104,22 +102,22 @@ void Window::renderButtons() {
 		gAssets->uiSheets[UIC_BLUE], // sprite sheet
 		gAssets->uiClippings[0], // clipping
 		5, 7, // border
-		knockButton // location
+		gAssets->knockButton // location
 	);
 	
 	drawAButton(
 		gAssets->uiSheets[UIC_BLUE],
 		gAssets->uiClippings[0],
 		5, 7, 
-		sortButton
+		gAssets->sortButton
 	);
 	
 	if(P1->canWeKnock())
-		SDL_RenderCopy(gWindow->getRenderer(), knockTexture, NULL, &knockPos);
+		SDL_RenderCopy(gWindow->getRenderer(), gAssets->knockTexture, NULL, &gAssets->knockPos);
 	else
-		SDL_RenderCopy(gWindow->getRenderer(), knockTextureST, NULL, &knockPos);
+		SDL_RenderCopy(gWindow->getRenderer(), gAssets->knockTextureST, NULL, &gAssets->knockPos);
 	
-	SDL_RenderCopy(gWindow->getRenderer(), sortTexture, NULL, &sortPos);
+	SDL_RenderCopy(gWindow->getRenderer(), gAssets->sortTexture, NULL, &gAssets->sortPos);
 }
 
 
@@ -128,18 +126,18 @@ void Window::renderMeldsDeadwood() {
 		gAssets->uiSheets[UIC_GREY],
 		gAssets->uiClippings[1],
 		8, 7,
-		deadwoodPanel
+		gAssets->deadwoodPanel
 	);
 
 	drawAButton(
 		gAssets->uiSheets[UIC_GREY],
 		gAssets->uiClippings[1],
 		8, 7,
-		meldsPanel
+		gAssets->meldsPanel
 	);
 	
-	SDL_RenderCopy(gWindow->getRenderer(), meldTextTexture, NULL, &meldTextPos);
-	SDL_RenderCopy(gWindow->getRenderer(), dwTextTexture, NULL, &dwTextPos);
+	SDL_RenderCopy(gWindow->getRenderer(), gAssets->meldTextTexture, NULL, &gAssets->meldTextPos);
+	SDL_RenderCopy(gWindow->getRenderer(), gAssets->dwTextTexture, NULL, &gAssets->dwTextPos);
 }
 
 
@@ -148,7 +146,7 @@ void Window::renderHelp() {
 		gAssets->uiSheets[UIC_GREY],
 		gAssets->uiClippings[1],
 		8, 7,
-		helpPanel
+		gAssets->helpPanel
 	);
 }
 
@@ -213,6 +211,7 @@ void Window::drawAButton(SDL_Texture* tex, SDL_Rect src, int h_p, int w_p, SDL_R
 
 
 bool Window::checkKnockClick(const int x, const int y) {
+	const SDL_Rect &knockButton = gAssets->knockButton;
 	if(    x > knockButton.x
 		&& x < knockButton.x + knockButton.w
 		&& y > knockButton.y
@@ -224,6 +223,7 @@ bool Window::checkKnockClick(const int x, const int y) {
 
 
 bool Window::checkSortClick(const int x, const int y) {
+	const SDL_Rect &sortButton = gAssets->sortButton;
 	if(    x > sortButton.x
 		&& x < sortButton.x + sortButton.w
 		&& y > sortButton.y

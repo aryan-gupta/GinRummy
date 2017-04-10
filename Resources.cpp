@@ -24,6 +24,7 @@
 #include "./inc/main.h"
 #include "./inc/Resources.h"
 #include "./inc/CardPile.h"
+#include "./inc/Player.h"
 #include "./inc/Window.h"
 
 static const char* CARDS_SHEET      = "..//res//sprites//Spritesheets//playingCards.png";
@@ -170,7 +171,7 @@ Resources::Resources() {
 		textColor
 	);
 	knockTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
-		renderer,
+		gWindow->getRenderer(),
 		textSurface
 	);
 	knockPos = SDL_Rect{ // Text position
@@ -188,7 +189,7 @@ Resources::Resources() {
 		textColor
 	);
 	sortTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
-		renderer,
+		gWindow->getRenderer(),
 		textSurface
 	);
 	sortPos = SDL_Rect{
@@ -206,7 +207,7 @@ Resources::Resources() {
 		textColor
 	);
 	meldTextTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
-		renderer,
+		gWindow->getRenderer(),
 		textSurface
 	);
 	meldTextPos = SDL_Rect{
@@ -224,7 +225,7 @@ Resources::Resources() {
 		textColor
 	);
 	dwTextTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
-		renderer,
+		gWindow->getRenderer(),
 		textSurface
 	);
 	dwTextPos = SDL_Rect{
@@ -244,7 +245,7 @@ Resources::Resources() {
 		textColor
 	);
 	knockTextureST = SDL_CreateTextureFromSurface( // Convert it to a texture
-		renderer,
+		gWindow->getRenderer(),
 		textSurface
 	);
 	
