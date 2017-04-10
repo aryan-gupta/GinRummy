@@ -15,16 +15,17 @@
  * =============================================================================
  */
 #include "info.h"
-#include <SDL.h>
+
+#include <SDL2/SDL.h>
 #include <algorithm>
 #include <vector>
 using std::vector;
 #include <random>
 
-#include ".\inc\main.h"
-#include ".\inc\CardPile.h"
-#include ".\inc\Window.h"
-#include ".\inc\Resources.h"
+#include "./inc/main.h"
+#include "./inc/CardPile.h"
+#include "./inc/Window.h"
+#include "./inc/Resources.h"
 
 const int CARD_W   = 140 *5/8;
 const int CARD_H   = 190 *5/8;

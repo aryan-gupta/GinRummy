@@ -18,7 +18,7 @@
 #ifndef OPPONENT_H_INC
 #define OPPONENT_H_INC
 
-#include ".\Player.h"
+#include "./Player.h"
 
 class Opponent : public Player {
 public:

@@ -17,17 +17,17 @@
 #include "info.h"
 
 #include <iostream>
-#include <SDL.h>
-#include <SDL_Image.h>
-//#include <SDL_TTF.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_Image.h>
+//#include <SDL2/SDL_TTF.h>
 
-#include ".\inc\main.h"
-#include ".\inc\Window.h"
-#include ".\inc\Player.h"
-#include ".\inc\Human.h"
-#include ".\inc\Opponent.h"
-#include ".\inc\CardPile.h"
-#include ".\inc\Resources.h"
+#include "./inc/main.h"
+#include "./inc/Window.h"
+#include "./inc/Player.h"
+#include "./inc/Human.h"
+#include "./inc/Opponent.h"
+#include "./inc/CardPile.h"
+#include "./inc/Resources.h"
 
 const int SCRN_W = 680; /// @todo Make sure that this is a good ratio
 const int SCRN_H = 510;

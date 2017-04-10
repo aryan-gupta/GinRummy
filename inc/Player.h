@@ -31,7 +31,7 @@ enum MeldTypes {
 
 /// @brief A complete meld
 struct Meld {
-	MeldTypes type;           ///< Type of meld \sa MeldTypes
+	MeldTypes type;           ///< Type of meld /sa MeldTypes
 	std::vector<Card*> cards; ///< The cards that are part of the meld
 };
 

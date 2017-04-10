@@ -16,25 +16,25 @@
  */
 #include "info.h"
 
-#include <SDL.h>
-#include <SDL_Image.h>
-#include <SDL_TTF.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_Image.h>
+#include <SDL2/SDL_TTF.h>
 #include <iostream>
 
-#include ".\inc\main.h"
-#include ".\inc\Resources.h"
-#include ".\inc\CardPile.h"
-#include ".\inc\Window.h"
+#include "./inc/main.h"
+#include "./inc/Resources.h"
+#include "./inc/CardPile.h"
+#include "./inc/Window.h"
 
-static const char* CARDS_SHEET      = "..\\res\\sprites\\Spritesheets\\playingCards.png";
-static const char* CARDS_SHEET_BACK = "..\\res\\sprites\\Spritesheets\\playingCardBacks.png";
-static const char* BRIEF_FONT       = "..\\res\\brief_font.ttf";
+static const char* CARDS_SHEET      = "..//res//sprites//Spritesheets//playingCards.png";
+static const char* CARDS_SHEET_BACK = "..//res//sprites//Spritesheets//playingCardBacks.png";
+static const char* BRIEF_FONT       = "..//res//brief_font.ttf";
 static const char* UI_SHEETS[] = {
-	"..\\res\\sprites\\Spritesheets\\blueSheet.png",
-	"..\\res\\sprites\\Spritesheets\\greenSheet.png",
-	"..\\res\\sprites\\Spritesheets\\greySheet.png",
-	"..\\res\\sprites\\Spritesheets\\redSheet.png",
-	"..\\res\\sprites\\Spritesheets\\yellowSheet.png",
+	"..//res//sprites//Spritesheets//blueSheet.png",
+	"..//res//sprites//Spritesheets//greenSheet.png",
+	"..//res//sprites//Spritesheets//greySheet.png",
+	"..//res//sprites//Spritesheets//redSheet.png",
+	"..//res//sprites//Spritesheets//yellowSheet.png",
 };
 
 Resources::Resources() {
