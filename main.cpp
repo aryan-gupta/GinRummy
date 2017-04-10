@@ -93,22 +93,6 @@ void initSDL() {
 	*/
 }
 
-
-
-
-
-putCards(); 
-
-
-void putCards(Card* a) {  // each player put card face up after get card from cardpile gdeck 
-
-	pile.insert(pile.begin, a); 
-	
-} 
-
-
-
-
 void dealCards() {
 	for(int i = 0; i < NUM_CARDS_PER; ++i) { // Give each player 10 cards
 		P1->takeCard(gDeck->getACard());

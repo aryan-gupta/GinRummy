@@ -64,6 +64,12 @@ CardPile::~CardPile() {
 }
 
 
+void CardPile::putCards(Card* a) {  // each player put card face up after get card from cardpile gdeck 
+
+	pile.insert(pile.begin, a); 
+	
+} 
+
 void CardPile::shuffle() {
 	std::random_shuffle(pile.begin(), pile.end());
 }
