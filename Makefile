@@ -33,7 +33,7 @@ L_SDLL = -L./SDL/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL
 # ==============================  MACROS  ======================================
 CFLAGS = $(DEBUG) -Wall -std=c++11 -c
 LFLAGS = $(DEBUG) -Wall
-OBJ = $(OBJDIR)/main.o $(OBJDIR)/res.o $(OBJDIR)/Player.o $(OBJDIR)/CardPile.o $(OBJDIR)/Window.o $(OBJDIR)/Resources.o $(OBJDIR)/Human.o $(OBJDIR)/Opponent.o
+OBJ = $(OBJDIR)/main.o $(OBJDIR)/Player.o $(OBJDIR)/CardPile.o $(OBJDIR)/Window.o $(OBJDIR)/Resources.o $(OBJDIR)/Human.o $(OBJDIR)/Opponent.o
 
 # ============================ RECEPIES ========================================
 
