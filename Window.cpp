@@ -148,6 +148,13 @@ void Window::renderHelp() {
 		8, 7,
 		gAssets->helpPanel
 	);
+	
+	SDL_RenderCopy(render, gAssets->helpTexts[helpToRender], NULL, gAssets->helpPanel);
+}
+
+
+void Window::changeHelp(HelpTextItems helpToRender) {
+	this->helpToRender = helpToRender;
 }
 
 

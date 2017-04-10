@@ -18,6 +18,8 @@
 #ifndef WINDOW_H_INC
 #define WINDOW_H_INC
 
+#include "./Resources.h"
+
 extern const int SCRN_W;
 extern const int SCRN_H;
 extern const int WIN_PAD;
@@ -42,6 +44,8 @@ public:
 private:
 	SDL_Window* window;     ///< Stores our main Window
 	SDL_Renderer* renderer; ///< Stores our main renderer
+	
+	HelpTextItems helpToRender;
 	
 	void clear();  ///< Clear the window
 	void renderBackground();    ///< Render the background
