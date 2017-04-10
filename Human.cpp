@@ -247,8 +247,15 @@ void Human::pickCard() {
 						SDL_GetMouseState(&x, &y);
 						if(gWindow->checkKnockClick(x, y))
 							LOGL("WE KNOCKED")
-						if(gWindow->checkSortClick(x, y))
-							LOGL("WE SORTED")
+						if(gWindow->checkSortClick(x, y)) { 
+						
+							sort(hand.begin(), hand.end(),
+							[](Card* a, Card* b) {
+								return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
+							}); 
+							
+						}	
+					
 					}
 				} break;
 			}
