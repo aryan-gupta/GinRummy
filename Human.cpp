@@ -236,9 +236,10 @@ void Human::pickCard() {
 								hand.erase(hand.begin() + i);  
 						
 						
-						if( selectedCard != nullptr )
+						if( selectedCard != nullptr ) { 
 							gDiscard->takeACard(selectedCard); 
-						
+							finished = true; 
+						}
 					
 						selectedCard = nullptr;
 						
