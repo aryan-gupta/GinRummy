@@ -37,7 +37,7 @@ OBJ = $(OBJDIR)\main.o $(OBJDIR)\res.o $(OBJDIR)\Player.o $(OBJDIR)\CardPile.o $
 
 # ============================ RECEPIES ========================================
 
-$(OBJDIR)\main.o: .\main.cpp $(INCDIR)\main.h $(INCDIR)\Player.h $(INCDIR)\CardPile.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
+$(OBJDIR)\main.o: .\main.cpp $(INCDIR)\main.h $(INCDIR)\CardPile.h $(INCDIR)\Player.h $(INCDIR)\Human.h $(INCDIR)\Opponent.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
 	$(CC) .\main.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
 $(OBJDIR)\Player.o: .\Player.cpp $(INCDIR)\Player.h $(INCDIR)\main.h $(INCDIR)\CardPile.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
@@ -52,7 +52,7 @@ $(OBJDIR)\Opponent.o: .\Opponent.cpp $(INCDIR)\Opponent.h $(INCDIR)\main.h $(INC
 $(OBJDIR)\CardPile.o: .\CardPile.cpp $(INCDIR)\CardPile.h $(INCDIR)\main.h $(INCDIR)\Window.h $(INCDIR)\Resources.h
 	$(CC) .\CardPile.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 
-$(OBJDIR)\Window.o: .\Window.cpp $(INCDIR)\Window.h $(INCDIR)\main.h $(INCDIR)\Player.h $(INCDIR)\CardPile.h $(INCDIR)\Resources.h
+$(OBJDIR)\Window.o: .\Window.cpp $(INCDIR)\Window.h $(INCDIR)\main.h $(INCDIR)\Player.h $(INCDIR)\Human.h $(INCDIR)\Opponent.h $(INCDIR)\CardPile.h $(INCDIR)\Resources.h
 	$(CC) .\Window.cpp -o .\$@ $(CFLAGS) $(L_SDLC)
 	
 $(OBJDIR)\Resources.o: .\Resources.cpp $(INCDIR)\Resources.h $(INCDIR)\main.h $(INCDIR)\CardPile.h
