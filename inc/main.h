@@ -36,7 +36,7 @@ extern Player* P1;
 extern Player* P2;
 
 extern Window* gWindow;
-extern Resources* gAssets;
+extern const Resources* gAssets;
 
 
 // =========================
