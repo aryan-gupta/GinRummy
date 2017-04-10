@@ -15,9 +15,11 @@
  * =============================================================================
  */
 
-#ifndef _
-#define _
+#ifndef OPPONENT_H_INC
+#define OPPONENT_H_INC
 
-
+class Opponent : public Player {
+	
+}
 
 #endif
