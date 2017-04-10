@@ -146,11 +146,14 @@ void Human::pickDeck() {
 						SDL_GetMouseState(&x, &y);
 						
 						if(gDeck->checkClick(x, y)) {
-							LOGL("DECK") // WE CLICKED ON THE DECK
+						
+							takeCard(gDeck->getACard()); // WE CLICKED ON THE DECK 
+							
 						}
 						
 						if(gDiscard->checkClick(x, y)) {
-							LOGL("DISCARD") // WE CLICKED ON THE DISCARD
+							
+							takeCard(gDiscard->getACard()); // WE CLICKED ON THE DISCARD
 						}
 					}
 				} break;
