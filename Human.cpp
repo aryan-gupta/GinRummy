@@ -34,47 +34,9 @@ using std::sort;
 #include "./inc/Resources.h"
 
 
-
-/// @brief labels for the suits (for debugging)
-static const char* Suits_Label[] {
-	"SUIT_CLUBS",
-	"SUIT_DIAMONDS",
-	"SUIT_HEARTS",
-	"SUIT_SPADES",
-	
-	"SUIT_TOTAL"
-};
-
-/// @brief Labels for the ranks
-static const char* Ranks_Label[] {
-	"RANK_ACE",
-	"RANK_2",
-	"RANK_3",
-	"RANK_4",
-	"RANK_5",
-	"RANK_6",
-	"RANK_7",
-	"RANK_8",
-	"RANK_9",
-	"RANK_10",
-	"RANK_JACK",
-	"RANK_QUEEN",
-	"RANK_KING",
-	
-	"RANK_TOTAL"
-};
-
-/// @brief Labels for the melds
-static const char* Meld_Label[] {
-	"MELD_SET",
-	"MELD_RUN"
-};
-
-
 void Human::doTurn() {
 	getMelds();
 	getDeadwood();
-	printHand();
 	
 	pickDeck();
 	pickCard();
@@ -267,23 +229,6 @@ void Human::moveCard(Card* c, int idx) {
 	}
 	
 	hand.insert(hand.begin() + idx, c); // move it to the new location
-}
-
-// WILL BE REMOVED IN FINAL GAME
-void Human::printHand() {
-	for(Card* tmpCard : hand)
-		cout << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
-	
-	if(melds.size() == 0) {
-		cout << "NO MELDS FOUND" << endl;
-	} else {
-		for(auto tmpMeld : melds) {
-			cout << Meld_Label[tmpMeld->type] << " " << endl;
-			for(auto tmpCard : tmpMeld->cards) {
-				cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
-			}
-		}
-	}
 }
 
 

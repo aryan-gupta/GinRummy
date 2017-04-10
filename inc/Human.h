@@ -34,8 +34,6 @@ protected:
 	virtual void pickCard(); ///< Pick a card to put into discard
 	
 private:	
-	void printHand();      ///< Print the hand out
-	
 	void renderDeadwood(); ///< Render deadwood
 	void renderMelds();    ///< Render melds
 	
