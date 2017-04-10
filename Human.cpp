@@ -231,13 +231,9 @@ void Human::pickCard() {
 						selectedCard = nullptr;
 					} else {
 						/// @todo check for button presses or picking a card, that will mean we are finished
-						for(unsigned i = 0; i < hand.size(); ++i)
-							if(selectedCard == hand[i])
-								hand.erase(hand.begin() + i);  
-						
 						
 						if( selectedCard != nullptr ) { 
-							gDiscard->takeACard(selectedCard); 
+							gDiscard->takeACard(getCard(selectedCard)); 
 							finished = true; 
 						}
 					
