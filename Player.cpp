@@ -24,7 +24,7 @@ using std::endl;
 using std::vector;
 #include <algorithm>
 using std::sort;
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <string.h>
 
 #include "./inc/main.h"

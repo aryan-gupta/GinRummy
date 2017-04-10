@@ -15,9 +15,9 @@
  * =============================================================================
  */
 #include "info.h"
-#include <SDL.h>
-#include <SDL_Image.h>
-#include <SDL_TTF.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_Image.h>
+#include <SDL2/SDL_TTF.h>
 #include <iostream>
 #include <vector>
 using std::vector;

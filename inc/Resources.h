@@ -18,8 +18,8 @@
 #ifndef RESOURCES_H_INC
 #define RESOURCES_H_INC
 
-#include <SDL.h>
-#include <SDL_TTF.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_TTF.h>
 
 #define GCI(s, r) (s*RANK_TOTAL)+r
 

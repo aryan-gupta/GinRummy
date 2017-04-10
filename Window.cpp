@@ -17,9 +17,9 @@
 #include "info.h"
 
 #include <iostream>
-#include <SDL.h>
-#include <SDL_Image.h>
-//#include <SDL_TTF.h>
+#include <SDL2/SDL.h>
+#include <SDL2/SDL_Image.h>
+//#include <SDL2/SDL_TTF.h>
 
 #include "./inc/main.h"
 #include "./inc/Window.h"

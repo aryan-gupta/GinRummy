@@ -27,7 +27,7 @@ DEBUG = -g -DDEBUG=true
 # ============================  SDL LIBS  ======================================
 GRAPHICS = -w -Wl,-subsystem,windows
 # Standard SDL libs
-L_SDLC = -I./SDL/include/SDL2 
+L_SDLC = -I./SDL/include 
 L_SDLL = -L./SDL/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL2_image
 L_SDLLM = -L./SDL/lib -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL2_image
 
