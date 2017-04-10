@@ -98,7 +98,7 @@ void Player::getMelds() {
 
 
 void Player::getDeadwood() {
-	// check anycard in your hand that not part of meld 
+	// FIND anycard in our hand that not part of meld 
 	
 	for(unsigned i = 0; i < hand.size(); i++) { 	
 		for(unsigned j = 0; j < hand.size(); j++) { 
@@ -112,5 +112,15 @@ void Player::getDeadwood() {
 
 
 unsigned Player::getNumDeadwood() {
-	return 0;
+	// FIND how many deadwood do we have in our hand  
+	int sum =0; 
+	
+	for(unsigned i = 0; i < deadwood.size(); i++) { 
+		if(deadwood[i] -> rank > RANK_JACK) { 
+			sum = sum + 10;
+		}	
+		else { sum = sum + deadwood[i] + 1; } 
+		
+	return sum;
+	
 }
