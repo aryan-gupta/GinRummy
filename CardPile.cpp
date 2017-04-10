@@ -45,7 +45,6 @@ CardPile::CardPile(CardPileTypes type) {
 		};
 		
 	} else {
-		pile.push_back( new Card{(Suits)1, (Ranks)1} ); /// @warning ONLY FOR DEBUGGING
 		position = SDL_Rect {
 			SCRN_W/2 + 20,
 			SCRN_H/2 - CARD_H/2 - WIN_PAD*3,
