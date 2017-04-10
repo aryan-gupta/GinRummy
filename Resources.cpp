@@ -166,7 +166,7 @@ Resources::Resources() {
 	
 	textColor = SDL_Color{0x00, 0x00, 0x00, 0xFF}; // black text color
 	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-		gAssets->buttonFont,
+		buttonFont,
 		"knock", 
 		textColor
 	);
@@ -184,7 +184,7 @@ Resources::Resources() {
 	SDL_FreeSurface(textSurface); // free the memory
 	
 	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-		gAssets->buttonFont,
+		buttonFont,
 		"sort", 
 		textColor
 	);
@@ -202,7 +202,7 @@ Resources::Resources() {
 	SDL_FreeSurface(textSurface);
 	
 	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-		gAssets->nFont,
+		nFont,
 		"Melds:", 
 		textColor
 	);
@@ -220,7 +220,7 @@ Resources::Resources() {
 	SDL_FreeSurface(textSurface);
 	
 	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-		gAssets->nFont,
+		nFont,
 		"Deadwood:", 
 		textColor
 	);
@@ -237,10 +237,10 @@ Resources::Resources() {
 	
 	SDL_FreeSurface(textSurface);
 	
-	TTF_SetFontStyle(gAssets->buttonFont, TTF_STYLE_STRIKETHROUGH);
+	TTF_SetFontStyle(buttonFont, TTF_STYLE_STRIKETHROUGH);
 	textColor = SDL_Color{0xFF, 0x00, 0x00, 0xFF}; // black text color
 	textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-		gAssets->buttonFont,
+		buttonFont,
 		"knock", 
 		textColor
 	);
