@@ -40,7 +40,7 @@ extern const int MCARD_H;
 
 /// @brief A player on the board
 class Player {
-public:
+public: 
 
 	Player() {};
 	virtual ~Player(); /// Default destructor
@@ -53,7 +53,6 @@ public:
 	virtual void render() = 0;
 	
 protected:
-
 	std::vector<Card*> hand;  ///< Stores the cards in the Player's hand
 	std::vector<Meld*> melds; ///< Stores the melds
 	std::vector<Card*> deadwood; ///< Stores the melds
@@ -67,6 +66,7 @@ protected:
 	
 	virtual void renderCards() = 0;
 	
+private:
 };
 
 #endif

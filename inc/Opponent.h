@@ -27,9 +27,12 @@ public:
 
 	virtual void doTurn(); ///< Does a turn for the player
 	virtual void render();
-private:
 
+protected:
 	virtual void renderCards();    ///< Render all the cards
+
+private:
+	
 };
 
 #endif

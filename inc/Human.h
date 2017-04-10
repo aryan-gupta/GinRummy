@@ -22,15 +22,16 @@
 
 class Human : public Player {
 public:
-
-	Human();
-	virtual ~Human();
+	Human() {};
+	virtual ~Human() {};
 	
 	virtual void doTurn(); ///< Does a turn for the player
 	virtual void render();
 	
+protected:
+	virtual void renderCards();    ///< Render all the cards
+	
 private:
-
 	void pickDeck(); ///< Pick a deck to draw from
 	void pickCard(); ///< Pick a card to put into discard
 	
@@ -40,8 +41,6 @@ private:
 	void renderMelds();    ///< Render melds
 	
 	void moveCard(Card* c, int idx); /// Move a card in your hand
-	
-	virtual void renderCards();    ///< Render all the cards
 	
 };
 

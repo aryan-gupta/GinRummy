@@ -70,12 +70,6 @@ static const char* Meld_Label[] {
 	"MELD_RUN"
 };
 
-Human::Human() 
-:Player() {
-	
-}
-
-Human::~Human() {}
 
 void Human::doTurn() {
 	getMelds();
