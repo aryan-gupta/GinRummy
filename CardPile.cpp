@@ -32,10 +32,10 @@ const int CARD_H   = 190 *5/8;
 const int CARD_PAD = 35  *5/8;
 
 
-bool operator == (Card* lhs, Card* rhs) {
-	return    lhs->rank == rhs->rank
-		   && lhs->suit == rhs->suit;
-}
+// bool operator == (Card* lhs, Card* rhs) {
+	// return    lhs->rank == rhs->rank
+		   // && lhs->suit == rhs->suit;
+// }
 
 CardPile::CardPile(CardPileTypes type) {
 	if(type == PILE_DECK) {
