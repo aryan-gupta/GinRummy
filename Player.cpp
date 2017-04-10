@@ -129,8 +129,14 @@ bool Player::canWeKnock() {
 }
 
 
-
-
+unsigned Player::getPoints() {
+	unsigned sum = 0;
+	
+	sum += getGin();
+	sum += getBigGin();
+	
+	return sum
+}
 
 
 Card* Player::getCard(Card* card) {  // remove card from hand 
@@ -140,3 +146,14 @@ Card* Player::getCard(Card* card) {  // remove card from hand
 			hand.erase(hand.begin() + i);  
 	return card; 					
 }		
+
+
+unsigned Player::getGin() {
+	return 0;
+}
+
+
+unsigned Player::getBigGin() {
+	
+	return 0;
+}
