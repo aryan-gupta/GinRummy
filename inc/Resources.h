@@ -50,6 +50,25 @@ struct Resources {
 	
 	TTF_Font* buttonFont, ///< Our button font
 	        * nFont;      ///< Our normal font
+			
+
+	SDL_Rect knockButton, ///< Knock button position
+	         sortButton,  ///< Sort button position
+	         deadwoodPanel,
+	         meldsPanel,
+	         helpPanel,
+			 knockPos,    ///< Knock text position
+			 sortPos,     ///< Sort text position
+			 meldTextPos, ///< Meld text position
+			 dwTextPos;   ///< Deadwood text position
+			 
+	SDL_Texture* knockTexture,    ///< Knock text texture
+	           * knockTextureST,  ///< 
+	           * sortTexture,     ///< Sort text texture
+			   * meldTextTexture, ///< Meld text texture
+			   * dwTextTexture;   ///< Deadwood text texture
+			   
+	SDL_Color textColor; ///< Text color
 private:
 	/// @brief loads an image into a texture
 	/// @param [in] file `const char*` The file to load

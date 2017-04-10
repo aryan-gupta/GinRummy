@@ -43,26 +43,6 @@ private:
 	SDL_Window* window;     ///< Stores our main Window
 	SDL_Renderer* renderer; ///< Stores our main renderer
 	
-	SDL_Texture* background; ///< The background texture, Points to texture in /ref Resources
-	
-	SDL_Rect knockButton, ///< Knock button position
-	         sortButton,  ///< Sort button position
-	         deadwoodPanel,
-	         meldsPanel,
-	         helpPanel,
-			 knockPos,    ///< Knock text position
-			 sortPos,     ///< Sort text position
-			 meldTextPos, ///< Meld text position
-			 dwTextPos;   ///< Deadwood text position
-			 
-	SDL_Texture* knockTexture,    ///< Knock text texture
-	           * knockTextureST,  ///< 
-	           * sortTexture,     ///< Sort text texture
-			   * meldTextTexture, ///< Meld text texture
-			   * dwTextTexture;   ///< Deadwood text texture
-			   
-	SDL_Color textColor; ///< Text color
-	
 	void clear();  ///< Clear the window
 	void renderBackground();    ///< Render the background
 	void renderButtons();       ///< Render the buttons
