@@ -28,6 +28,7 @@ using std::vector;
 #include ".\inc\main.h"
 #include ".\inc\CardPile.h"
 #include ".\inc\Player.h"
+#include ".\inc\Human.h"
 #include ".\inc\Window.h"
 #include ".\inc\Resources.h"
 
@@ -53,8 +54,8 @@ int main(int argc, char* argv[]) {
 	
 	gDeck    = new CardPile(PILE_DECK);
 	gDiscard = new CardPile(PILE_DISCARD);
-	P1       = new Player(true);
-	P2       = new Player(false);
+	P1       = new Human();
+	//P2       = new Player(false);
 	
 	gDeck->shuffle(); // Shuffle our main deck
 	
