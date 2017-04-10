@@ -16,10 +16,62 @@
  */
 #include "info.h"
 
-#include ".\h\main.h"
+#include <iostream>
+using std::cout;
+using std::cin;
+using std::endl;
+#include <vector>
+using std::vector;
+#include <algorithm>
+using std::sort;
+#include <SDL.h>
+#include <string.h>
+
+#include ".\inc\main.h"
+#include ".\inc\Human.h"
+#include ".\inc\CardPile.h"
+#include ".\inc\Window.h"
+#include ".\inc\Resources.h"
 
 
-void Player::doTurn() {
+
+/// @brief labels for the suits (for debugging)
+static const char* Suits_Label[] {
+	"SUIT_CLUBS",
+	"SUIT_DIAMONDS",
+	"SUIT_HEARTS",
+	"SUIT_SPADES",
+	
+	"SUIT_TOTAL"
+};
+
+/// @brief Labels for the ranks
+static const char* Ranks_Label[] {
+	"RANK_ACE",
+	"RANK_2",
+	"RANK_3",
+	"RANK_4",
+	"RANK_5",
+	"RANK_6",
+	"RANK_7",
+	"RANK_8",
+	"RANK_9",
+	"RANK_10",
+	"RANK_JACK",
+	"RANK_QUEEN",
+	"RANK_KING",
+	
+	"RANK_TOTAL"
+};
+
+/// @brief Labels for the melds
+static const char* Meld_Label[] {
+	"MELD_SET",
+	"MELD_RUN"
+};
+
+
+void Human::doTurn() {
 	getMelds();
 	printHand();
 	
@@ -29,7 +81,7 @@ void Player::doTurn() {
 }
 
 
-void Player::pickDeck() {
+void Human::pickDeck() {
 	/// @todo First we want to ask the user to pick a deck to pull cards from
 	bool finished = false, isMovingCard = false;
 	Card* selectedCard = nullptr;
@@ -107,7 +159,7 @@ void Player::pickDeck() {
 }
 
 
-void Player::pickCard() {
+void Human::pickCard() {
 	/// @todo Then we want to get the melds and organize our cards and pick a card to discard
 	bool finished = false, isMovingCard = false;
 	Card* selectedCard = nullptr;
@@ -193,7 +245,7 @@ void Player::pickCard() {
 }
 
 
-void Player::moveCard(Card* c, int idx) {
+void Human::moveCard(Card* c, int idx) {
 	for(unsigned i = 0; i < hand.size(); ++i) {
 		if(c == hand[i])
 			hand.erase(hand.begin() + i); // remove the selected card
@@ -203,7 +255,7 @@ void Player::moveCard(Card* c, int idx) {
 }
 
 // WILL BE REMOVED IN FINAL GAME
-void Player::printHand() {
+void Human::printHand() {
 	for(Card* tmpCard : hand)
 		cout << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
 	
@@ -217,64 +269,60 @@ void Player::printHand() {
 			}
 		}
 	}
-	
-	if(isUser) {} else {}
-	cout << endl;
 }
 
 
-void Player::render() {
+void Human::render() {
 	renderCards();
 	renderDeadwood();
 	renderMelds();
 }
 
 
-void Player::renderCards() {
+void Human::renderCards() {
 	// The entire card lay is going to be 140px for the top card and 40px for each
 	// card behind, But we are shrinking the card by a factor of 0.25 so its 35px
 	// for the top card and 10px for the sequential cards. Total of 125px
-	if(isUser) {
-		SDL_Rect currCardPos = { // get the first card location
-			SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2,
-			SCRN_H - WIN_PAD - CARD_H,
-			CARD_W,
-			CARD_H
-		};
+	SDL_Rect currCardPos = { // get the first card location
+		SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2,
+		SCRN_H - WIN_PAD - CARD_H,
+		CARD_W,
+		CARD_H
+	};
+	
+	for(Card* tmpCard : hand) {
+		SDL_RenderCopy( // render it
+			gWindow->getRenderer(),
+			gAssets->cardsSheet,
+			&gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)],
+			&currCardPos
+		);
 		
-		for(Card* tmpCard : hand) {
-			SDL_RenderCopy( // render it
-				gWindow->getRenderer(),
-				gAssets->cardsSheet,
-				&gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)],
-				&currCardPos
-			);
-			
-			currCardPos.x += CARD_PAD; // move to the next card
-		}
-	} else {
-		SDL_Rect currCardPos = { // Get the first card loaction
-			SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2,
-			WIN_PAD,
-			CARD_W,
-			CARD_H
-		};
-		
-		for(unsigned i = 0; i < hand.size(); ++i) {
-			SDL_RenderCopy( // render it
-				gWindow->getRenderer(),
-				gAssets->cardBackSheet,
-				&gAssets->cardClippingBack,
-				&currCardPos
-			);
-			
-			currCardPos.x += CARD_PAD; // move the pos to the next card
-		}
+		currCardPos.x += CARD_PAD; // move to the next card
 	}
+	// } else {
+		// SDL_Rect currCardPos = { // Get the first card loaction
+			// SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2,
+			// WIN_PAD,
+			// CARD_W,
+			// CARD_H
+		// };
+		
+		// for(unsigned i = 0; i < hand.size(); ++i) {
+			// SDL_RenderCopy( // render it
+				// gWindow->getRenderer(),
+				// gAssets->cardBackSheet,
+				// &gAssets->cardClippingBack,
+				// &currCardPos
+			// );
+			
+			// currCardPos.x += CARD_PAD; // move the pos to the next card
+		// }
+	// }
 }
 
 
-void Player::renderDeadwood() {
+void Human::renderDeadwood() {
 	/// @todo Dude I really need to do some clean up on this. It is terrible,
 	/// but it works. Dont mess with it
 	
@@ -305,17 +353,51 @@ void Player::renderDeadwood() {
 			return GCI(a->suit, a->rank) < GCI(b->suit, b->rank);
 		}
 	);
-	if(isUser) {		
-		SDL_Rect clipping = SDL_Rect{0, 0, 30, 55};
+	
+	SDL_Rect clipping = SDL_Rect{0, 0, 30, 55};
+	
+	SDL_Rect pos = SDL_Rect{
+		WIN_PAD,
+		SCRN_H - MCARD_H*2 - WIN_PAD*2,
+		MCARD_W,
+		MCARD_H
+	};
+	
+	for(Card* tmpCard : tmpHand) {
+		clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5;
+		clipping.y = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].y + 5;
 		
-		SDL_Rect pos = SDL_Rect{
-			WIN_PAD,
-			SCRN_H - MCARD_H*2 - WIN_PAD*2,
-			MCARD_W,
-			MCARD_H
-		};
+		SDL_RenderCopy(
+			gWindow->getRenderer(),
+			gAssets->cardsSheetT,
+			&clipping,
+			&pos
+		);
 		
-		for(Card* tmpCard : tmpHand) {
+		pos.x += pos.w;
+		if(pos.x + pos.w > (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*3 + 5)) {
+			pos.x = WIN_PAD;
+			pos.y += pos.h + WIN_PAD/2;
+		}
+	}
+
+}
+
+
+void Human::renderMelds() {
+	/// @todo Dude I really need to do some clean up on this. It is terrible,
+	/// but it works, I dont know why, but it does. Dont mess with it
+	SDL_Rect clipping = SDL_Rect{0, 0, 30, 55};
+	
+	SDL_Rect pos = SDL_Rect{
+		WIN_PAD,
+		SCRN_H - MCARD_H*5 - WIN_PAD*6,
+		MCARD_W,
+		MCARD_H
+	};
+	
+	for(Meld* tmpMeld : melds) {
+		for(Card* tmpCard : tmpMeld->cards) {
 			clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5;
 			clipping.y = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].y + 5;
 			
@@ -327,45 +409,9 @@ void Player::renderDeadwood() {
 			);
 			
 			pos.x += pos.w;
-			if(pos.x + pos.w > (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*3 + 5)) {
-				pos.x = WIN_PAD;
-				pos.y += pos.h + WIN_PAD/2;
-			}
 		}
-	}
-}
-
-
-void Player::renderMelds() {
-	/// @todo Dude I really need to do some clean up on this. It is terrible,
-	/// but it works, I dont know why, but it does. Dont mess with it
-	if(isUser) {
-		SDL_Rect clipping = SDL_Rect{0, 0, 30, 55};
 		
-		SDL_Rect pos = SDL_Rect{
-			WIN_PAD,
-			SCRN_H - MCARD_H*5 - WIN_PAD*6,
-			MCARD_W,
-			MCARD_H
-		};
-		
-		for(Meld* tmpMeld : melds) {
-			for(Card* tmpCard : tmpMeld->cards) {
-				clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5;
-				clipping.y = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].y + 5;
-				
-				SDL_RenderCopy(
-					gWindow->getRenderer(),
-					gAssets->cardsSheetT,
-					&clipping,
-					&pos
-				);
-				
-				pos.x += pos.w;
-			}
-			
-			pos.x = WIN_PAD;
-			pos.y += pos.h + WIN_PAD/2;
-		}
+		pos.x = WIN_PAD;
+		pos.y += pos.h + WIN_PAD/2;
 	}
 }
