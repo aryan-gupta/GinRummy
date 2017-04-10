@@ -73,9 +73,7 @@ static const char* Meld_Label[] {
 
 void Human::doTurn() {
 	getMelds();
-	getDeadwood();
 	printHand();
-	
 	
 	pickDeck();
 	pickCard();
@@ -267,7 +265,7 @@ void Human::printHand() {
 		for(auto tmpMeld : melds) {
 			cout << Meld_Label[tmpMeld->type] << " " << endl;
 			for(auto tmpCard : tmpMeld->cards) {
-				cout << "/t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
+				cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
 			}
 		}
 	}
@@ -329,7 +327,7 @@ void Human::renderDeadwood() {
 	SDL_RenderCopy(gWindow->getRenderer(), dwTextTexture, NULL, &dwTextPos);
 	SDL_DestroyTexture(dwTextTexture);
 	
-	vector<Card*> tmpHand(deadwood);
+	vector<Card*> tmpHand(hand);
 	sort(
 		tmpHand.begin(), tmpHand.end(),
 		[](Card* a, Card* b) {

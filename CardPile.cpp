@@ -70,6 +70,7 @@ void CardPile::takeACard(Card* card) {  // each player put card face up after ge
 	pile.insert(pile.begin(), card); 
 } 
 
+
 void CardPile::shuffle() {
 	std::random_shuffle(pile.begin(), pile.end());
 }
