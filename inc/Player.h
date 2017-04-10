@@ -49,10 +49,10 @@ public:
 	/// @param[in] card `Card*` The card that user should take
 	void takeCard(Card* card);
 	
-	virtual doTurn() = 0;
-	virtual render() = 0;
+	virtual void doTurn() = 0;
+	virtual void render() = 0;
 	
-private:
+protected:
 
 	std::vector<Card*> hand;  ///< Stores the cards in the Player's hand
 	std::vector<Meld*> melds; ///< Stores the melds
