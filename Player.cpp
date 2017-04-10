@@ -33,40 +33,6 @@ using std::sort;
 #include ".\inc\Window.h"
 #include ".\inc\Resources.h"
 
-/// @brief labels for the suits (for debugging)
-static const char* Suits_Label[] {
-	"SUIT_CLUBS",
-	"SUIT_DIAMONDS",
-	"SUIT_HEARTS",
-	"SUIT_SPADES",
-	
-	"SUIT_TOTAL"
-};
-
-/// @brief Labels for the ranks
-static const char* Ranks_Label[] {
-	"RANK_ACE",
-	"RANK_2",
-	"RANK_3",
-	"RANK_4",
-	"RANK_5",
-	"RANK_6",
-	"RANK_7",
-	"RANK_8",
-	"RANK_9",
-	"RANK_10",
-	"RANK_JACK",
-	"RANK_QUEEN",
-	"RANK_KING",
-	
-	"RANK_TOTAL"
-};
-
-/// @brief Labels for the melds
-static const char* Meld_Label[] {
-	"MELD_SET",
-	"MELD_RUN"
-};
 
 const int MCARD_W = 35 *5/8;
 const int MCARD_H = 55 *5/8;
