@@ -23,8 +23,8 @@
 class Human : public Player {
 public:
 
-	Human() {};
-	virtual ~Human() {};
+	Human();
+	virtual ~Human();
 	
 	virtual void doTurn(); ///< Does a turn for the player
 	virtual void render();

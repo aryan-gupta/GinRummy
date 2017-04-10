@@ -55,7 +55,7 @@ int main(int argc, char* argv[]) {
 	gDeck    = new CardPile(PILE_DECK);
 	gDiscard = new CardPile(PILE_DISCARD);
 	P1       = new Human();
-	//P2       = new Player(false);
+	P2       = new Human();
 	
 	gDeck->shuffle(); // Shuffle our main deck
 	
