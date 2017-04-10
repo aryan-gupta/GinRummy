@@ -135,7 +135,7 @@ unsigned Player::getPoints() {
 	sum += getGin();
 	sum += getBigGin();
 	
-	return sum
+	return sum;
 }
 
 

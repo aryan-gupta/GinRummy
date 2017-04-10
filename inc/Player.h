@@ -67,7 +67,8 @@ protected:
 	unsigned getNumDeadwood();
 	
 	virtual void renderCards() = 0;
-	
+	virtual void pickDeck() = 0;
+	virtual void pickCard() = 0;
 private:
 	unsigned getGin();
 	unsigned getBigGin();
