@@ -268,6 +268,7 @@ void Window::renderHelp() {
 	);
 }
 
+
 void Window::drawAButton(SDL_Texture* tex, SDL_Rect src, int h_p, int w_p, SDL_Rect dest) {
 	// Im way to lazy to comment this algorithm. I created it a long time ago,
 	// and im just copying it from an older project

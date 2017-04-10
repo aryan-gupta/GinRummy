@@ -33,10 +33,8 @@ using std::sort;
 #include "./inc/Window.h"
 #include "./inc/Resources.h"
 
-
 const int MCARD_W = 35 *5/8;
 const int MCARD_H = 55 *5/8;
-
 
 Player::~Player() {
 	for(Card* tmpCard : hand)

@@ -15,6 +15,7 @@
  * =============================================================================
  */
 #include "info.h"
+
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_Image.h>
 #include <SDL2/SDL_TTF.h>
@@ -91,6 +92,7 @@ void initSDL() {
 		EXIT("Mixer Init Failed! " << Mix_GetError(), -0x101);
 	*/
 }
+
 
 void dealCards() {
 	for(int i = 0; i < NUM_CARDS_PER; ++i) { // Give each player 10 cards

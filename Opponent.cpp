@@ -42,6 +42,7 @@ void Opponent::render() {
 	renderCards();
 }
 
+
 void Opponent::renderCards() {
 	SDL_Rect currCardPos = { // Get the first card loaction
 		SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2,

@@ -130,12 +130,14 @@ Resources::Resources() {
 	SDL_FreeSurface(tmpSurface); tmpSurface = nullptr;
 }
 
+
 Resources::~Resources() {
 	SDL_DestroyTexture(cardsSheet); cardsSheet = nullptr;
 	SDL_DestroyTexture(cardBackSheet); cardBackSheet = nullptr;
 	
 	delete[] cardClippings;
 }
+
 
 SDL_Texture* Resources::load(const char* file) {
 	SDL_Surface* tmpSurface = IMG_Load(file);

@@ -31,8 +31,6 @@ const int CARD_W   = 140 *5/8;
 const int CARD_H   = 190 *5/8;
 const int CARD_PAD = 35  *5/8;
 
-
-
 CardPile::CardPile(CardPileTypes type) {
 	if(type == PILE_DECK) {
 		for(int i = 0; i < SUIT_TOTAL; ++i)
