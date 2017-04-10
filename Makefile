@@ -15,8 +15,8 @@
 # ==============================================================================
 .DEFAULT_GOAL := all
 # ==========================  CONST MACROS  ====================================
-CC = "g++.exe"
-RES = "windres.exe"
+CC = "g++"
+RES = "windres"
 OBJDIR = ./obj
 BINDIR = ./bin
 DATDIR = ./dat
