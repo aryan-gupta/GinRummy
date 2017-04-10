@@ -59,8 +59,6 @@ struct Card {
 	Ranks rank;
 };
 
-bool operator == (Card* lhs, Card* rhs);
-
 /// @brief The card pile types
 enum CardPileTypes {
 	PILE_DECK,
