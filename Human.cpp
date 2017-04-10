@@ -148,12 +148,13 @@ void Human::pickDeck() {
 						if(gDeck->checkClick(x, y)) {
 						
 							takeCard(gDeck->getACard()); // WE CLICKED ON THE DECK 
-							
+							finished = true; 				
 						}
 						
 						if(gDiscard->checkClick(x, y)) {
 							
 							takeCard(gDiscard->getACard()); // WE CLICKED ON THE DISCARD
+							finished = true; 
 						}
 					}
 				} break;
