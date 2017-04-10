@@ -231,7 +231,6 @@ void Human::pickCard() {
 						selectedCard = nullptr;
 					} else {
 						/// @todo check for button presses or picking a card, that will mean we are finished
-						
 						if( selectedCard != nullptr ) { 
 							gDiscard->takeACard(getCard(selectedCard)); 
 							finished = true; 
@@ -241,15 +240,16 @@ void Human::pickCard() {
 						
 						int x, y;
 						SDL_GetMouseState(&x, &y);
-						if(gWindow->checkKnockClick(x, y))
-							LOGL("WE KNOCKED")
-						if(gWindow->checkSortClick(x, y)) { 
 						
+						if(gWindow->checkKnockClick(x, y)) {
+							LOGL("WE KNOCKED")
+						}
+						
+						if(gWindow->checkSortClick(x, y)) { 
 							sort(hand.begin(), hand.end(),
 							[](Card* a, Card* b) {
 								return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
 							}); 
-							
 						}	
 					
 					}
