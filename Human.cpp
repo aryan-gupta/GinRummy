@@ -108,7 +108,10 @@ void Human::pickDeck() {
 					if(isMovingCard) {
 						isMovingCard = false;
 						selectedCard = nullptr;
+						gWindow->changeHelp(HTI_PICK_DECK); // Change help text
 					} else {
+						gWindow->changeHelp(HTI_PICK_DECK_ERR);
+						
 						int x, y;
 						SDL_GetMouseState(&x, &y);
 						
@@ -127,7 +130,6 @@ void Human::pickDeck() {
 						}
 						
 						selectedCard = nullptr;
-						gWindow->changeHelp(HTI_PICK_DECK_ERR);
 					}
 				} break;
 			}
@@ -209,7 +211,8 @@ void Human::pickCard() {
 						isMovingCard = false;
 						selectedCard = nullptr;
 					} else {
-						/// @todo check for button presses or picking a card, that will mean we are finished
+						gWindow->changeHelp(HTI_PICK_CARD_ERR);
+						
 						if( selectedCard != nullptr ) { 
 							gDiscard->takeACard(getCard(selectedCard)); 
 							finished = true; 
@@ -228,10 +231,10 @@ void Human::pickCard() {
 								[](Card* a, Card* b) {
 									return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
 							}); 
+							gWindow->changeHelp(HTI_PICK_CARD);
 						}
 						
 						selectedCard = nullptr;
-						gWindow->changeHelp(HTI_PICK_CARD_ERR);
 					}
 				} break;
 			}
