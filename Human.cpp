@@ -51,8 +51,11 @@ void Human::pickDeck() {
 	bool finished = false, isMovingCard = false;
 	Card* selectedCard = nullptr;
 	SDL_Event event;
+	uint32_t FPS_Timer = 0;
 	
 	while(!finished) { // RENDER LOOP
+		FPS_Timer = SDL_GetTicks();
+		
 		gWindow->renderAll(); // render everything
 		
 		while(SDL_PollEvent(&event)) {
@@ -124,6 +127,10 @@ void Human::pickDeck() {
 				} break;
 			}
 		}
+		
+		uint32_t frameTicks = SDL_GetTicks() - FPS_Timer; // Get time it took to render frame
+		if( frameTicks < 1000.0/MAX_FPS ) // If this was too big
+			SDL_Delay( 1000.0/MAX_FPS - frameTicks ); // Wait remainging time
 	}
 }
 
@@ -135,8 +142,10 @@ void Human::pickCard() {
 	bool finished = false, isMovingCard = false;
 	Card* selectedCard = nullptr;
 	SDL_Event event;
+	uint32_t FPS_Timer = 0;
 	
 	while(!finished) {
+		FPS_Timer = SDL_GetTicks();
 		// finished stores if we have completed the step of not,
 		// in this case it is picking a deck to draw from. After we have chosen
 		// a deck to draw from, finished is set true and the loop ends
@@ -224,6 +233,10 @@ void Human::pickCard() {
 				} break;
 			}
 		}
+		
+		uint32_t frameTicks = SDL_GetTicks() - FPS_Timer; // Get time it took to render frame
+		if( frameTicks < 1000.0/MAX_FPS ) // If this was too big
+			SDL_Delay( 1000.0/MAX_FPS - frameTicks ); // Wait remainging time
 	}
 }
 
