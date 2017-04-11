@@ -257,22 +257,7 @@ Resources::Resources() {
 		textSurface
 	);
 	
-	SDL_FreeSurface(textSurface); // free the memory
-	
-	helpTexts = new SDL_Texture*[HTI_TOTAL];
-	for(int i = 0; i < HTI_TOTAL; ++i) {
-		SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-			nFont,
-			HELP_TEXT[i], 
-			textColor
-		);
-		helpTexts[i] = SDL_CreateTextureFromSurface( // Convert it to a texture
-			gWindow->getRenderer(),
-			textSurface
-		);
-		SDL_FreeSurface(textSurface); // free the memory
-	}
-	
+	SDL_FreeSurface(textSurface); // free the memory	
 }
 
 
