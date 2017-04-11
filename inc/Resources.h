@@ -34,6 +34,7 @@ enum UI_Colors {
 	UIC_TOTAL
 };
 
+/// @brief The various help text texts indexes
 enum HelpTextItems {
 	HTI_PICK_DECK,
 	HTI_PICK_DECK_ERR,
@@ -44,7 +45,7 @@ enum HelpTextItems {
 	HTI_TOTAL
 };
 
-extern const char* HELP_TEXT[];
+extern const char* HELP_TEXT[]; ///< The actual help text
 
 /// @brief Stores all of our assets
 struct Resources {
@@ -52,7 +53,7 @@ struct Resources {
 	~Resources(); ///< Destroy our assets
 	
 	SDL_Texture* cardsSheet;       ///< The texture for our cards
-	SDL_Texture* cardsSheetT;
+	SDL_Texture* cardsSheetT;      ///< The Texture of our cards with transparent card background
 	SDL_Texture* cardBackSheet;    ///< The texture for our backs
 	SDL_Rect*    cardClippings;    ///< The card clippings
 	SDL_Rect     cardClippingBack; ///< The clippings for our backs
@@ -63,18 +64,18 @@ struct Resources {
 	TTF_Font* buttonFont, ///< Our button font
 	        * nFont;      ///< Our normal font
 			
-	SDL_Rect knockButton, ///< Knock button position
-	         sortButton,  ///< Sort button position
-	         deadwoodPanel,
-	         meldsPanel,
-	         helpPanel,
-			 knockPos,    ///< Knock text position
-			 sortPos,     ///< Sort text position
-			 meldTextPos, ///< Meld text position
-			 dwTextPos;   ///< Deadwood text position
+	SDL_Rect knockButton,   ///< Knock button position
+	         sortButton,    ///< Sort button position
+	         deadwoodPanel, ///< Deadwood Panel position
+	         meldsPanel,    ///< Melds Panel position
+	         helpPanel,     ///< Help panel position
+			 knockPos,      ///< Knock text position
+			 sortPos,       ///< Sort text position
+			 meldTextPos,   ///< Meld text position
+			 dwTextPos;     ///< Deadwood text position
 			 
 	SDL_Texture* knockTexture,    ///< Knock text texture
-	           * knockTextureST,  ///< 
+	           * knockTextureST,  ///< Crossed out Knock text texture
 	           * sortTexture,     ///< Sort text texture
 			   * meldTextTexture, ///< Meld text texture
 			   * dwTextTexture;   ///< Deadwood text texture
