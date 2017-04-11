@@ -28,6 +28,7 @@ struct Resources;
 struct Card;
 
 extern const int NUM_CARDS_PER; ///< Number of cards per player (default 10)
+extern const int MAX_FPS;
 
 extern CardPile* gDeck;    ///< The CardPile for the main deck
 extern CardPile* gDiscard; ///< The discard pile
