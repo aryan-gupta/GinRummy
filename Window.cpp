@@ -112,9 +112,9 @@ void Window::renderButtons() {
 		gAssets->sortButton
 	);
 	
-	if(P1->canWeKnock())
+	if(P1->canWeKnock()) // if we can knock then render the normal texture
 		SDL_RenderCopy(gWindow->getRenderer(), gAssets->knockTexture, NULL, &gAssets->knockPos);
-	else
+	else // else render the crossed out texture
 		SDL_RenderCopy(gWindow->getRenderer(), gAssets->knockTextureST, NULL, &gAssets->knockPos);
 	
 	SDL_RenderCopy(gWindow->getRenderer(), gAssets->sortTexture, NULL, &gAssets->sortPos);
@@ -122,7 +122,7 @@ void Window::renderButtons() {
 
 
 void Window::renderMeldsDeadwood() {
-	drawAButton(
+	drawAButton( // draw the panels
 		gAssets->uiSheets[UIC_GREY],
 		gAssets->uiClippings[1],
 		8, 7,
@@ -136,7 +136,7 @@ void Window::renderMeldsDeadwood() {
 		gAssets->meldsPanel
 	);
 	
-	SDL_RenderCopy(gWindow->getRenderer(), gAssets->meldTextTexture, NULL, &gAssets->meldTextPos);
+	SDL_RenderCopy(gWindow->getRenderer(), gAssets->meldTextTexture, NULL, &gAssets->meldTextPos); // draw the texts
 	SDL_RenderCopy(gWindow->getRenderer(), gAssets->dwTextTexture, NULL, &gAssets->dwTextPos);
 }
 
@@ -247,6 +247,7 @@ void Window::drawAButton(SDL_Texture* tex, SDL_Rect src, int h_p, int w_p, SDL_R
 
 bool Window::checkKnockClick(const int x, const int y) {
 	const SDL_Rect &knockButton = gAssets->knockButton;
+	// check if the x and y was within the button
 	if(    x > knockButton.x
 		&& x < knockButton.x + knockButton.w
 		&& y > knockButton.y
@@ -259,6 +260,7 @@ bool Window::checkKnockClick(const int x, const int y) {
 
 bool Window::checkSortClick(const int x, const int y) {
 	const SDL_Rect &sortButton = gAssets->sortButton;
+	// check if the x and y was within the button
 	if(    x > sortButton.x
 		&& x < sortButton.x + sortButton.w
 		&& y > sortButton.y
