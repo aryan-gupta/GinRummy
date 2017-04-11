@@ -184,7 +184,7 @@ Resources::Resources() {
 	);
 	knockPos = SDL_Rect{ // Text position
 		knockButton.x - textSurface->w/2 + knockButton.w/2,
-		knockButton.y - textSurface->h/2 + knockButton.h/2 + 4,
+		knockButton.y - textSurface->h/2 + knockButton.h/2,
 		textSurface->w, 
 		textSurface->h
 	};
@@ -202,7 +202,7 @@ Resources::Resources() {
 	);
 	sortPos = SDL_Rect{
 		sortButton.x - textSurface->w/2 + sortButton.w/2,
-		sortButton.y - textSurface->h/2 + sortButton.h/2 + 4,
+		sortButton.y - textSurface->h/2 + sortButton.h/2,
 		textSurface->w, 
 		textSurface->h
 	}; // Text position
