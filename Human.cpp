@@ -46,15 +46,13 @@ void Human::doTurn() {
 
 
 void Human::pickDeck() {
-	gWindow->changeHelp(HTI_PICK_DECK);
+	gWindow->changeHelp(HTI_PICK_DECK); // Change help text
 	
-	/// @todo First we want to ask the user to pick a deck to pull cards from
 	bool finished = false, isMovingCard = false;
 	Card* selectedCard = nullptr;
 	SDL_Event event;
 	
-	while(!finished) {
-		
+	while(!finished) { // RENDER LOOP
 		gWindow->renderAll(); // render everything
 		
 		while(SDL_PollEvent(&event)) {
@@ -80,8 +78,6 @@ void Human::pickDeck() {
 				break;
 				
 				case SDL_MOUSEBUTTONDOWN: {
-					/// @todo If next event is mouse movement then THEN move the card. 
-					/// @todo get card that the user selected
 					int x, y;
 					SDL_GetMouseState(&x, &y);
 					
@@ -106,18 +102,19 @@ void Human::pickDeck() {
 						isMovingCard = false;
 						selectedCard = nullptr;
 					} else {
-						/// @todo if one of the decks of cards is selected then mark finished to true
 						int x, y;
 						SDL_GetMouseState(&x, &y);
 						
-						if(gDeck->checkClick(x, y)) {
+						if(gWindow->checkKnockClick(x, y)) {
+							LOGL("WE KNOCKED") /// @todo change help text
+						}
 						
+						if(gDeck->checkClick(x, y)) {
 							takeCard(gDeck->getACard()); // WE CLICKED ON THE DECK 
 							finished = true; 				
 						}
 						
 						if(gDiscard->checkClick(x, y)) {
-							
 							takeCard(gDiscard->getACard()); // WE CLICKED ON THE DISCARD
 							finished = true; 
 						}
