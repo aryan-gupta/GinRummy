@@ -102,7 +102,10 @@ void Player::getDeadwood() {
 			for(unsigned k = 0; k < melds[j]->cards.size(); k++) {   // go through all the cards in the melds
 				if(    deadwood[i]->suit == melds[j]->cards[k]->suit // if the card is in the meld
 					&& deadwood[i]->rank == melds[j]->cards[k]->rank
-				) deadwood.erase(deadwood.begin() + i);              // remove it from deadwood
+				) {
+					if(i < deadwood.size())
+						deadwood.erase(deadwood.begin() + i);              // remove it from deadwood
+				}
 			}			
 		}	
 	}
