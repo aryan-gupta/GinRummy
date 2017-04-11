@@ -46,6 +46,8 @@ void Human::doTurn() {
 
 
 void Human::pickDeck() {
+	gWindow->changeHelp(HTI_PICK_DECK);
+	
 	/// @todo First we want to ask the user to pick a deck to pull cards from
 	bool finished = false, isMovingCard = false;
 	Card* selectedCard = nullptr;
@@ -119,6 +121,8 @@ void Human::pickDeck() {
 							takeCard(gDiscard->getACard()); // WE CLICKED ON THE DISCARD
 							finished = true; 
 						}
+						
+						gWindow->changeHelp(HTI_PICK_DECK_ERR);
 					}
 				} break;
 			}
@@ -128,6 +132,8 @@ void Human::pickDeck() {
 
 
 void Human::pickCard() {
+	gWindow->changeHelp(HTI_PICK_CARD);
+	
 	/// @todo Then we want to get the melds and organize our cards and pick a card to discard
 	bool finished = false, isMovingCard = false;
 	Card* selectedCard = nullptr;
@@ -214,7 +220,8 @@ void Human::pickCard() {
 								return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
 							}); 
 						}	
-					
+						
+						gWindow->changeHelp(HTI_PICK_CARD_ERR);
 					}
 				} break;
 			}

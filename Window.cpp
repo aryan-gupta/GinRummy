@@ -148,6 +148,39 @@ void Window::renderHelp() {
 		8, 7,
 		gAssets->helpPanel
 	);
+	
+	int coursorx = gAssets->helpPanel.x + 10;
+	int coursory = gAssets->helpPanel.y + 10;
+	for(int i = 0; HELP_TEXT[helpToRender][i] != '\0'; ++i) {
+		SDL_Surface* tmpS = TTF_RenderGlyph_Blended(gAssets->nFont, HELP_TEXT[helpToRender][i], gAssets->textColor);
+		SDL_Texture* tmpT = SDL_CreateTextureFromSurface(renderer, tmpS);
+		SDL_Rect tmpR = {coursorx, coursory, tmpS->w, tmpS->h};
+		SDL_RenderCopy(renderer, tmpT, NULL, &tmpR);
+		
+		coursorx += tmpS->w + 1;
+		if(HELP_TEXT[helpToRender][i] == ' ') {
+			int j;
+			for(j = i + 1; HELP_TEXT[helpToRender][j] != '\0'; ++j) {
+				if(HELP_TEXT[helpToRender][j] == ' ')
+					break;			
+			}
+			
+			std::string s2(HELP_TEXT[helpToRender], i, j - i);
+			int w, h;
+			TTF_SizeText(gAssets->nFont, s2.c_str(), &w, &h);
+			if(coursorx + w > gAssets->helpPanel.x + gAssets->helpPanel.w - 5) {
+				coursorx = gAssets->helpPanel.x + 10;
+				coursory = coursory + tmpS->h + 3;
+			}
+		}
+		SDL_FreeSurface(tmpS);
+		SDL_DestroyTexture(tmpT);
+	}
+}
+
+
+void Window::changeHelp(HelpTextItems helpToRender) {
+	this->helpToRender = helpToRender;
 }
 
 

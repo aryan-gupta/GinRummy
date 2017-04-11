@@ -38,6 +38,14 @@ static const char* UI_SHEETS[] = {
 	"..//res//sprites//Spritesheets//yellowSheet.png",
 };
 
+const char* HELP_TEXT[] = {
+	"Its your turn. Pick a deck to pick from. You can either click on the stock deck or the discard deck",
+	"You MUST draw from either card pile. Please click on either the stock deck or the discard deck",
+	"Now you must discard a card, or knock if you can",
+	"You MUST click on a card, or knock if you can. You can knock ONLY if you have less than 10 deadwood",
+	"Its your Opponent's turn"	
+};
+
 Resources::Resources() {
 	cardClippingBack = SDL_Rect{280, 570, 140, 190};
 	
@@ -250,6 +258,20 @@ Resources::Resources() {
 	);
 	
 	SDL_FreeSurface(textSurface); // free the memory
+	
+	helpTexts = new SDL_Texture*[HTI_TOTAL];
+	for(int i = 0; i < HTI_TOTAL; ++i) {
+		SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+			nFont,
+			HELP_TEXT[i], 
+			textColor
+		);
+		helpTexts[i] = SDL_CreateTextureFromSurface( // Convert it to a texture
+			gWindow->getRenderer(),
+			textSurface
+		);
+		SDL_FreeSurface(textSurface); // free the memory
+	}
 	
 }
 

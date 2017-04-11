@@ -18,6 +18,8 @@
 #ifndef WINDOW_H_INC
 #define WINDOW_H_INC
 
+#include "./Resources.h"
+
 extern const int SCRN_W;
 extern const int SCRN_H;
 extern const int WIN_PAD;
@@ -34,14 +36,18 @@ public:
 	void initWindow();
 	
 	void renderAll(); ///< Renders all of the objects on the screen
+	void changeHelp(HelpTextItems helpToRender);
 	
 	bool checkKnockClick(const int x, const int y);
 	bool checkSortClick(const int x, const int y);
 	
 	inline SDL_Renderer*  getRenderer(); ///< Get the current Window's renderer
+	
 private:
 	SDL_Window* window;     ///< Stores our main Window
 	SDL_Renderer* renderer; ///< Stores our main renderer
+	
+	HelpTextItems helpToRender;
 	
 	void clear();  ///< Clear the window
 	void renderBackground();    ///< Render the background

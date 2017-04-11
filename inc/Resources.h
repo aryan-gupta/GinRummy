@@ -34,6 +34,18 @@ enum UI_Colors {
 	UIC_TOTAL
 };
 
+enum HelpTextItems {
+	HTI_PICK_DECK,
+	HTI_PICK_DECK_ERR,
+	HTI_PICK_CARD,
+	HTI_PICK_CARD_ERR,
+	HTI_NOT_YOUR_TURN,
+	
+	HTI_TOTAL
+};
+
+extern const char* HELP_TEXT[];
+
 /// @brief Stores all of our assets
 struct Resources {
 	Resources();  ///< Load all of our assets
@@ -51,7 +63,8 @@ struct Resources {
 	TTF_Font* buttonFont, ///< Our button font
 	        * nFont;      ///< Our normal font
 			
-
+	SDL_Texture** helpTexts;
+	
 	SDL_Rect knockButton, ///< Knock button position
 	         sortButton,  ///< Sort button position
 	         deadwoodPanel,
