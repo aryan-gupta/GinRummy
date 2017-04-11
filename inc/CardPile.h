@@ -73,6 +73,8 @@ public:
 	CardPile(CardPileTypes type);
 	~CardPile();
 	
+	size_t size();
+	
 	void shuffle(); ///< Suffle the deck
 	void render();  ///< Render the deck
 	

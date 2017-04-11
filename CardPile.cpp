@@ -63,6 +63,11 @@ CardPile::~CardPile() {
 }
 
 
+size_t CardPile::size() {
+	return pile.size();
+}
+
+
 void CardPile::takeACard(Card* card) {  // each player put card face up after get card from cardpile gdeck 
 	pile.insert(pile.begin(), card); 
 } 
