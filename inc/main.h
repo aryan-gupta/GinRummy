@@ -28,16 +28,16 @@ struct Resources;
 struct Card;
 
 extern const int NUM_CARDS_PER; ///< Number of cards per player (default 10)
-extern const int MAX_FPS;
+extern const int MAX_FPS;       ///< Max FPS of the game
 
 extern CardPile* gDeck;    ///< The CardPile for the main deck
 extern CardPile* gDiscard; ///< The discard pile
 
-extern Player* P1;
-extern Player* P2;
+extern Player* P1; ///< Player 1
+extern Player* P2; ///< Player 2
 
-extern Window* gWindow;
-extern const Resources* gAssets;
+extern Window* gWindow; ///< The window
+extern const Resources* gAssets; ///< All the assets
 
 
 // =========================
@@ -49,7 +49,5 @@ void initSDL();       ///< Inits the graphics
 void createPlayers(); ///< creates the players
 void dealCards();     ///< Deals the cards
 void quit(int code);  ///< Deletes variables and exits
-
-unsigned getDeadwood(const std::vector<Card*> &cards);
 
 #endif // MAIN_H_INCLUDED

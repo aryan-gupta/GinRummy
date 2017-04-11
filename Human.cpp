@@ -35,13 +35,13 @@ using std::sort;
 
 
 void Human::doTurn() {
-	getMelds();
-	getDeadwood();
-	pickDeck();
+	pickDeck();    // pick a deack to pick from
+	getMelds();    // update our melds
+	getDeadwood(); // update our deadwood
 	
-	getMelds();
-	getDeadwood();
-	pickCard();
+	pickCard();    // pick a card to discard
+	getMelds();    // update our melds
+	getDeadwood(); // update our deadwood
 }
 
 
@@ -58,7 +58,7 @@ void Human::pickDeck() {
 		
 		gWindow->renderAll(); // render everything
 		
-		while(SDL_PollEvent(&event)) {
+		while(SDL_PollEvent(&event)) { // EVENT LOOP
 			if(isMovingCard) { // if we are moving a card
 				int x, y;
 				SDL_GetMouseState(&x, &y);
@@ -292,45 +292,45 @@ void Human::renderDeadwood() {
 	// First render the number of deadwood
 	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->nFont,
-		("(" + std::to_string(getNumDeadwood()) + ")").c_str(), 
-		SDL_Color{0x00, 0x00, 0x00, 0xFF}
+		("(" + std::to_string(getNumDeadwood()) + ")").c_str(), // convert num of deadwood into a string
+		gAssets->textColor
 	);
 	SDL_Texture* dwTextTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
 		gWindow->getRenderer(),
 		textSurface
 	);
-	SDL_Rect dwTextPos = SDL_Rect{
+	SDL_Rect dwTextPos = SDL_Rect{ // get the position
 		WIN_PAD + 76,
-		SCRN_H - MCARD_H*2 - WIN_PAD*3,
+		SCRN_H - MCARD_H*2 - WIN_PAD*3, // 2 lines of cards plus 3 paddings from the bottom
 		textSurface->w, 
 		textSurface->h
-	}; // Text position
-	SDL_FreeSurface(textSurface);
+	};
+	
+	SDL_FreeSurface(textSurface); // render and free memory
 	SDL_RenderCopy(gWindow->getRenderer(), dwTextTexture, NULL, &dwTextPos);
 	SDL_DestroyTexture(dwTextTexture);
 	
-	vector<Card*> tmpHand(deadwood);
-	sort(
-		tmpHand.begin(), tmpHand.end(),
+	sort( // sort our deadwood
+		deadwood.begin(), deadwood.end(),
 		[](Card* a, Card* b) {
 			return GCI(a->suit, a->rank) < GCI(b->suit, b->rank);
 		}
 	);
 	
-	SDL_Rect clipping = SDL_Rect{0, 0, 30, 55};
+	SDL_Rect clipping = SDL_Rect{0, 0, 30, 55}; // set the w/h of the clippings clippings
 	
-	SDL_Rect pos = SDL_Rect{
+	SDL_Rect pos = SDL_Rect{ // position of where to render each card
 		WIN_PAD,
 		SCRN_H - MCARD_H*2 - WIN_PAD*2,
 		MCARD_W,
 		MCARD_H
 	};
 	
-	for(Card* tmpCard : tmpHand) {
-		clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5;
+	for(Card* tmpCard : deadwood) {
+		clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5; // find each card
 		clipping.y = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].y + 5;
 		
-		SDL_RenderCopy(
+		SDL_RenderCopy( // render
 			gWindow->getRenderer(),
 			gAssets->cardsSheetT,
 			&clipping,
@@ -338,8 +338,8 @@ void Human::renderDeadwood() {
 		);
 		
 		pos.x += pos.w;
-		if(pos.x + pos.w > (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*2)) {
-			pos.x = WIN_PAD;
+		if(pos.x + pos.w > (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*2)) { ///@ @todo make this gAssets->deadwood-panel dependent
+			pos.x = WIN_PAD; // CRLF
 			pos.y += pos.h + WIN_PAD/2;
 		}
 	}
@@ -350,31 +350,31 @@ void Human::renderDeadwood() {
 void Human::renderMelds() {
 	/// @todo Dude I really need to do some clean up on this. It is terrible,
 	/// but it works, I dont know why, but it does. Dont mess with it
-	SDL_Rect clipping = SDL_Rect{0, 0, 30, 55};
+	SDL_Rect clipping = SDL_Rect{0, 0, 30, 55}; // Card clipping for mini card
 	
-	SDL_Rect pos = SDL_Rect{
+	SDL_Rect pos = SDL_Rect{ // position of the meld cards
 		WIN_PAD,
-		SCRN_H - MCARD_H*5 - WIN_PAD*6,
+		SCRN_H - MCARD_H*5 - WIN_PAD*6, // 5 lines of cards and 6 lines of padding from the bottom
 		MCARD_W,
 		MCARD_H
 	};
 	
 	for(Meld* tmpMeld : melds) {
 		for(Card* tmpCard : tmpMeld->cards) {
-			clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5;
+			clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5; // get card clippings and remove 5px from the top and left
 			clipping.y = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].y + 5;
 			
-			SDL_RenderCopy(
+			SDL_RenderCopy( // render
 				gWindow->getRenderer(),
 				gAssets->cardsSheetT,
 				&clipping,
 				&pos
 			);
 			
-			pos.x += pos.w;
+			pos.x += pos.w; // move to next 'character'
 		}
 		
-		pos.x = WIN_PAD;
+		pos.x = WIN_PAD; // CRLF
 		pos.y += pos.h + WIN_PAD/2;
 	}
 }
