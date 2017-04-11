@@ -214,10 +214,11 @@ void Human::pickCard() {
 							LOGL("WE KNOCKED")
 						}
 						
-						if(gWindow->checkSortClick(x, y)) { 
-							sort(hand.begin(), hand.end(),
-							[](Card* a, Card* b) {
-								return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
+						if(gWindow->checkSortClick(x, y)) { ///@todo Swap sorting algorithms
+							sort(
+								hand.begin(), hand.end(),
+								[](Card* a, Card* b) {
+									return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
 							}); 
 						}	
 						
