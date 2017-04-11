@@ -19,7 +19,7 @@
 #include <iostream>
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_Image.h>
-//#include <SDL2/SDL_TTF.h>
+#include <string>
 
 #include "./inc/main.h"
 #include "./inc/Window.h"
