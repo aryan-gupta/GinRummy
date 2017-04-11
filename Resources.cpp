@@ -39,11 +39,11 @@ static const char* UI_SHEETS[] = {
 };
 
 const char* HELP_TEXT[] = {
-	"Its your turn. Pick a deck to pick from. You can either click on the stock deck or the discard deck",
-	"You MUST draw from either card pile. Please click on either the stock deck or the discard deck",
+	"Its your turn. Pick a deck to pick from. You can either click on the stock deck or the discard deck.",
+	"You MUST draw from either card pile. Please click on either the stock deck or the discard deck.",
 	"Now you must discard a card, or knock if you can",
-	"You MUST click on a card, or knock if you can. You can knock ONLY if you have less than 10 deadwood",
-	"Its your Opponent's turn"	
+	"You MUST click on a card, or knock if you can. You can knock ONLY if you have less than 10 deadwood.",
+	"Its your Opponent's turn."	
 };
 
 Resources::Resources() {
@@ -162,7 +162,7 @@ Resources::Resources() {
 		WIN_PAD - 5,
 		SCRN_H - MCARD_H*5 - WIN_PAD*7 - 5,
 		SCRN_W/2 - (CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
-		MCARD_H*3 + WIN_PAD*2 + 5
+		MCARD_H*3 + WIN_PAD*5/2 + 5
 	};
 	
 	helpPanel = SDL_Rect{
