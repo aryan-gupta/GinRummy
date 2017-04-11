@@ -46,6 +46,7 @@ private:
 	SDL_Renderer* renderer; ///< Stores our main renderer
 	
 	HelpTextItems helpToRender;
+	void changeHelp(HelpTextItems helpToRender);
 	
 	void clear();  ///< Clear the window
 	void renderBackground();    ///< Render the background

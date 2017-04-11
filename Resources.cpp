@@ -38,6 +38,14 @@ static const char* UI_SHEETS[] = {
 	"..//res//sprites//Spritesheets//yellowSheet.png",
 };
 
+const char* HELP_TEXT[] = {
+	"Its your turn. Pick a deck to pick from...",
+	"You MUST draw from either the discard or the stock",
+	"Now you must discard a card, or knock if you can",
+	"You MUST click on a card, or knock",
+	"Its your Opponent's turn"	
+};
+
 Resources::Resources() {
 	cardClippingBack = SDL_Rect{280, 570, 140, 190};
 	
@@ -53,7 +61,7 @@ Resources::Resources() {
 	if(buttonFont == NULL)
 		EXIT("Font Opening Failed" << TTF_GetError(), -0x20A);
 
-	nFont = TTF_OpenFont(BRIEF_FONT, 12); // Load the font
+	nFont = TTF_OpenFont(BRIEF_FONT, 13); // Load the font
 	if(nFont == NULL)
 		EXIT("Font Opening Failed" << TTF_GetError(), -0x20A);
 	
@@ -250,6 +258,20 @@ Resources::Resources() {
 	);
 	
 	SDL_FreeSurface(textSurface); // free the memory
+	
+	helpTexts = new SDL_Texture*[HTI_TOTAL];
+	for(int i = 0; i < HTI_TOTAL; ++i) {
+		SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+			nFont,
+			HELP_TEXT[i], 
+			textColor
+		);
+		helpTexts[i] = SDL_CreateTextureFromSurface( // Convert it to a texture
+			gWindow->getRenderer(),
+			textSurface
+		);
+		SDL_FreeSurface(textSurface); // free the memory
+	}
 	
 }
 

@@ -149,7 +149,15 @@ void Window::renderHelp() {
 		gAssets->helpPanel
 	);
 	
-	SDL_RenderCopy(render, gAssets->helpTexts[helpToRender], NULL, gAssets->helpPanel);
+	int w, h;
+	SDL_QueryTexture(gAssets->helpTexts[helpToRender], NULL, NULL, &w, &h);
+	SDL_Rect pos = {
+		gAssets->helpPanel.x + gAssets->helpPanel.w/2 - w/2,
+		gAssets->helpPanel.y + gAssets->helpPanel.h/2 - h/2,
+		w,
+		h,
+	};
+	SDL_RenderCopy(renderer, gAssets->helpTexts[helpToRender], NULL, &pos);
 }
 
 

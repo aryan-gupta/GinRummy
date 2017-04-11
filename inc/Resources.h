@@ -39,15 +39,9 @@ enum HelpTextItems {
 	HTI_PICK_DECK_ERR,
 	HTI_PICK_CARD,
 	HTI_PICK_CARD_ERR,
-	HTI_NOT_YOUR_TURN
-};
-
-const char* HELP_TEXT[] = {
-	"Its your turn. Pick a deck to pick from...",
-	"You MUST draw from either the discard or the stock",
-	"Now you must discard a card, or knock if you can",
-	"You MUST click on a card, or knock",
-	"Its your Opponent's turn"	
+	HTI_NOT_YOUR_TURN,
+	
+	HTI_TOTAL
 };
 
 /// @brief Stores all of our assets
