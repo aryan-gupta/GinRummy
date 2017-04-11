@@ -174,7 +174,8 @@ void Window::renderHelp() {
 				cursory = cursory + tmpS->h + 3;
 			}
 		}
-		SDL_FreeSurface(tmpS);
+		
+		SDL_FreeSurface(tmpS); // Free the memory
 		SDL_DestroyTexture(tmpT);
 	}
 }
