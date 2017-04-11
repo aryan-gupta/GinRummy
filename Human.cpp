@@ -101,7 +101,7 @@ void Human::pickDeck() {
 				} break;
 				
 				case SDL_MOUSEMOTION:
-					if(selectedCard != nullptr) isMovingCard = true;
+					if(selectedCard != nullptr) isMovingCard = true; /// @todo if x or y is more than 5 px from when we mouse down then move card
 				break;
 				
 				case SDL_MOUSEBUTTONUP: {
