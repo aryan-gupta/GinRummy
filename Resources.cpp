@@ -40,8 +40,8 @@ static const char* UI_SHEETS[] = {
 
 const char* HELP_TEXT[] = {
 	"Its your turn. Pick a deck to pick from...",
-	"You MUST draw from either the discard or the stock",
-	"Now you must discard a card, or knock if you can",
+	"You MUST draw from either card pile",
+	"Now you must discard a card, or knock",
 	"You MUST click on a card, or knock",
 	"Its your Opponent's turn"	
 };
@@ -61,7 +61,7 @@ Resources::Resources() {
 	if(buttonFont == NULL)
 		EXIT("Font Opening Failed" << TTF_GetError(), -0x20A);
 
-	nFont = TTF_OpenFont(BRIEF_FONT, 13); // Load the font
+	nFont = TTF_OpenFont(BRIEF_FONT, 12); // Load the font
 	if(nFont == NULL)
 		EXIT("Font Opening Failed" << TTF_GetError(), -0x20A);
 	
