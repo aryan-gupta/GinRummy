@@ -150,7 +150,7 @@ void Window::renderHelp() {
 	);
 	
 	int coursorx = gAssets->helpPanel.x + 10;
-	int coursory = gAssets->helpPanel.y + 5;
+	int coursory = gAssets->helpPanel.y + 10;
 	for(int i = 0; HELP_TEXT[helpToRender][i] != '\0'; ++i) {
 		SDL_Surface* tmpS = TTF_RenderGlyph_Blended(gAssets->nFont, HELP_TEXT[helpToRender][i], gAssets->textColor);
 		SDL_Texture* tmpT = SDL_CreateTextureFromSurface(renderer, tmpS);
@@ -170,7 +170,7 @@ void Window::renderHelp() {
 			TTF_SizeText(gAssets->nFont, s2.c_str(), &w, &h);
 			if(coursorx + w > gAssets->helpPanel.x + gAssets->helpPanel.w - 5) {
 				coursorx = gAssets->helpPanel.x + 10;
-				coursory = gAssets->helpPanel.y + h + 10;
+				coursory = coursory + tmpS->h + 3;
 			}
 		}
 		SDL_FreeSurface(tmpS);
