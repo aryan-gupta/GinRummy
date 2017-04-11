@@ -162,7 +162,7 @@ Resources::Resources() {
 		WIN_PAD - 5,
 		SCRN_H - MCARD_H*5 - WIN_PAD*7 - 5,
 		SCRN_W/2 - (CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W)/2 - WIN_PAD*3 + 5,
-		MCARD_H*3 + WIN_PAD*2 + 5
+		MCARD_H*3 + WIN_PAD*5/2 + 5
 	};
 	
 	helpPanel = SDL_Rect{
