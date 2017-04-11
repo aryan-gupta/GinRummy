@@ -61,8 +61,8 @@ public:
 	
 protected:
 	std::vector<Card*> hand;     ///< Stores the cards in the Player's hand
-	std::vector<Meld*> melds;    ///< Stores the melds
 	std::vector<Card*> deadwood; ///< Stores the melds
+	std::vector<Meld*> melds;    ///< Stores the melds
 	
 	/// @brief gets a specific card from the hand
 	/// @warning removes the card from the hand
