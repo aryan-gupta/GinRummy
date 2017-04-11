@@ -89,7 +89,7 @@ void Human::pickDeck() {
 						&& y > SCRN_H - WIN_PAD - CARD_H
 						&& y < SCRN_H - WIN_PAD
 					)  {
-						isMovingCard = true;
+						//isMovingCard = true;
 						int cardx = x - (SCRN_W/2 - (CARD_PAD*(hand.size() - 1) + CARD_W)/2); // get the x coordinate offset from the start of the cards
 						int cardi = cardx / CARD_PAD; // get the index of the card we clicked
 						
@@ -99,6 +99,10 @@ void Human::pickDeck() {
 						selectedCard = hand[cardi];
 					}
 				} break;
+				
+				case SDL_MOUSEMOTION:
+					if(selectedCard != nullptr) isMovingCard = true;
+				break;
 				
 				case SDL_MOUSEBUTTONUP: {
 					if(isMovingCard) {
@@ -122,6 +126,7 @@ void Human::pickDeck() {
 							finished = true; 
 						}
 						
+						selectedCard = nullptr;
 						gWindow->changeHelp(HTI_PICK_DECK_ERR);
 					}
 				} break;
@@ -153,7 +158,6 @@ void Human::pickCard() {
 		gWindow->renderAll(); // render everything
 		
 		while(SDL_PollEvent(&event)) {   // get all the events from the window
-		
 			if(isMovingCard) { // If we have clicked on a card and we are moving it
 				int x, y;
 				SDL_GetMouseState(&x, &y);
@@ -210,8 +214,6 @@ void Human::pickCard() {
 							gDiscard->takeACard(getCard(selectedCard)); 
 							finished = true; 
 						}
-					
-						selectedCard = nullptr;
 						
 						int x, y;
 						SDL_GetMouseState(&x, &y);
@@ -226,8 +228,9 @@ void Human::pickCard() {
 								[](Card* a, Card* b) {
 									return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
 							}); 
-						}	
+						}
 						
+						selectedCard = nullptr;
 						gWindow->changeHelp(HTI_PICK_CARD_ERR);
 					}
 				} break;
