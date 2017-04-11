@@ -96,15 +96,12 @@ void Player::getMelds() {
 void Player::getDeadwood() {
 	// FIND anycard in our hand that not part of meld 
 	deadwood = hand; // first copy the hand into deadwood
-
-	for(int i = deadwood.size() - 1; i >= 0; --i) {                  // go backwards in the deadwood so index isnt screwed up
-		for(unsigned j = 0; j < melds.size(); j++) {                 // go through all the melds
-			for(unsigned k = 0; k < melds[j]->cards.size(); k++) {   // go through all the cards in the melds
-				if(    deadwood[i]->suit == melds[j]->cards[k]->suit // if the card is in the meld
-					&& deadwood[i]->rank == melds[j]->cards[k]->rank
-				) deadwood.erase(deadwood.begin() + i);              // remove it from deadwood
-			}			
-		}	
+	
+	for(Meld* tmpMeld : melds) {
+		for(Card* tmpCard : tmpMeld->cards) {
+			auto idx = std::remove(deadwood.begin(), deadwood.end(), tmpCard);
+			deadwood.erase(idx, deadwood.end());
+		}
 	}
 }
 
