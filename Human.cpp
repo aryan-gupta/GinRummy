@@ -35,13 +35,13 @@ using std::sort;
 
 
 void Human::doTurn() {
+	getMelds();    // update our melds
+	getDeadwood(); // update our deadwood
 	pickDeck();    // pick a deack to pick from
-	getMelds();    // update our melds
-	getDeadwood(); // update our deadwood
 	
-	pickCard();    // pick a card to discard
 	getMelds();    // update our melds
 	getDeadwood(); // update our deadwood
+	pickCard();    // pick a card to discard
 }
 
 

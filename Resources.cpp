@@ -281,7 +281,7 @@ Resources::Resources() {
 			SDL_FreeSurface(textSurface); // free the memory	
 		}
 		
-		TTF_SetFontStyle(buttonFont, TTF_STYLE_NONE);
+		TTF_SetFontStyle(buttonFont, TTF_STYLE_NORMAL);
 		textColor = SDL_Color{0x00, 0x00, 0x00, 0xFF}; // black text color
 	}
 }
