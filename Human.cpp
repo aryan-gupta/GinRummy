@@ -338,7 +338,7 @@ void Human::renderDeadwood() {
 		);
 		
 		pos.x += pos.w;
-		if(pos.x + pos.w > (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*3 + 5)) {
+		if(pos.x + pos.w > (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*2)) {
 			pos.x = WIN_PAD;
 			pos.y += pos.h + WIN_PAD/2;
 		}
