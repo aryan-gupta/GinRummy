@@ -44,6 +44,8 @@ enum HelpTextItems {
 	HTI_TOTAL
 };
 
+extern const char* HELP_TEXT[];
+
 /// @brief Stores all of our assets
 struct Resources {
 	Resources();  ///< Load all of our assets

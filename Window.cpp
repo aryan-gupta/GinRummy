@@ -149,15 +149,33 @@ void Window::renderHelp() {
 		gAssets->helpPanel
 	);
 	
-	int w, h;
-	SDL_QueryTexture(gAssets->helpTexts[helpToRender], NULL, NULL, &w, &h);
-	SDL_Rect pos = {
-		gAssets->helpPanel.x + gAssets->helpPanel.w/2 - w/2,
-		gAssets->helpPanel.y + gAssets->helpPanel.h/2 - h/2,
-		w,
-		h,
-	};
-	SDL_RenderCopy(renderer, gAssets->helpTexts[helpToRender], NULL, &pos);
+	int coursorx = gAssets->helpPanel.x + 10;
+	int coursory = gAssets->helpPanel.y + 5;
+	for(int i = 0; HELP_TEXT[helpToRender][i] != '\0'; ++i) {
+		SDL_Surface* tmpS = TTF_RenderGlyph_Blended(gAssets->nFont, HELP_TEXT[helpToRender][i], gAssets->textColor);
+		SDL_Texture* tmpT = SDL_CreateTextureFromSurface(renderer, tmpS);
+		SDL_Rect tmpR = {coursorx, coursory, tmpS->w, tmpS->h};
+		SDL_RenderCopy(renderer, tmpT, NULL, &tmpR);
+		
+		coursorx += tmpS->w + 1;
+		if(HELP_TEXT[helpToRender][i] == ' ') {
+			int j;
+			for(j = i + 1; HELP_TEXT[helpToRender][j] != '\0'; ++j) {
+				if(HELP_TEXT[helpToRender][j] == ' ')
+					break;			
+			}
+			
+			std::string s2(HELP_TEXT[helpToRender], i, j - i);
+			int w, h;
+			TTF_SizeText(gAssets->nFont, s2.c_str(), &w, &h);
+			if(coursorx + w > gAssets->helpPanel.x + gAssets->helpPanel.w - 5) {
+				coursorx = gAssets->helpPanel.x + 10;
+				coursory = gAssets->helpPanel.y + h + 10;
+			}
+		}
+		SDL_FreeSurface(tmpS);
+		SDL_DestroyTexture(tmpT);
+	}
 }
 
 
