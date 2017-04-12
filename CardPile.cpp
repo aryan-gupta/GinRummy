@@ -119,3 +119,17 @@ bool CardPile::checkClick(const int x, const int y) {
 	
 	return false;
 }
+
+
+
+Card* CardPile::peek() { 
+
+	if(pile.size() == 0) { 
+		return nullptr; 
+
+	}
+	
+	return pile[0]; // return first card  
+ 
+
+} 
