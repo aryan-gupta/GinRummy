@@ -50,43 +50,33 @@ void Player::takeCard(Card* card) {
 
 void Player::getMelds() {
 	melds.clear();
-	// FOR DEBUGGING
 	typedef std::vector<Card*> CS;
 	
-	auto checkMelds = [](CS vec) { // or bool (*checkMelds)(CS)
-		LOGL(vec.size())
-		for(Card* tmpCard : vec) {
-			if(tmpCard->rank != vec[0]->rank)
-				return false;
-		}
-		return true;
-	};
-	
-	CS tmp = hand;
+	CS tmpHand = hand;
 	std::sort(
-		tmp.begin(), tmp.end(),
+		tmpHand.begin(), tmpHand.end(),
 		[](Card* a, Card* b) {
 			return (a->rank*SUIT_TOTAL + a->suit) < (b->rank*SUIT_TOTAL + b->suit);
 		}
 	);
 	
-	for(auto i = tmp.end() - 1; i >= tmp.begin() + 2; --i) {
-		if(    i >= tmp.begin() + 3 
-			&& (*(i    ))->rank == (*(i - 1))->rank
-			&& (*(i - 1))->rank == (*(i - 2))->rank
-			&& (*(i - 2))->rank == (*(i - 3))->rank
+	for(int i = tmpHand.size() - 1; i > 1; --i) {
+		if(    i > 2 
+			&& tmpHand[i    ]->rank == tmpHand[i - 1]->rank
+			&& tmpHand[i - 1]->rank == tmpHand[i - 2]->rank
+			&& tmpHand[i - 2]->rank == tmpHand[i - 3]->rank
 		) {
 			melds.push_back( new Meld {
 				MELD_SET,
-				{*(i), *(i - 1), *(i - 2), *(i - 3)}
+				{tmpHand[i], tmpHand[i - 1], tmpHand[i - 2], tmpHand[i - 3]}
 			});
 			i -= 3;
-		} else if(    (*(i    ))->rank == (*(i - 1))->rank
-				   && (*(i - 1))->rank == (*(i - 2))->rank
+		} else if(    tmpHand[i    ]->rank == tmpHand[i - 1]->rank
+				   && tmpHand[i - 1]->rank == tmpHand[i - 2]->rank
 		) {
 			melds.push_back( new Meld {
 				MELD_SET,
-				{*(i), *(i - 1), *(i - 2)}
+				{tmpHand[i], tmpHand[i - 1], tmpHand[i - 2]}
 			});
 			i -= 2;
 		}
@@ -102,7 +92,7 @@ void Player::getMelds() {
 				if(    hand[i]->suit == hand[j]->suit // if the suits are all the same, we may have a run
 					&& hand[j]->suit == hand[k]->suit
 				) {
-					vector<Card*> tmpCards{hand[i], hand[j], hand[k]}; // create vector to sort 
+					CS tmpCards{hand[i], hand[j], hand[k]}; // create vector to sort 
 					sort( // sort the 3 cards by rank
 						tmpCards.begin(), tmpCards.end(),
 						[](Card* a, Card* b) { return a->rank < b->rank; }
