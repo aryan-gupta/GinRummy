@@ -49,8 +49,15 @@ void Player::takeCard(Card* card) {
 
 
 void Player::getMelds() {
+	typedef std::vector<Card*> CS; // Card Stack
 	melds.clear();
-	typedef std::vector<Card*> CS;
+	
+	bool (*checkMelds)(CS) = [](CS vec) { // Could use std::function<bool(CS)>
+		for(Card* tmpCard : vec)
+			if(tmpCard->rank != vec[0]->rank)
+				return false;	
+		return true;
+	};
 	
 	CS tmpHand = hand;
 	std::sort(
@@ -61,19 +68,15 @@ void Player::getMelds() {
 	);
 	
 	for(int i = tmpHand.size() - 1; i > 1; --i) { // Go through the hand (There is no point of going backwards, but thats just the way we did it)
-		if(    i > 2                                        // Make sure that we wont go out of bounds checking 4 card set
-			&& tmpHand[i    ]->rank == tmpHand[i - 1]->rank // Check if all 3 cards ar of the same rank
-			&& tmpHand[i - 1]->rank == tmpHand[i - 2]->rank
-			&& tmpHand[i - 2]->rank == tmpHand[i - 3]->rank
+		if(    i > 2 // Make sure that we wont go out of bounds checking 4 card set
+			&& checkMelds({tmpHand[i], tmpHand[i - 1], tmpHand[i - 2], tmpHand[i - 3]})
 		) {
 			melds.push_back( new Meld { // if so we have a meld
 				MELD_SET,
 				{tmpHand[i], tmpHand[i - 1], tmpHand[i - 2], tmpHand[i - 3]}
 			});
 			i -= 3; // move the pointer back 3 points so it isnt included in a meld again
-		} else if(    tmpHand[i    ]->rank == tmpHand[i - 1]->rank
-				   && tmpHand[i - 1]->rank == tmpHand[i - 2]->rank
-		) {
+		} else if(checkMelds({tmpHand[i], tmpHand[i - 1], tmpHand[i - 2]})) {
 			melds.push_back( new Meld {
 				MELD_SET,
 				{tmpHand[i], tmpHand[i - 1], tmpHand[i - 2]}
@@ -82,10 +85,9 @@ void Player::getMelds() {
 		}
 	}
 	
+	tmpHand.clear();
 	
-	///@todo Check for a 4 card set
-	
-	// FIND RUNS (3 cards in the same suit that go in order)
+	// FIND RUNS (3+ cards in the same suit that go in order)
 	for(unsigned i = 0; i < hand.size(); ++i) {
 		for(unsigned j = i + 1; j < hand.size(); ++j) {
 			for(unsigned k = j + 1; k < hand.size(); ++k) { // go through sets of 3 cards
