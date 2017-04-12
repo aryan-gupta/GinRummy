@@ -84,13 +84,14 @@ void Opponent::pickCard() {
 	// player has 8 turn and computer has 8 turn 
 	// if turnCounter is greater than 4, then pass half of the game 
  
+	if(turnCounter < 4) { 
+		// do something 
+	}
+	else { // we want to start dumping high card and pulling low card 
+
 	
 	
-	
-	
-	
-	
-	
+	}
 	
 	
 	
