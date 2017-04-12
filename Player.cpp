@@ -49,29 +49,43 @@ void Player::takeCard(Card* card) {
 
 void Player::getMelds() {
 	melds.clear();
+	typedef std::vector<Card*> CS;
 	
-	// FIND SETS (3 or 4 cards with the same rank/value)
-	for(unsigned i = 0; i < hand.size(); ++i) {
-		for(unsigned j = i + 1; j < hand.size(); ++j) {
-			for(unsigned k = j + 1; k < hand.size(); ++k) {
-				if(    (hand[i]->rank == hand[j]->rank) // see if the ranks are the same
-					&& (hand[j]->rank == hand[k]->rank)
-				) {
-					melds.push_back( new Meld{
-						MELD_SET,
-						{hand[i], hand[j], hand[k]}
-					});
-				}
+	CS tmp = hand;
+	std::sort(
+		tmp.begin(), tmp.end(),
+		[](Card* a, Card* b) {
+			return (a->rank*SUIT_TOTAL + a->suit) < (b->rank*SUIT_TOTAL + b->suit);
+		}
+	);
+	
+	for(int i = tmp.size() - 4; i > 0; --i) {
+		if(tmp[i]->rank == tmp[i + 1]->rank && tmp[i + 1] == tmp[i + 2]) {
+			if(i + 3 < tmp.size() && tmp[i + 3]->rank == tmp[i]->rank) {
+				melds.push_back( new Meld {
+					MELD_SET,
+					{tmp[i], tmp[i + 1], tmp[i + 2], tmp[i + 3]}
+				});
+				tmp.erase(tmp.begin() + i, tmp.begin() + i + 3);
+			} else {
+				melds.push_back( new Meld {
+					MELD_SET,
+					{tmp[i], tmp[i + 1], tmp[i + 2]}
+				});
+				tmp.erase(tmp.begin() + i, tmp.begin() + i + 2);
 			}
 		}
 	}
 	
-	
 	for(unsigned i = 0; i < melds.size(); i++) { 
 		for(unsigned j = 0; j < hand.size(); j++) { 
 			if(hand[j]->rank == melds[i]->cards[0]->rank) { 
-				if(std::find(melds[i]->cards.begin(),melds[i]->cards.end(), hand[j]) == melds[i]->cards.end()) 
-					melds[i]->cards.push_back(hand[i]); 
+				if(0 == std::count_if(
+					melds[i]->cards.begin(), melds[i]->cards.end(), 
+					[&](Card* a) {
+						return hand[j] == a;
+					}
+				)) melds[i]->cards.push_back(hand[i]); 
 		
 			}
 		
