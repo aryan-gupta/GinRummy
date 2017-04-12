@@ -129,6 +129,15 @@ void Human::pickDeck() {
 							finished = true; 
 						}
 						
+						if(gWindow->checkSortClick(x, y)) { ///@todo Swap sorting algorithms
+							sort(
+								hand.begin(), hand.end(),
+								[](Card* a, Card* b) {
+									return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
+							}); 
+						
+						}
+						
 						selectedCard = nullptr;
 					}
 				} break;
@@ -231,6 +240,7 @@ void Human::pickCard() {
 								[](Card* a, Card* b) {
 									return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
 							}); 
+							
 							gWindow->changeHelp(HTI_PICK_CARD);
 						}
 						
