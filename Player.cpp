@@ -59,13 +59,21 @@ void Player::getMelds() {
 		}
 	);
 	
+	Meld* tmpMeld = nullptr;
 	for(auto i = tmp.begin(); i != tmp.end() - 2; ++i) {
 		if((*i)->rank == (*(i + 1))->rank && (*(i + 1))->rank == (*(i + 2))->rank) {
-			melds.push_back( new Meld {
+			tmpMeld = new Meld {
 				MELD_SET,
 				{*i, *(i + 1), *(i + 2)}
-			});
+			};
 			tmp.erase(i, i + 2);
+			for(auto j = tmp.begin(); j != tmp.end(); ++j) {
+				if((*j)->rank == tmpMeld->cards[0]->rank) {
+					tmpMeld->cards.push_back(*j);
+				}
+				tmp.erase(j);
+			}
+			melds.push_back(tmpMeld);
 		}
 	}
 	
