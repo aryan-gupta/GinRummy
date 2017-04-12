@@ -146,13 +146,17 @@ Card* Player::getCard(Card* card) {
 /*
 unsigned Player::getKnockPoints() {
 	
+	
+	
+	
+	// return 0; 
 }
 */
 
 unsigned Player::getGin() {
 	// when all 10 cards in our hand are parts of melds also have no deadwood 
 	
-	if(deadwood.size == 1) 
+	if(deadwood.size() == 1) 
 		
 	return 25;
 }
@@ -160,7 +164,7 @@ unsigned Player::getGin() {
 
 unsigned Player::getBigGin() {
 	// When all 10 cards in our hand are parts of melds and the card we just drew are parts of melds - 11 cards total
-	if(deadwood.size == 0) 
+	if(deadwood.size() == 0) 
 	
 	return 30;
 }
