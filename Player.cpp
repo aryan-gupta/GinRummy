@@ -70,8 +70,8 @@ void Player::getMelds() {
 		}
 	);
 	
-	for(auto i = tmp.end() - 1; i != tmp.begin() + 2; --i) {
-		if(    i > tmp.begin() + 3 
+	for(auto i = tmp.end() - 1; i >= tmp.begin() + 2; --i) {
+		if(    i >= tmp.begin() + 3 
 			&& (*(i    ))->rank == (*(i - 1))->rank
 			&& (*(i - 1))->rank == (*(i - 2))->rank
 			&& (*(i - 2))->rank == (*(i - 3))->rank
