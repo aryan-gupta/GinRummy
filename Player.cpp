@@ -59,13 +59,13 @@ void Player::getMelds() {
 		}
 	);
 	
-	for(int i = tmp.size() - 3; i > 0; --i) {
-		if(tmp[i]->rank == tmp[i + 1]->rank && tmp[i + 1]->rank == tmp[i + 2]->rank) {
+	for(auto i = tmp.begin(); i != tmp.end() - 2; ++i) {
+		if((*i)->rank == (*(i + 1))->rank && (*(i + 1))->rank == (*(i + 2))->rank) {
 			melds.push_back( new Meld {
 				MELD_SET,
-				{tmp[i], tmp[i + 1], tmp[i + 2]}
+				{*i, *(i + 1), *(i + 2)}
 			});
-			tmp.erase(tmp.begin() + i, tmp.begin() + i + 2);
+			tmp.erase(i, i + 2);
 		}
 	}
 	
