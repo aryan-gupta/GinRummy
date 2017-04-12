@@ -41,8 +41,29 @@ void Opponent::doTurn() {
 
 void Opponent::pickDeck() {
 	// for now we are picking the deck
-	takeCard(gDeck->getACard());
+	//takeCard(gDeck->getACard());
+	
+	Card* topcard = gDiscard->peek(); 
+	bool canMeld = false; 
+	
+	for(unsigned i = 0; i < hand.size(); i++) { 
+		for(unsigned j = i + 1; j < hand.size(); j++) { 
+				// check melds i, j, and topcard 
+				// if those three cards meld then turn canMeld to true 
+				
+		}
+	}	
+	
+	if(canMeld) {
+		takeCard(gDiscard->getACard()); 
+	}
+	else { 
+		takeCard(gDeck->getACard()); 	
+	}
+
+	
 }
+
 
 
 void Opponent::pickCard() {
