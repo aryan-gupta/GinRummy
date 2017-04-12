@@ -49,32 +49,31 @@ void Player::takeCard(Card* card) {
 
 void Player::getMelds() {
 	melds.clear();
+	typedef std::vector<Card*> CS;
 	
-	// FIND SETS (3 or 4 cards with the same rank/value)
-	for(unsigned i = 0; i < hand.size(); ++i) {
-		for(unsigned j = i + 1; j < hand.size(); ++j) {
-			for(unsigned k = j + 1; k < hand.size(); ++k) {
-				if(    (hand[i]->rank == hand[j]->rank) // see if the ranks are the same
-					&& (hand[j]->rank == hand[k]->rank)
-				) {
-					melds.push_back( new Meld{
-						MELD_SET,
-						{hand[i], hand[j], hand[k]}
-					});
-				}
-			}
+	CS tmp = hand;
+	std::sort(
+		tmp.begin(), tmp.end(),
+		[](Card* a, Card* b) {
+			return (a->rank*SUIT_TOTAL + a->suit) < (b->rank*SUIT_TOTAL + b->suit);
 		}
-	}
+	);
 	
-	
-	for(unsigned i = 0; i < melds.size(); i++) { 
-		for(unsigned j = 0; j < hand.size(); j++) { 
-			if(hand[j]->rank == melds[i]->cards[0]->rank) { 
-				if(std::find(melds[i]->cards.begin(),melds[i]->cards.end(), hand[j]) == melds[i]->cards.end()) 
-					melds[i]->cards.push_back(hand[i]); 
-		
+	Meld* tmpMeld = nullptr;
+	for(auto i = tmp.begin(); i != tmp.end() - 2; ++i) {
+		if((*i)->rank == (*(i + 1))->rank && (*(i + 1))->rank == (*(i + 2))->rank) {
+			tmpMeld = new Meld {
+				MELD_SET,
+				{*i, *(i + 1), *(i + 2)}
+			};
+			tmp.erase(i, i + 2);
+			for(auto j = tmp.begin(); j != tmp.end(); ++j) {
+				if((*j)->rank == tmpMeld->cards[0]->rank) {
+					tmpMeld->cards.push_back(*j);
+				}
+				tmp.erase(j);
 			}
-		
+			melds.push_back(tmpMeld);
 		}
 	}
 	
