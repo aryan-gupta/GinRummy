@@ -59,36 +59,13 @@ void Player::getMelds() {
 		}
 	);
 	
-	for(int i = tmp.size() - 4; i > 0; --i) {
-		if(tmp[i]->rank == tmp[i + 1]->rank && tmp[i + 1] == tmp[i + 2]) {
-			if(i + 3 < tmp.size() && tmp[i + 3]->rank == tmp[i]->rank) {
-				melds.push_back( new Meld {
-					MELD_SET,
-					{tmp[i], tmp[i + 1], tmp[i + 2], tmp[i + 3]}
-				});
-				tmp.erase(tmp.begin() + i, tmp.begin() + i + 3);
-			} else {
-				melds.push_back( new Meld {
-					MELD_SET,
-					{tmp[i], tmp[i + 1], tmp[i + 2]}
-				});
-				tmp.erase(tmp.begin() + i, tmp.begin() + i + 2);
-			}
-		}
-	}
-	
-	for(unsigned i = 0; i < melds.size(); i++) { 
-		for(unsigned j = 0; j < hand.size(); j++) { 
-			if(hand[j]->rank == melds[i]->cards[0]->rank) { 
-				if(0 == std::count_if(
-					melds[i]->cards.begin(), melds[i]->cards.end(), 
-					[&](Card* a) {
-						return hand[j] == a;
-					}
-				)) melds[i]->cards.push_back(hand[i]); 
-		
-			}
-		
+	for(int i = tmp.size() - 3; i > 0; --i) {
+		if(tmp[i]->rank == tmp[i + 1]->rank && tmp[i + 1]->rank == tmp[i + 2]->rank) {
+			melds.push_back( new Meld {
+				MELD_SET,
+				{tmp[i], tmp[i + 1], tmp[i + 2]}
+			});
+			tmp.erase(tmp.begin() + i, tmp.begin() + i + 2);
 		}
 	}
 	
