@@ -70,6 +70,27 @@ void Opponent::pickDeck() {
 void Opponent::pickCard() {
 	// We are going to put back a random card, cause why not1
 	// gDiscard->takeACard(getCard(hand[rand() % hand.size()]));
+	if(canWeKnock()) { //  
+		// go ahead and knock 
+		
+	
+	}
+	
+	// we have 52 cards 
+	// 10 for player1 
+	// 10 for computer 
+	// leave 32 cards in play 
+	// that's mean 16 turn that will happen until the end of the deck 
+	// player has 8 turn and computer has 8 turn 
+	// if turnCounter is greater than 4, then pass half of the game 
+ 
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
