@@ -65,6 +65,20 @@ void Player::getMelds() {
 			}
 		}
 	}
+	
+	
+	for(unsigned i = 0; i < melds.size(); i++) { 
+		for(unsigned j = 0; j < hand.size(); j++) { 
+			if(hand[j]->rank == melds[i]->cards[0]->rank) { 
+				if(std::find(melds[i]->cards.begin(),melds[i]->cards.end(), hand[j]) == melds[i]->cards.end()) 
+					melds[i]->cards.push_back(hand[i]); 
+		
+			}
+		
+		}
+	}
+	
+	
 	///@todo Check for a 4 card set
 	
 	// FIND RUNS (3 cards in the same suit that go in order)
