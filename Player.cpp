@@ -71,6 +71,17 @@ void Player::getMelds() {
 				i = i + 3; 
 			}	
 			
+		else {  
+			
+				melds.push_back( new Meld {
+					MELD_SET,
+					{*i, *(i + 1), *(i + 2)}
+				}); 
+				
+				i = i + 2; 
+			
+		}
+			
 		}
 	}
 	
