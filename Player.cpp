@@ -26,6 +26,7 @@ using std::vector;
 using std::sort;
 #include <SDL2/SDL.h>
 #include <string.h>
+#include <functional>
 
 #include "./inc/main.h"
 #include "./inc/Player.h"
@@ -49,7 +50,17 @@ void Player::takeCard(Card* card) {
 
 void Player::getMelds() {
 	melds.clear();
+	// FOR DEBUGGING
 	typedef std::vector<Card*> CS;
+	
+	auto checkMelds = [](CS vec) { // or bool (*checkMelds)(CS)
+		LOGL(vec.size())
+		for(Card* tmpCard : vec) {
+			if(tmpCard->rank != vec[0]->rank)
+				return false;
+		}
+		return true;
+	};
 	
 	CS tmp = hand;
 	std::sort(
@@ -59,29 +70,25 @@ void Player::getMelds() {
 		}
 	);
 	
-	for(auto i = tmp.end() - 2; i != tmp.begin(); --i) {
-		if((*i)->rank == (*(i + 1))->rank && (*(i + 1))->rank == (*(i + 2))->rank) {
-			if((tmp.end() - i < 3) && (*(i + 3))->rank == (*i)->rank) {
-			
-				melds.push_back( new Meld {
-					MELD_SET,
-					{*i, *(i + 1), *(i + 2), *(i+3)}
-				}); 
-				
-				i = i + 3; 
-			}	
-			
-		else {  
-			
-				melds.push_back( new Meld {
-					MELD_SET,
-					{*i, *(i + 1), *(i + 2)}
-				}); 
-				
-				i = i + 2; 
-			
-		}
-			
+	for(auto i = tmp.end() - 1; i != tmp.begin() + 2; --i) {
+		if(    i > tmp.begin() + 3 
+			&& (*(i    ))->rank == (*(i - 1))->rank
+			&& (*(i - 1))->rank == (*(i - 2))->rank
+			&& (*(i - 2))->rank == (*(i - 3))->rank
+		) {
+			melds.push_back( new Meld {
+				MELD_SET,
+				{*(i), *(i - 1), *(i - 2), *(i - 3)}
+			});
+			i -= 3;
+		} else if(    (*(i    ))->rank == (*(i - 1))->rank
+				   && (*(i - 1))->rank == (*(i - 2))->rank
+		) {
+			melds.push_back( new Meld {
+				MELD_SET,
+				{*(i), *(i - 1), *(i - 2)}
+			});
+			i -= 2;
 		}
 	}
 	
