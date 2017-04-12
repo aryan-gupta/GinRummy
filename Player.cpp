@@ -59,27 +59,20 @@ void Player::getMelds() {
 		}
 	);
 	
-	Meld* tmpMeld = nullptr;
 	for(auto i = tmp.end() - 2; i != tmp.begin(); --i) {
 		if((*i)->rank == (*(i + 1))->rank && (*(i + 1))->rank == (*(i + 2))->rank) {
-			tmpMeld = new Meld {
-				MELD_SET,
-				{*i, *(i + 1), *(i + 2)}
-			};
-			tmp.erase(i, i + 2);
+			if((tmp.end() - i < 3) && (*(i + 3))->rank == (*i)->rank) {
 			
-			melds.push_back(tmpMeld);
+				melds.push_back( new Meld {
+					MELD_SET,
+					{*i, *(i + 1), *(i + 2), *(i+3)}
+				}); 
+				
+				i = i + 3; 
+			}	
+			
 		}
 	}
-	
-	for(auto i = tmp.begin(); i != tmp.end(); ++i)
-		for(Meld* tmpMeld: melds) { 
-			if(tmpMeld->cards[0]->rank == (*i)->rank) { 
-				tmpMeld->cards.push_back(*i); 
-				tmp.erase(i); 
-			}
-		}
-	
 	
 	
 	///@todo Check for a 4 card set
