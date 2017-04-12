@@ -34,7 +34,20 @@ using std::sort;
 #include "./inc/Resources.h"
 
 void Opponent::doTurn() {
+	pickDeck();
+	pickCard();
+}
 
+
+void Opponent::pickDeck() {
+	// for now we are picking the deck
+	takeCard(gDeck->getACard());
+}
+
+
+void Opponent::pickCard() {
+	// We are going to put back a random card, cause why not1
+	gDiscard->takeACard(getCard(hand[rand() % hand.size()]));
 }
 
 

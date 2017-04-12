@@ -26,22 +26,18 @@ public:
 	virtual ~Human() {};
 	
 	virtual void doTurn(); ///< Does a turn for the player
-	virtual void render();
+	virtual void render(); ///< Render the Player
 	
 protected:
-	virtual void renderCards();    ///< Render all the cards
+	virtual void renderCards(); ///< Render all the cards
+	virtual void pickDeck();    ///< Pick a deck to draw from
+	virtual void pickCard();    ///< Pick a card to put into discard
 	
-private:
-	void pickDeck(); ///< Pick a deck to draw from
-	void pickCard(); ///< Pick a card to put into discard
-	
-	void printHand();      ///< Print the hand out
-	
+private:	
 	void renderDeadwood(); ///< Render deadwood
 	void renderMelds();    ///< Render melds
 	
 	void moveCard(Card* c, int idx); /// Move a card in your hand
-	
 };
 
 #endif

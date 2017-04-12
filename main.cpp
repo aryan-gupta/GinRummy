@@ -34,6 +34,7 @@ using std::vector;
 #include "./inc/Resources.h"
 
 const int NUM_CARDS_PER = 10;
+const int MAX_FPS = 45;
 
 CardPile* gDeck;
 CardPile* gDiscard;

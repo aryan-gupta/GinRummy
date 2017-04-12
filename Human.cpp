@@ -34,65 +34,31 @@ using std::sort;
 #include "./inc/Resources.h"
 
 
-
-/// @brief labels for the suits (for debugging)
-static const char* Suits_Label[] {
-	"SUIT_CLUBS",
-	"SUIT_DIAMONDS",
-	"SUIT_HEARTS",
-	"SUIT_SPADES",
-	
-	"SUIT_TOTAL"
-};
-
-/// @brief Labels for the ranks
-static const char* Ranks_Label[] {
-	"RANK_ACE",
-	"RANK_2",
-	"RANK_3",
-	"RANK_4",
-	"RANK_5",
-	"RANK_6",
-	"RANK_7",
-	"RANK_8",
-	"RANK_9",
-	"RANK_10",
-	"RANK_JACK",
-	"RANK_QUEEN",
-	"RANK_KING",
-	
-	"RANK_TOTAL"
-};
-
-/// @brief Labels for the melds
-static const char* Meld_Label[] {
-	"MELD_SET",
-	"MELD_RUN"
-};
-
-
 void Human::doTurn() {
-	getMelds();
-	getDeadwood();
-	printHand();
+	getMelds();    // update our melds
+	getDeadwood(); // update our deadwood
+	pickDeck();    // pick a deack to pick from
 	
-	pickDeck();
-	pickCard();
-
+	getMelds();    // update our melds
+	getDeadwood(); // update our deadwood
+	pickCard();    // pick a card to discard
 }
 
 
 void Human::pickDeck() {
-	/// @todo First we want to ask the user to pick a deck to pull cards from
+	gWindow->changeHelp(HTI_PICK_DECK); // Change help text
+	
 	bool finished = false, isMovingCard = false;
 	Card* selectedCard = nullptr;
 	SDL_Event event;
+	uint32_t FPS_Timer = 0;
 	
-	while(!finished) {
+	while(!finished) { // RENDER LOOP
+		FPS_Timer = SDL_GetTicks();
 		
 		gWindow->renderAll(); // render everything
 		
-		while(SDL_PollEvent(&event)) {
+		while(SDL_PollEvent(&event)) { // EVENT LOOP
 			if(isMovingCard) { // if we are moving a card
 				int x, y;
 				SDL_GetMouseState(&x, &y);
@@ -115,8 +81,6 @@ void Human::pickDeck() {
 				break;
 				
 				case SDL_MOUSEBUTTONDOWN: {
-					/// @todo If next event is mouse movement then THEN move the card. 
-					/// @todo get card that the user selected
 					int x, y;
 					SDL_GetMouseState(&x, &y);
 					
@@ -125,7 +89,7 @@ void Human::pickDeck() {
 						&& y > SCRN_H - WIN_PAD - CARD_H
 						&& y < SCRN_H - WIN_PAD
 					)  {
-						isMovingCard = true;
+						//isMovingCard = true;
 						int cardx = x - (SCRN_W/2 - (CARD_PAD*(hand.size() - 1) + CARD_W)/2); // get the x coordinate offset from the start of the cards
 						int cardi = cardx / CARD_PAD; // get the index of the card we clicked
 						
@@ -136,41 +100,59 @@ void Human::pickDeck() {
 					}
 				} break;
 				
+				case SDL_MOUSEMOTION:
+					if(selectedCard != nullptr) isMovingCard = true; /// @todo if x or y is more than 5 px from when we mouse down then move card
+				break;
+				
 				case SDL_MOUSEBUTTONUP: {
 					if(isMovingCard) {
 						isMovingCard = false;
 						selectedCard = nullptr;
+						gWindow->changeHelp(HTI_PICK_DECK); // Change help text
 					} else {
-						/// @todo if one of the decks of cards is selected then mark finished to true
+						gWindow->changeHelp(HTI_PICK_DECK_ERR);
+						
 						int x, y;
 						SDL_GetMouseState(&x, &y);
 						
-						if(gDeck->checkClick(x, y)) {
+						if(gWindow->checkKnockClick(x, y)) {
+							LOGL("WE KNOCKED") /// @todo change help text
+						}
 						
+						if(gDeck->checkClick(x, y)) {
 							takeCard(gDeck->getACard()); // WE CLICKED ON THE DECK 
 							finished = true; 				
 						}
 						
 						if(gDiscard->checkClick(x, y)) {
-							
 							takeCard(gDiscard->getACard()); // WE CLICKED ON THE DISCARD
 							finished = true; 
 						}
+						
+						selectedCard = nullptr;
 					}
 				} break;
 			}
 		}
+		
+		uint32_t frameTicks = SDL_GetTicks() - FPS_Timer; // Get time it took to render frame
+		if( frameTicks < 1000.0/MAX_FPS ) // If this was too big
+			SDL_Delay( 1000.0/MAX_FPS - frameTicks ); // Wait remainging time
 	}
 }
 
 
 void Human::pickCard() {
+	gWindow->changeHelp(HTI_PICK_CARD);
+	
 	/// @todo Then we want to get the melds and organize our cards and pick a card to discard
 	bool finished = false, isMovingCard = false;
 	Card* selectedCard = nullptr;
 	SDL_Event event;
+	uint32_t FPS_Timer = 0;
 	
 	while(!finished) {
+		FPS_Timer = SDL_GetTicks();
 		// finished stores if we have completed the step of not,
 		// in this case it is picking a deck to draw from. After we have chosen
 		// a deck to draw from, finished is set true and the loop ends
@@ -178,7 +160,6 @@ void Human::pickCard() {
 		gWindow->renderAll(); // render everything
 		
 		while(SDL_PollEvent(&event)) {   // get all the events from the window
-		
 			if(isMovingCard) { // If we have clicked on a card and we are moving it
 				int x, y;
 				SDL_GetMouseState(&x, &y);
@@ -230,32 +211,38 @@ void Human::pickCard() {
 						isMovingCard = false;
 						selectedCard = nullptr;
 					} else {
-						/// @todo check for button presses or picking a card, that will mean we are finished
+						gWindow->changeHelp(HTI_PICK_CARD_ERR);
 						
 						if( selectedCard != nullptr ) { 
 							gDiscard->takeACard(getCard(selectedCard)); 
 							finished = true; 
 						}
-					
-						selectedCard = nullptr;
 						
 						int x, y;
 						SDL_GetMouseState(&x, &y);
-						if(gWindow->checkKnockClick(x, y))
-							LOGL("WE KNOCKED")
-						if(gWindow->checkSortClick(x, y)) { 
 						
-							sort(hand.begin(), hand.end(),
-							[](Card* a, Card* b) {
-								return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
+						if(gWindow->checkKnockClick(x, y)) {
+							LOGL("WE KNOCKED")
+						}
+						
+						if(gWindow->checkSortClick(x, y)) { ///@todo Swap sorting algorithms
+							sort(
+								hand.begin(), hand.end(),
+								[](Card* a, Card* b) {
+									return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
 							}); 
-							
-						}	
-					
+							gWindow->changeHelp(HTI_PICK_CARD);
+						}
+						
+						selectedCard = nullptr;
 					}
 				} break;
 			}
 		}
+		
+		uint32_t frameTicks = SDL_GetTicks() - FPS_Timer; // Get time it took to render frame
+		if( frameTicks < 1000.0/MAX_FPS ) // If this was too big
+			SDL_Delay( 1000.0/MAX_FPS - frameTicks ); // Wait remainging time
 	}
 }
 
@@ -267,23 +254,6 @@ void Human::moveCard(Card* c, int idx) {
 	}
 	
 	hand.insert(hand.begin() + idx, c); // move it to the new location
-}
-
-// WILL BE REMOVED IN FINAL GAME
-void Human::printHand() {
-	for(Card* tmpCard : hand)
-		cout << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
-	
-	if(melds.size() == 0) {
-		cout << "NO MELDS FOUND" << endl;
-	} else {
-		for(auto tmpMeld : melds) {
-			cout << Meld_Label[tmpMeld->type] << " " << endl;
-			for(auto tmpCard : tmpMeld->cards) {
-				cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
-			}
-		}
-	}
 }
 
 
@@ -325,45 +295,45 @@ void Human::renderDeadwood() {
 	// First render the number of deadwood
 	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->nFont,
-		("(" + std::to_string(getNumDeadwood()) + ")").c_str(), 
-		SDL_Color{0x00, 0x00, 0x00, 0xFF}
+		("(" + std::to_string(getNumDeadwood()) + ")").c_str(), // convert num of deadwood into a string
+		gAssets->textColor
 	);
 	SDL_Texture* dwTextTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
 		gWindow->getRenderer(),
 		textSurface
 	);
-	SDL_Rect dwTextPos = SDL_Rect{
+	SDL_Rect dwTextPos = SDL_Rect{ // get the position
 		WIN_PAD + 76,
-		SCRN_H - MCARD_H*2 - WIN_PAD*3,
+		SCRN_H - MCARD_H*2 - WIN_PAD*3, // 2 lines of cards plus 3 paddings from the bottom
 		textSurface->w, 
 		textSurface->h
-	}; // Text position
-	SDL_FreeSurface(textSurface);
+	};
+	
+	SDL_FreeSurface(textSurface); // render and free memory
 	SDL_RenderCopy(gWindow->getRenderer(), dwTextTexture, NULL, &dwTextPos);
 	SDL_DestroyTexture(dwTextTexture);
 	
-	vector<Card*> tmpHand(deadwood);
-	sort(
-		tmpHand.begin(), tmpHand.end(),
+	sort( // sort our deadwood
+		deadwood.begin(), deadwood.end(),
 		[](Card* a, Card* b) {
 			return GCI(a->suit, a->rank) < GCI(b->suit, b->rank);
 		}
 	);
 	
-	SDL_Rect clipping = SDL_Rect{0, 0, 30, 55};
+	SDL_Rect clipping = SDL_Rect{0, 0, 30, 55}; // set the w/h of the clippings clippings
 	
-	SDL_Rect pos = SDL_Rect{
+	SDL_Rect pos = SDL_Rect{ // position of where to render each card
 		WIN_PAD,
 		SCRN_H - MCARD_H*2 - WIN_PAD*2,
 		MCARD_W,
 		MCARD_H
 	};
 	
-	for(Card* tmpCard : tmpHand) {
-		clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5;
+	for(Card* tmpCard : deadwood) {
+		clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5; // find each card
 		clipping.y = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].y + 5;
 		
-		SDL_RenderCopy(
+		SDL_RenderCopy( // render
 			gWindow->getRenderer(),
 			gAssets->cardsSheetT,
 			&clipping,
@@ -371,8 +341,8 @@ void Human::renderDeadwood() {
 		);
 		
 		pos.x += pos.w;
-		if(pos.x + pos.w > (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*3 + 5)) {
-			pos.x = WIN_PAD;
+		if(pos.x + pos.w > (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*2)) { ///@ @todo make this gAssets->deadwood-panel dependent
+			pos.x = WIN_PAD; // CRLF
 			pos.y += pos.h + WIN_PAD/2;
 		}
 	}
@@ -383,31 +353,31 @@ void Human::renderDeadwood() {
 void Human::renderMelds() {
 	/// @todo Dude I really need to do some clean up on this. It is terrible,
 	/// but it works, I dont know why, but it does. Dont mess with it
-	SDL_Rect clipping = SDL_Rect{0, 0, 30, 55};
+	SDL_Rect clipping = SDL_Rect{0, 0, 30, 55}; // Card clipping for mini card
 	
-	SDL_Rect pos = SDL_Rect{
+	SDL_Rect pos = SDL_Rect{ // position of the meld cards
 		WIN_PAD,
-		SCRN_H - MCARD_H*5 - WIN_PAD*6,
+		SCRN_H - MCARD_H*5 - WIN_PAD*6, // 5 lines of cards and 6 lines of padding from the bottom
 		MCARD_W,
 		MCARD_H
 	};
 	
 	for(Meld* tmpMeld : melds) {
 		for(Card* tmpCard : tmpMeld->cards) {
-			clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5;
+			clipping.x = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].x + 5; // get card clippings and remove 5px from the top and left
 			clipping.y = gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)].y + 5;
 			
-			SDL_RenderCopy(
+			SDL_RenderCopy( // render
 				gWindow->getRenderer(),
 				gAssets->cardsSheetT,
 				&clipping,
 				&pos
 			);
 			
-			pos.x += pos.w;
+			pos.x += pos.w; // move to next 'character'
 		}
 		
-		pos.x = WIN_PAD;
+		pos.x = WIN_PAD; // CRLF
 		pos.y += pos.h + WIN_PAD/2;
 	}
 }

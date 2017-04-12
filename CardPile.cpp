@@ -37,7 +37,7 @@ CardPile::CardPile(CardPileTypes type) {
 			for(int j = 0; j < RANK_TOTAL; ++j)
 				pile.push_back( new Card{(Suits)i, (Ranks)j} ); // create cards with combinations of Suits and Cards
 	
-		position = SDL_Rect {
+		position = SDL_Rect { // position of the card pile
 			SCRN_W/2 - CARD_W - 20,
 			SCRN_H/2 - CARD_H/2 - WIN_PAD*3,
 			CARD_W,
@@ -45,8 +45,7 @@ CardPile::CardPile(CardPileTypes type) {
 		};
 		
 	} else {
-		pile.push_back( new Card{(Suits)1, (Ranks)1} ); /// @warning ONLY FOR DEBUGGING
-		position = SDL_Rect {
+		position = SDL_Rect { // position
 			SCRN_W/2 + 20,
 			SCRN_H/2 - CARD_H/2 - WIN_PAD*3,
 			CARD_W,
@@ -60,7 +59,12 @@ CardPile::CardPile(CardPileTypes type) {
 
 CardPile::~CardPile() {
 	for(Card* tmpCard : pile)
-		delete tmpCard;
+		delete tmpCard; // delete all the cards in the deck
+}
+
+
+size_t CardPile::size() {
+	return pile.size();
 }
 
 
@@ -92,14 +96,14 @@ void CardPile::render() {
 		SDL_RenderCopy(
 			gWindow->getRenderer(),
 			gAssets->cardBackSheet,
-			&gAssets->cardClippingBack,
+			&gAssets->cardClippingBack, // render the back
 			&position
 		);
 	} else {
 		SDL_RenderCopy(
 			gWindow->getRenderer(),
 			gAssets->cardsSheet,
-			&gAssets->cardClippings[GCI(pile[0]->suit, pile[0]->rank)],
+			&gAssets->cardClippings[GCI(pile[0]->suit, pile[0]->rank)], // render the top card
 			&position
 		);
 	}

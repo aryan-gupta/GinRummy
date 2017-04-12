@@ -95,16 +95,13 @@ void Player::getMelds() {
 
 void Player::getDeadwood() {
 	// FIND anycard in our hand that not part of meld 
-	deadwood = hand;
-
-	for(int i = deadwood.size() - 1; i >= 0; --i) { 	
-		for(unsigned j = 0; j < melds.size(); j++) { 
-			for(unsigned k = 0; k < melds[j]->cards.size(); k++) { 
-				if(    deadwood[i]->suit == melds[j]->cards[k]->suit
-					&& deadwood[i]->rank == melds[j]->cards[k]->rank
-				) deadwood.erase(deadwood.begin() + i);
-			}			
-		}	
+	deadwood = hand; // first copy the hand into deadwood
+	
+	for(Meld* tmpMeld : melds) {
+		for(Card* tmpCard : tmpMeld->cards) {
+			auto idx = std::remove(deadwood.begin(), deadwood.end(), tmpCard);
+			deadwood.erase(idx, deadwood.end());
+		}
 	}
 }
 
@@ -135,18 +132,22 @@ unsigned Player::getPoints() {
 	sum += getGin();
 	sum += getBigGin();
 	
-	return sum
+	return sum;
 }
 
 
-Card* Player::getCard(Card* card) {  // remove card from hand 
-
-	for(unsigned i = 0; i < hand.size(); ++i)
-		if(card == hand[i])
-			hand.erase(hand.begin() + i);  
-	return card; 					
+Card* Player::getCard(Card* card) { 
+	for(unsigned i = 0; i < hand.size(); ++i) // find the card in our hand
+		if(card == hand[i]) 
+			hand.erase(hand.begin() + i);     // remove card from hand  
+	return card; // return the card
 }		
 
+/*
+unsigned Player::getKnockPoints() {
+	
+}
+*/
 
 unsigned Player::getGin() {
 	// when all 10 cards in our hand are parts of melds also have no deadwood 

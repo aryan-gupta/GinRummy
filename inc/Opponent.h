@@ -30,8 +30,10 @@ public:
 
 protected:
 	virtual void renderCards();    ///< Render all the cards
-
-private:
+	virtual void pickDeck();
+	virtual void pickCard();
+	
+private: /// @todo make next two functions virtual functions
 	
 };
 
