@@ -149,11 +149,11 @@ Card* Player::getCard(Card* card) {  // remove card from hand
 
 
 unsigned Player::getGin() {
+	// when all 10 cards in our hand are parts of melds also have no deadwood 
 	
-	
-	
-	
-	return 0;
+	if(deadwood.size == 1) 
+		
+	return 25;
 }
 
 
