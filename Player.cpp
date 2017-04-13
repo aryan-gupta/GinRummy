@@ -120,20 +120,14 @@ void Player::getMelds() {
 		}
 	);
 	
-	CS usedCards; // This stores all the used cards
-	auto idx = remove_if( // Sp we are going to remove if our melds already use a card
-		melds.begin(), melds.end(), // go through the meld
-		[&](Meld* m) {
-			for(Card* tmpCard : m->cards) { // and go theough the cards in the meld
-				if(count(usedCards.begin(), usedCards.end(), tmpCard)) return true; // if we have already used the card before
-				usedCards.push_back(tmpCard); // if we havent then store the card in the usedCard vector
-			}
-			return false;
+	vector<vector<Meld*> > ps;
+	for(int i = 1; i < mels.size() - 1; ++i) { // i stores the size of the possible meld we are going to create
+		for(int j = 0; j < melds.size(); ++j) {
+			ps.push_back(vector<Meld*>(melds.begin(), melds.begin() + i))
+			std::rotate(melds.begin(), melds.end(), melds.begin() + 1);
 		}
-	);
-	
-	melds.erase(idx, melds.end());
-	// remove from the end if the cards repeat
+	}
+	ps.push_back(melds);
 }
 
 
