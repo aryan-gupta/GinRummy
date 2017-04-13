@@ -132,8 +132,7 @@ void Player::getMelds() {
 		}
 	);
 	
-	if(idx != melds.end())
-		melds.erase(idx, melds.end());
+	melds.erase(idx, melds.end());
 	// remove from the end if the cards repeat
 }
 
