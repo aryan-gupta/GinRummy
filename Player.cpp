@@ -26,6 +26,7 @@ using std::vector;
 using std::sort;
 #include <SDL2/SDL.h>
 #include <string.h>
+#include <functional>
 
 #include "./inc/main.h"
 #include "./inc/Player.h"
@@ -48,63 +49,104 @@ void Player::takeCard(Card* card) {
 
 
 void Player::getMelds() {
-	melds.clear();
+	typedef std::vector<Card*> CS; // Card Stack
+	bool (*checkMelds)(CS) = [](CS vec) { // Could use std::function<bool(CS)>
+		for(Card* tmpCard : vec)
+			if(tmpCard->rank != vec[0]->rank)
+				return false;	
+		return true;
+	};
 	
-	// FIND SETS (3 or 4 cards with the same rank/value)
-	for(unsigned i = 0; i < hand.size(); ++i) {
-		for(unsigned j = i + 1; j < hand.size(); ++j) {
-			for(unsigned k = j + 1; k < hand.size(); ++k) {
-				if(    (hand[i]->rank == hand[j]->rank) // see if the ranks are the same
-					&& (hand[j]->rank == hand[k]->rank)
-				) {
-					melds.push_back( new Meld{
-						MELD_SET,
-						{hand[i], hand[j], hand[k]}
-					});
-				}
-			}
+	melds.clear(); /// @todo clean up dynamic memory
+	/// @todo Fix multiple cards
+	CS tmpHand = hand;
+	
+	std::sort(
+		tmpHand.begin(), tmpHand.end(),
+		[](Card* a, Card* b) {
+			return (a->suit*RANK_TOTAL + a->rank) < (b->suit*RANK_TOTAL + b->rank);
+		}
+	);
+	
+	for(int i = 0; i < tmpHand.size(); ++i) {
+		int j = i + 1;
+		for(/*blank*/; j < tmpHand.size(); ++j) {
+			if(tmpHand[i]->suit != tmpHand[j]->suit)
+				break;
+			
+			if(tmpHand[i]->rank != (tmpHand[j]->rank - (j - i)))
+				break;
+		}
+		//LOGL(j - i)
+		if(j - i > 2) {
+			melds.push_back( new Meld {
+				MELD_RUN,
+				CS(tmpHand.begin() + i, tmpHand.begin() + j)
+			});
+			i = j;
 		}
 	}
-	///@todo Check for a 4 card set
 	
-	// FIND RUNS (3 cards in the same suit that go in order)
-	for(unsigned i = 0; i < hand.size(); ++i) {
-		for(unsigned j = i + 1; j < hand.size(); ++j) {
-			for(unsigned k = j + 1; k < hand.size(); ++k) { // go through sets of 3 cards
-				if(    hand[i]->suit == hand[j]->suit // if the suits are all the same, we may have a run
-					&& hand[j]->suit == hand[k]->suit
-				) {
-					vector<Card*> tmpCards{hand[i], hand[j], hand[k]}; // create vector to sort 
-					sort( // sort the 3 cards by rank
-						tmpCards.begin(), tmpCards.end(),
-						[](Card* a, Card* b) { return a->rank < b->rank; }
-					);
-					
-					// for(Card* tmpCard : tmpCards)
-						// cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
-					
-					if(    tmpCards[0]->rank == tmpCards[1]->rank - 1 // see if the ranks are incrementing
-						&& tmpCards[1]->rank == tmpCards[2]->rank - 1
-					) { melds.push_back( new Meld{MELD_RUN, tmpCards} ); }
-				}
-			}
+	tmpHand = hand;
+	std::sort(
+		tmpHand.begin(), tmpHand.end(),
+		[](Card* a, Card* b) {
+			return (a->rank*SUIT_TOTAL + a->suit) < (b->rank*SUIT_TOTAL + b->suit);
+		}
+	);
+	
+	for(int i = tmpHand.size() - 1; i > 1; --i) { // Go through the hand (There is no point of going backwards, but thats just the way we did it)
+		if(    i > 2 // Make sure that we wont go out of bounds checking 4 card set
+			&& checkMelds({tmpHand[i], tmpHand[i - 1], tmpHand[i - 2], tmpHand[i - 3]})
+		) {
+			melds.push_back( new Meld { // if so we have a meld
+				MELD_SET,
+				{tmpHand[i], tmpHand[i - 1], tmpHand[i - 2], tmpHand[i - 3]}
+			});
+			i -= 3; // move the pointer back 3 points so it isnt included in a meld again
+		} else if(checkMelds({tmpHand[i], tmpHand[i - 1], tmpHand[i - 2]})) {
+			melds.push_back( new Meld {
+				MELD_SET,
+				{tmpHand[i], tmpHand[i - 1], tmpHand[i - 2]}
+			});
+			i -= 2;
 		}
 	}
+	
+	std::stable_sort( // Sort by size
+		melds.begin(), melds.end(),
+		[](Meld* a, Meld* b) {
+			return a->cards.size() > b->cards.size(); // greatest to least
+		}
+	);
+	
+	CS usedCards; // This stores all the used cards
+	auto idx = remove_if( // Sp we are going to remove if our melds already use a card
+		melds.begin(), melds.end(), // go through the meld
+		[&](Meld* m) {
+			for(Card* tmpCard : m->cards) { // and go theough the cards in the meld
+				if(count(usedCards.begin(), usedCards.end(), tmpCard)) return true; // if we have already used the card before
+				usedCards.push_back(tmpCard); // if we havent then store the card in the usedCard vector
+			}
+			return false;
+		}
+	);
+	
+	if(idx != melds.end())
+		melds.erase(idx, melds.end());
+	// remove from the end if the cards repeat
 }
 
 
 void Player::getDeadwood() {
 	// FIND anycard in our hand that not part of meld 
-	deadwood = hand;
-
-	for(int i = deadwood.size() - 1; i >= 0; --i) { 	
-		for(unsigned j = 0; j < melds.size(); j++) { 
-			for(unsigned k = 0; k < melds[j]->cards.size(); k++) { 
-				if(    deadwood[i]->suit == melds[j]->cards[k]->suit
-					&& deadwood[i]->rank == melds[j]->cards[k]->rank
-				) deadwood.erase(deadwood.begin() + i);
-			}			
-		}	
+	deadwood = hand; // first copy the hand into deadwood
+	
+	for(Meld* tmpMeld : melds) {
+		for(Card* tmpCard : tmpMeld->cards) {
+			auto idx = std::remove(deadwood.begin(), deadwood.end(), tmpCard);
+			deadwood.erase(idx, deadwood.end());
+		}
 	}
 }
 
@@ -139,25 +181,35 @@ unsigned Player::getPoints() {
 }
 
 
-Card* Player::getCard(Card* card) {  // remove card from hand 
-
-	for(unsigned i = 0; i < hand.size(); ++i)
-		if(card == hand[i])
-			hand.erase(hand.begin() + i);  
-	return card; 					
+Card* Player::getCard(Card* card) { 
+	for(unsigned i = 0; i < hand.size(); ++i) // find the card in our hand
+		if(card == hand[i]) 
+			hand.erase(hand.begin() + i);     // remove card from hand  
+	return card; // return the card
 }		
 
+/*
+unsigned Player::getKnockPoints() {
+	
+	
+	
+	
+	// return 0; 
+}
+*/
 
 unsigned Player::getGin() {
+	// when all 10 cards in our hand are parts of melds also have no deadwood 
 	
-	
-	
-	
-	return 0;
+	if(deadwood.size() == 1) 
+		
+	return 25;
 }
 
 
 unsigned Player::getBigGin() {
+	// When all 10 cards in our hand are parts of melds and the card we just drew are parts of melds - 11 cards total
+	if(deadwood.size() == 0) 
 	
-	return 0;
+	return 30;
 }

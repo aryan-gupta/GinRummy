@@ -73,18 +73,31 @@ public:
 	CardPile(CardPileTypes type);
 	~CardPile();
 	
-	void shuffle(); ///< Suffle the deck
-	void render();
+	size_t size();
 	
-	Card* getACard(); ///< Pulls a card from the deck
+	void shuffle(); ///< Suffle the deck
+	void render();  ///< Render the deck
+	
+	/// @brief Pulls a card from the deck
+	/// @warning The card gets removed from the deck
+	/// @return Card* The Card pointer
+	Card* getACard();
+	
+	/// @brief Puts a card on the top of the deck
+	/// @warning Does not check if \p is nullptr or NULL
+	/// @param [in] Card* The Card pointer
 	void takeACard(Card* card);
 	
+	/// @brief checks of our click was on this deck
+	/// @param [in] x `int` The x coordinate of the click 
+	/// @param [in] y `int` The y cordinate of the click
 	bool checkClick(const int x, const int y);
-private:
-	std::vector<Card*> pile; ///< the deck/pile of cards
-	CardPileTypes type;      ///< type of CardPile @todo Convert to bool
 	
-	SDL_Rect position;
+private:
+	std::vector<Card*> pile; ///< The deck/pile of cards
+	CardPileTypes type;      ///< Type of CardPile @todo Convert to bool
+	
+	SDL_Rect position; ///< Position of the deck on the screen
 };
 
 #endif

@@ -34,13 +34,26 @@ enum UI_Colors {
 	UIC_TOTAL
 };
 
+/// @brief The various help text texts indexes
+enum HelpTextItems {
+	HTI_PICK_DECK,
+	HTI_PICK_DECK_ERR,
+	HTI_PICK_CARD,
+	HTI_PICK_CARD_ERR,
+	HTI_NOT_YOUR_TURN,
+	
+	HTI_TOTAL
+};
+
+extern const char* HELP_TEXT[]; ///< The actual help text
+
 /// @brief Stores all of our assets
 struct Resources {
 	Resources();  ///< Load all of our assets
 	~Resources(); ///< Destroy our assets
 	
 	SDL_Texture* cardsSheet;       ///< The texture for our cards
-	SDL_Texture* cardsSheetT;
+	SDL_Texture* cardsSheetT;      ///< The Texture of our cards with transparent card background
 	SDL_Texture* cardBackSheet;    ///< The texture for our backs
 	SDL_Rect*    cardClippings;    ///< The card clippings
 	SDL_Rect     cardClippingBack; ///< The clippings for our backs
@@ -50,6 +63,24 @@ struct Resources {
 	
 	TTF_Font* buttonFont, ///< Our button font
 	        * nFont;      ///< Our normal font
+			
+	SDL_Rect knockButton,   ///< Knock button position
+	         sortButton,    ///< Sort button position
+	         deadwoodPanel, ///< Deadwood Panel position
+	         meldsPanel,    ///< Melds Panel position
+	         helpPanel,     ///< Help panel position
+			 knockPos,      ///< Knock text position
+			 sortPos,       ///< Sort text position
+			 meldTextPos,   ///< Meld text position
+			 dwTextPos;     ///< Deadwood text position
+			 
+	SDL_Texture* knockTexture,    ///< Knock text texture
+	           * knockTextureST,  ///< Crossed out Knock text texture
+	           * sortTexture,     ///< Sort text texture
+			   * meldTextTexture, ///< Meld text texture
+			   * dwTextTexture;   ///< Deadwood text texture
+			   
+	SDL_Color textColor; ///< Text color
 private:
 	/// @brief loads an image into a texture
 	/// @param [in] file `const char*` The file to load
