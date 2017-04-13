@@ -52,7 +52,7 @@ void Player::getMelds() {
 	typedef std::vector<Card*> CS; // Card Stack
 	melds.clear();
 	
-	bool (*checkMelds)(CS) = [](CS vec) { // Could use std::function<bool(CS)>
+	/* bool (*checkMelds)(CS) = [](CS vec) { // Could use std::function<bool(CS)>
 		for(Card* tmpCard : vec)
 			if(tmpCard->rank != vec[0]->rank)
 				return false;	
@@ -85,29 +85,32 @@ void Player::getMelds() {
 		}
 	}
 	
-	tmpHand.clear();
+	tmpHand.clear();*/
+	CS tmpHand = hand;
 	
-	// FIND RUNS (3+ cards in the same suit that go in order)
-	for(unsigned i = 0; i < hand.size(); ++i) {
-		for(unsigned j = i + 1; j < hand.size(); ++j) {
-			for(unsigned k = j + 1; k < hand.size(); ++k) { // go through sets of 3 cards
-				if(    hand[i]->suit == hand[j]->suit // if the suits are all the same, we may have a run
-					&& hand[j]->suit == hand[k]->suit
-				) {
-					CS tmpCards{hand[i], hand[j], hand[k]}; // create vector to sort 
-					sort( // sort the 3 cards by rank
-						tmpCards.begin(), tmpCards.end(),
-						[](Card* a, Card* b) { return a->rank < b->rank; }
-					);
-					
-					// for(Card* tmpCard : tmpCards)
-						// cout << "\t" << Suits_Label[tmpCard->suit] << " " << Ranks_Label[tmpCard->rank] << " " << endl;
-					
-					if(    tmpCards[0]->rank == tmpCards[1]->rank - 1 // see if the ranks are incrementing
-						&& tmpCards[1]->rank == tmpCards[2]->rank - 1
-					) { melds.push_back( new Meld{MELD_RUN, tmpCards} ); }
-				}
-			}
+	std::sort(
+		tmpHand.begin(), tmpHand.end(),
+		[](Card* a, Card* b) {
+			return (a->suit*RANK_TOTAL + a->rank) < (b->suit*RANK_TOTAL + b->rank);
+		}
+	);
+	
+	for(int i = 0; i < tmpHand.size(); ++i) {
+		int j = i + 1;
+		for(/*blank*/; j < tmpHand.size(); ++j) {
+			if(tmpHand[i]->suit != tmpHand[j]->suit)
+				break;
+			
+			if(tmpHand[i]->rank != (tmpHand[j]->rank - (j - i)))
+				break;
+		}
+		//LOGL(j - i)
+		if(j - i > 2) {
+			melds.push_back( new Meld {
+				MELD_RUN,
+				CS(tmpHand.begin() + i, tmpHand.begin() + j)
+			});
+			i = j;
 		}
 	}
 }
