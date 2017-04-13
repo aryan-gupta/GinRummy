@@ -125,19 +125,15 @@ void Player::getMelds() {
 		melds.begin(), melds.end(), // go through the meld
 		[&](Meld* m) {
 			for(Card* tmpCard : m->cards) { // and go theough the cards in the meld
-				if(count_if(
-					usedCards.begin(), usedCards.end(), // if we have already used the card before
-					[&](Card* a) {
-						return a == tmpCard;
-					}
-				)) return true;
-				
+				if(count(usedCards.begin(), usedCards.end(), tmpCard)) return true; // if we have already used the card before
 				usedCards.push_back(tmpCard); // if we havent then store the card in the usedCard vector
 			}
 			return false;
 		}
 	);
-	melds.erase(idx, melds.end());
+	
+	if(idx != melds.end())
+		melds.erase(idx, melds.end());
 	// remove from the end if the cards repeat
 }
 
