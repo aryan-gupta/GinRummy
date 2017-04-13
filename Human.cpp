@@ -52,7 +52,7 @@ void Human::pickDeck() {
 	Card* selectedCard = nullptr;
 	SDL_Event event;
 	uint32_t FPS_Timer = 0;
-	
+	int xDown, yDown;
 	while(!finished) { // RENDER LOOP
 		FPS_Timer = SDL_GetTicks();
 		
@@ -81,16 +81,15 @@ void Human::pickDeck() {
 				break;
 				
 				case SDL_MOUSEBUTTONDOWN: {
-					int x, y;
-					SDL_GetMouseState(&x, &y);
+					SDL_GetMouseState(&xDown, &yDown);
 					
-					if(    x > SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
-						&& x < SCRN_W/2 + (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
-						&& y > SCRN_H - WIN_PAD - CARD_H
-						&& y < SCRN_H - WIN_PAD
+					if(    xDown > SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
+						&& xDown < SCRN_W/2 + (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
+						&& yDown > SCRN_H - WIN_PAD - CARD_H
+						&& yDown < SCRN_H - WIN_PAD
 					)  {
 						//isMovingCard = true;
-						int cardx = x - (SCRN_W/2 - (CARD_PAD*(hand.size() - 1) + CARD_W)/2); // get the x coordinate offset from the start of the cards
+						int cardx = xDown - (SCRN_W/2 - (CARD_PAD*(hand.size() - 1) + CARD_W)/2); // get the x coordinate offset from the start of the cards
 						int cardi = cardx / CARD_PAD; // get the index of the card we clicked
 						
 						if(cardi >= (int)hand.size()) // correct for the last card being the top card
@@ -100,9 +99,15 @@ void Human::pickDeck() {
 					}
 				} break;
 				
-				case SDL_MOUSEMOTION:
-					if(selectedCard != nullptr) isMovingCard = true; /// @todo if x or y is more than 5 px from when we mouse down then move card
-				break;
+				case SDL_MOUSEMOTION: {
+					int x, y;
+					SDL_GetMouseState(&x, &y);
+					
+					if(selectedCard != nullptr) {
+						if(abs(x - xDown) > 3 || abs(y - yDown) > 3)
+							isMovingCard = true;
+					}
+				} break;
 				
 				case SDL_MOUSEBUTTONUP: {
 					if(isMovingCard) {
@@ -159,6 +164,7 @@ void Human::pickCard() {
 	Card* selectedCard = nullptr;
 	SDL_Event event;
 	uint32_t FPS_Timer = 0;
+	int xDown, yDown;
 	
 	while(!finished) {
 		FPS_Timer = SDL_GetTicks();
@@ -192,15 +198,14 @@ void Human::pickCard() {
 				
 				case SDL_MOUSEBUTTONDOWN: { // If we clicked down (Only thing here is moving the card)
 					/// @todo get card that the user selected
-					int x, y;
-					SDL_GetMouseState( &x, &y );
+					SDL_GetMouseState(&xDown, &yDown);
 					
-					if(    x > SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
-						&& x < SCRN_W/2 + (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
-						&& y > SCRN_H - WIN_PAD - CARD_H
-						&& y < SCRN_H - WIN_PAD
+					if(    xDown > SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
+						&& xDown < SCRN_W/2 + (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
+						&& yDown > SCRN_H - WIN_PAD - CARD_H
+						&& yDown < SCRN_H - WIN_PAD
 					)  {
-						int cardx = x - (SCRN_W/2 - (CARD_PAD*(hand.size() - 1) + CARD_W)/2); // get the x coordinate offset from the start of the cards
+						int cardx = xDown - (SCRN_W/2 - (CARD_PAD*(hand.size() - 1) + CARD_W)/2); // get the x coordinate offset from the start of the cards
 						int cardi = cardx / CARD_PAD; // get the index of the card we clicked
 						
 						if(cardi >= (int)hand.size()) // correct for the last card being the top card
@@ -210,9 +215,15 @@ void Human::pickCard() {
 					}
 				} break;
 				
-				case SDL_MOUSEMOTION:
-					if(selectedCard != nullptr) isMovingCard = true;
-				break;
+				case SDL_MOUSEMOTION: {
+					int x, y;
+					SDL_GetMouseState(&x, &y);
+					
+					if(selectedCard != nullptr) {
+						if(abs(x - xDown) > 3 || abs(y - yDown) > 3)
+							isMovingCard = true;
+					}
+				} break;
 				
 				case SDL_MOUSEBUTTONUP: { // we clicked up, here is where we want to select the decks and what not
 					/// @todo check for released the card
