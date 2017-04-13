@@ -50,42 +50,8 @@ void Player::takeCard(Card* card) {
 
 void Player::getMelds() {
 	typedef std::vector<Card*> CS; // Card Stack
-	melds.clear();
-	
-	/* bool (*checkMelds)(CS) = [](CS vec) { // Could use std::function<bool(CS)>
-		for(Card* tmpCard : vec)
-			if(tmpCard->rank != vec[0]->rank)
-				return false;	
-		return true;
-	};
-	
-	CS tmpHand = hand;
-	std::sort(
-		tmpHand.begin(), tmpHand.end(),
-		[](Card* a, Card* b) {
-			return (a->rank*SUIT_TOTAL + a->suit) < (b->rank*SUIT_TOTAL + b->suit);
-		}
-	);
-	
-	for(int i = tmpHand.size() - 1; i > 1; --i) { // Go through the hand (There is no point of going backwards, but thats just the way we did it)
-		if(    i > 2 // Make sure that we wont go out of bounds checking 4 card set
-			&& checkMelds({tmpHand[i], tmpHand[i - 1], tmpHand[i - 2], tmpHand[i - 3]})
-		) {
-			melds.push_back( new Meld { // if so we have a meld
-				MELD_SET,
-				{tmpHand[i], tmpHand[i - 1], tmpHand[i - 2], tmpHand[i - 3]}
-			});
-			i -= 3; // move the pointer back 3 points so it isnt included in a meld again
-		} else if(checkMelds({tmpHand[i], tmpHand[i - 1], tmpHand[i - 2]})) {
-			melds.push_back( new Meld {
-				MELD_SET,
-				{tmpHand[i], tmpHand[i - 1], tmpHand[i - 2]}
-			});
-			i -= 2;
-		}
-	}
-	
-	tmpHand.clear();*/
+	melds.clear(); /// @todo clean up dynamic memory
+	/// @todo Fix multiple cards
 	CS tmpHand = hand;
 	
 	std::sort(
@@ -113,6 +79,42 @@ void Player::getMelds() {
 			i = j;
 		}
 	}
+	
+	bool (*checkMelds)(CS) = [](CS vec) { // Could use std::function<bool(CS)>
+		for(Card* tmpCard : vec)
+			if(tmpCard->rank != vec[0]->rank)
+				return false;	
+		return true;
+	};
+	
+	tmpHand = hand;
+	std::sort(
+		tmpHand.begin(), tmpHand.end(),
+		[](Card* a, Card* b) {
+			return (a->rank*SUIT_TOTAL + a->suit) < (b->rank*SUIT_TOTAL + b->suit);
+		}
+	);
+	
+	for(int i = tmpHand.size() - 1; i > 1; --i) { // Go through the hand (There is no point of going backwards, but thats just the way we did it)
+		if(    i > 2 // Make sure that we wont go out of bounds checking 4 card set
+			&& checkMelds({tmpHand[i], tmpHand[i - 1], tmpHand[i - 2], tmpHand[i - 3]})
+		) {
+			melds.push_back( new Meld { // if so we have a meld
+				MELD_SET,
+				{tmpHand[i], tmpHand[i - 1], tmpHand[i - 2], tmpHand[i - 3]}
+			});
+			i -= 3; // move the pointer back 3 points so it isnt included in a meld again
+		} else if(checkMelds({tmpHand[i], tmpHand[i - 1], tmpHand[i - 2]})) {
+			melds.push_back( new Meld {
+				MELD_SET,
+				{tmpHand[i], tmpHand[i - 1], tmpHand[i - 2]}
+			});
+			i -= 2;
+		}
+	}
+	
+	// Sort by size
+	// remove from the end if the cards repeat
 }
 
 
