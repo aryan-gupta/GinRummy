@@ -84,8 +84,8 @@ Resources::Resources() {
 		cardClippings[GCI(SUIT_CLUBS,    RANK_9    )] = SDL_Rect{560,  950, 140, 190};
 		cardClippings[GCI(SUIT_CLUBS,    RANK_10   )] = SDL_Rect{560,  760, 140, 190};
 		cardClippings[GCI(SUIT_CLUBS,    RANK_JACK )] = SDL_Rect{560,  380, 140, 190};
-		cardClippings[GCI(SUIT_CLUBS,    RANK_QUEEN)] = SDL_Rect{560,  190, 140, 190};
-		cardClippings[GCI(SUIT_CLUBS,    RANK_KING )] = SDL_Rect{560,    0, 140, 190};
+		cardClippings[GCI(SUIT_CLUBS,    RANK_QUEEN)] = SDL_Rect{560,    0, 140, 190};
+		cardClippings[GCI(SUIT_CLUBS,    RANK_KING )] = SDL_Rect{560,  190, 140, 190};
 
 		cardClippings[GCI(SUIT_DIAMONDS, RANK_ACE  )] = SDL_Rect{420,    0, 140, 190};
 		cardClippings[GCI(SUIT_DIAMONDS, RANK_2    )] = SDL_Rect{420, 1710, 140, 190};
@@ -98,8 +98,8 @@ Resources::Resources() {
 		cardClippings[GCI(SUIT_DIAMONDS, RANK_9    )] = SDL_Rect{420,  380, 140, 190};
 		cardClippings[GCI(SUIT_DIAMONDS, RANK_10   )] = SDL_Rect{420,  190, 140, 190};
 		cardClippings[GCI(SUIT_DIAMONDS, RANK_JACK )] = SDL_Rect{280, 1710, 140, 190};
-		cardClippings[GCI(SUIT_DIAMONDS, RANK_QUEEN)] = SDL_Rect{280, 1520, 140, 190};
-		cardClippings[GCI(SUIT_DIAMONDS, RANK_KING )] = SDL_Rect{280, 1330, 140, 190};
+		cardClippings[GCI(SUIT_DIAMONDS, RANK_QUEEN)] = SDL_Rect{280, 1330, 140, 190};
+		cardClippings[GCI(SUIT_DIAMONDS, RANK_KING )] = SDL_Rect{280, 1520, 140, 190};
 		
 		cardClippings[GCI(SUIT_HEARTS,   RANK_ACE  )] = SDL_Rect{140, 1330, 140, 190};
 		cardClippings[GCI(SUIT_HEARTS,   RANK_2    )] = SDL_Rect{700,  380, 140, 190};
@@ -112,8 +112,8 @@ Resources::Resources() {
 		cardClippings[GCI(SUIT_HEARTS,   RANK_9    )] = SDL_Rect{140, 1710, 140, 190};
 		cardClippings[GCI(SUIT_HEARTS,   RANK_10   )] = SDL_Rect{140, 1520, 140, 190};
 		cardClippings[GCI(SUIT_HEARTS,   RANK_JACK )] = SDL_Rect{140, 1140, 140, 190};
-		cardClippings[GCI(SUIT_HEARTS,   RANK_QUEEN)] = SDL_Rect{140,  950, 140, 190};
-		cardClippings[GCI(SUIT_HEARTS,   RANK_KING )] = SDL_Rect{140,  760, 140, 190};
+		cardClippings[GCI(SUIT_HEARTS,   RANK_QUEEN)] = SDL_Rect{140,  760, 140, 190};
+		cardClippings[GCI(SUIT_HEARTS,   RANK_KING )] = SDL_Rect{140,  950, 140, 190};
 		
 		cardClippings[GCI(SUIT_SPADES,   RANK_ACE  )] = SDL_Rect{  0,  570, 140, 190};
 		cardClippings[GCI(SUIT_SPADES,   RANK_2    )] = SDL_Rect{140,  380, 140, 190};
@@ -126,8 +126,8 @@ Resources::Resources() {
 		cardClippings[GCI(SUIT_SPADES,   RANK_9    )] = SDL_Rect{  0,  950, 140, 190};
 		cardClippings[GCI(SUIT_SPADES,   RANK_10   )] = SDL_Rect{  0,  760, 140, 190};
 		cardClippings[GCI(SUIT_SPADES,   RANK_JACK )] = SDL_Rect{  0,  380, 140, 190};
-		cardClippings[GCI(SUIT_SPADES,   RANK_QUEEN)] = SDL_Rect{  0,  190, 140, 190};
-		cardClippings[GCI(SUIT_SPADES,   RANK_KING )] = SDL_Rect{  0,    0, 140, 190};
+		cardClippings[GCI(SUIT_SPADES,   RANK_QUEEN)] = SDL_Rect{  0,    0, 140, 190};
+		cardClippings[GCI(SUIT_SPADES,   RANK_KING )] = SDL_Rect{  0,  190, 140, 190};
 	}
 	
 	{ // Load the cards and set the white as transparent
