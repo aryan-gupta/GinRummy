@@ -50,6 +50,13 @@ void Player::takeCard(Card* card) {
 
 void Player::getMelds() {
 	typedef std::vector<Card*> CS; // Card Stack
+	bool (*checkMelds)(CS) = [](CS vec) { // Could use std::function<bool(CS)>
+		for(Card* tmpCard : vec)
+			if(tmpCard->rank != vec[0]->rank)
+				return false;	
+		return true;
+	};
+	
 	melds.clear(); /// @todo clean up dynamic memory
 	/// @todo Fix multiple cards
 	CS tmpHand = hand;
@@ -80,13 +87,6 @@ void Player::getMelds() {
 		}
 	}
 	
-	bool (*checkMelds)(CS) = [](CS vec) { // Could use std::function<bool(CS)>
-		for(Card* tmpCard : vec)
-			if(tmpCard->rank != vec[0]->rank)
-				return false;	
-		return true;
-	};
-	
 	tmpHand = hand;
 	std::sort(
 		tmpHand.begin(), tmpHand.end(),
@@ -113,7 +113,30 @@ void Player::getMelds() {
 		}
 	}
 	
-	// Sort by size
+	std::sort( // Sort by size
+		melds.begin(), melds.end(),
+		[](Meld* a, Meld* b) {
+			return a->cards.size() > b->cards.size(); // lowest to greatest
+		}
+	);
+	
+	CS usedCards; // This stores all the used cards
+	auto idx = remove_if( // Sp we are going to remove if our melds already use a card
+		melds.begin(), melds.end(), // go through the meld
+		[&](Meld* m) {
+			for(Card* tmpCard : m->cards) { // and go theough the cards in the meld
+				if(0 != count_if(
+					usedCards.begin(), usedCards.end(), // if we have already used the card before
+					[&](Card* a) {
+						return a == tmpCard;
+					}
+				)) return true;
+				usedCards.push_back(tmpCard); // if we havent then store the card in the usedCard vector
+				return false;
+			}
+		}
+	);
+	melds.erase(idx, melds.end());
 	// remove from the end if the cards repeat
 }
 
