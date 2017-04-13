@@ -113,10 +113,10 @@ void Player::getMelds() {
 		}
 	}
 	
-	std::sort( // Sort by size
+	std::stable_sort( // Sort by size
 		melds.begin(), melds.end(),
 		[](Meld* a, Meld* b) {
-			return a->cards.size() > b->cards.size(); // lowest to greatest
+			return a->cards.size() > b->cards.size(); // greatest to least
 		}
 	);
 	
@@ -125,15 +125,16 @@ void Player::getMelds() {
 		melds.begin(), melds.end(), // go through the meld
 		[&](Meld* m) {
 			for(Card* tmpCard : m->cards) { // and go theough the cards in the meld
-				if(0 != count_if(
+				if(count_if(
 					usedCards.begin(), usedCards.end(), // if we have already used the card before
 					[&](Card* a) {
 						return a == tmpCard;
 					}
 				)) return true;
+				
 				usedCards.push_back(tmpCard); // if we havent then store the card in the usedCard vector
-				return false;
 			}
+			return false;
 		}
 	);
 	melds.erase(idx, melds.end());
