@@ -185,7 +185,7 @@ void Player::getMelds() {
 			
 			if(ucVec.size() == ucSet.size())
 				return false; // if cards are unique then return false
-			LOGL("FOUND CONFLICTING")
+			
 			return true;
 		}
 	);
@@ -211,16 +211,7 @@ void Player::getMelds() {
 		}
 	);
 	
-	LOGL(endl <<"RUN")
-	for(MS& i : ps) {
-		LOGL("A POSSIBLE MELD:" << calcDW(i))
-		for(auto j : i) {
-			for(auto k : j->cards) {
-				LOG(k << " ");
-			}
-			cout << endl;
-		}
-	}
+	melds = ps[0];
 }
 
 
