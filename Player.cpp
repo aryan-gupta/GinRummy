@@ -48,6 +48,34 @@ void Player::takeCard(Card* card) {
 }
 
 
+static std::ostream& operator << (std::ostream& out, Card* card) {
+	static const char* SL[] = {
+		"C",
+		"D",
+		"H",
+		"S"
+	};
+	static const char* RL[] = {
+		"A",
+		"2",
+		"3",
+		"4",
+		"5",
+		"6",
+		"7",
+		"8",
+		"9",
+		"10",
+		"J",
+		"Q",
+		"K",
+	};
+	out << SL[card->suit] << RL[card->rank];
+	
+	return out;
+}
+
+
 void Player::getMelds() {
 	typedef std::vector<Card*> CS; // Card Stack
 	bool (*checkMelds)(CS) = [](CS vec) { // Could use std::function<bool(CS)>
@@ -121,9 +149,9 @@ void Player::getMelds() {
 	);
 	
 	typedef std::vector<Meld*> MS; // Meld Stack
-	typedef std::vector<MS> MM; // Meld Matrix
+	typedef std::vector<MS> MM;    // Meld Matrix
 	
-	std::function<void (int, int, const int&, MS, MM&)> findAllMeld =
+	std::function<void (int, int, const int&, MS, MM&)> findAllMeld =  // create our recursive function 
 	[&](int start, int depth, const int& maxDepth, MS stack, MM& ps) {
 		stack.push_back(melds[start]);
 		
@@ -142,7 +170,30 @@ void Player::getMelds() {
 	for(int maxDepth = 0; maxDepth < melds.size(); ++maxDepth)
 		for(int start = 0; start < melds.size(); ++start)
 			findAllMeld(start, 0, maxDepth, stack, ps);
-
+		
+	auto idx = remove_if( // remove if a card is being used used twoce in a melds
+		ps.begin(), ps.end(),
+		[&](MS& curMelds) { // check this meld state if we have a reuccuring card
+			CS usedCards;  // stores all the card used in this meld stack
+			for(Meld* m : curMelds) { // add up all the cards used in the stack
+				usedCards.insert(usedCards.begin(), m->cards.begin(), m->cards.end());
+			}
+			if(usedCards.end() == unique(usedCards.begin(), usedCards.end()))
+				return false; // if cards are unique then return false
+			else return true;
+		}
+	);
+	ps.erase(idx, ps.end());
+	
+	for(auto i : ps) {
+		LOGL("A POSSIBLE MELD:" << endl)
+		for(auto j : i) {
+			for(auto k : j->cards) {
+				cout << k << " ";
+			}
+			cout << endl << endl;
+		}
+	}
 }
 
 
