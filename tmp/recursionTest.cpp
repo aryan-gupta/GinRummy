@@ -8,33 +8,36 @@ typedef vector<int> IV;
 
 IV master;
 
-void func(IV::iterator start, int depth, int fDepth, IV &vec) {
-	if(depth == fDepth)
+void func(int start, int depth, int fDepth, IV vec, vector<IV> &pos) {
+	cout << depth << start << endl;
+	if(depth == fDepth) {
+		pos.push_back(vec);
 		return;
-	for(auto i = start; start != master.end(); ++i) {
-		vec.push_back(*start);
-		func(i, depth + 1, fDepth, vec);
+	}
+	
+	vec.push_back(master[start]);
+	for(; start < master.size(); ++start) {
+		func(start + 1, depth + 1, fDepth, vec, pos);
 	}
 
 }
 
 int main() {
-	IV master = {1, 2, 3};
+	master = {1, 2, 3, 4};
 	
-	vector<IV> pos;
+	vector<IV> pos(master.size());
 	
-	for(int  i = 0; i < master.size(); ++i) {
+	//for(int  i = 0; i < master.size(); ++i) {
 		IV one;
-		func(master.begin(), 0, i, one);
-		pos.push_back(one);
-	}
+		func(0, 0, 2, one, pos);
+		
+	//}
 	
 	for(IV& tmpIV : pos) {
-		cout << "[ ";
 		for(int tmpInt : tmpIV) {
-			cout << tmpInt << ", ";
+			cout << tmpInt << " ";
 		}
-		cout << " ]" << endl;
+		cout << endl;
 	}
 	
 	return 0;
