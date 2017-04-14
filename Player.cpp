@@ -120,14 +120,29 @@ void Player::getMelds() {
 		}
 	);
 	
-	vector<vector<Meld*> > ps;
-	for(int i = 1; i < mels.size() - 1; ++i) { // i stores the size of the possible meld we are going to create
-		for(int j = 0; j < melds.size(); ++j) {
-			ps.push_back(vector<Meld*>(melds.begin(), melds.begin() + i))
-			std::rotate(melds.begin(), melds.end(), melds.begin() + 1);
+	typedef std::vector<Meld*> MS; // Meld Stack
+	typedef std::vector<MS> MM; // Meld Matrix
+	
+	std::function<void (int, int, const int&, MS, MM&)> findAllMeld =
+	[&](int start, int depth, const int& maxDepth, MS stack, MM& ps) {
+		stack.push_back(melds[start]);
+		
+		if(depth == maxDepth) {
+			ps.push_back(stack);
+			return;
 		}
-	}
-	ps.push_back(melds);
+		
+		for(int i = start + 1; i < melds.size(); ++i) {
+			findAllMeld(i, depth + 1, maxDepth, stack, ps);
+		}
+	};
+	
+	MM ps;
+	MS stack;
+	for(int maxDepth = 0; maxDepth < melds.size(); ++maxDepth)
+		for(int start = 0; start < melds.size(); ++start)
+			findAllMeld(start, 0, maxDepth, stack, ps);
+
 }
 
 
