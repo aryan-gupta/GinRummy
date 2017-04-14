@@ -142,7 +142,9 @@ void Player::getMelds() {
 		}
 	}
 	
-	std::stable_sort( // Sort by size
+	// SEE ISSUE #3 ON GITHUB FOR MORE DETAILS
+	
+	std::stable_sort( // Sort by size of meld
 		melds.begin(), melds.end(),
 		[](Meld* a, Meld* b) {
 			return a->cards.size() > b->cards.size(); // greatest to least
@@ -154,20 +156,23 @@ void Player::getMelds() {
 	
 	std::function<void (int, int, const int&, MS, MM&)> findAllMeld =  // create our recursive function 
 	[&](int start, int depth, const int& maxDepth, MS stack, MM& ps) {
-		stack.push_back(melds[start]);
+		stack.push_back(melds[start]); // Add the current leaf
 		
-		if(depth == maxDepth) {
-			ps.push_back(stack);
-			return;
+		if(depth == maxDepth) { // if we are at our end position then
+			ps.push_back(stack); // push back a copy of the accumulated stack
+			return; // collapse the function stack
 		}
 		
-		for(int i = start + 1; i < melds.size(); ++i) {
+		for(int i = start + 1; i < melds.size(); ++i) { // if there are leaves after us
+			 // spawn func for each leaf AND COPY the vector containing the accumulated Melds
 			findAllMeld(i, depth + 1, maxDepth, stack, ps);
 		}
+		
+		// if there are no more leaves then function collapses
 	};
 	
-	MM ps;
-	MS stack;
+	MM ps;    // Possible Melds
+	MS stack; // 
 	for(int maxDepth = 0; maxDepth < melds.size(); ++maxDepth)
 		for(int start = 0; start < melds.size(); ++start)
 			findAllMeld(start, 0, maxDepth, stack, ps);
@@ -178,7 +183,7 @@ void Player::getMelds() {
 			CS ucVec;              // stores all the card used in this meld stack
 			std::set<Card*> ucSet; // stores the cards, but only one of it
 			
-			for(Meld* m : curMelds) { // add up all the cards used in the stack
+			for(Meld* m : curMelds) { // copy all the cards used in the stack
 				ucVec.insert(ucVec.begin(), m->cards.begin(), m->cards.end());
 				ucSet.insert(m->cards.begin(), m->cards.end());
 			}
@@ -189,29 +194,30 @@ void Player::getMelds() {
 			return true;
 		}
 	);
-	ps.erase(idx, ps.end());
+	ps.erase(idx, ps.end()); // remove the ones that had duplicates
 	
+	// Function calculates deadwood given a Meld Stack
 	std::function<unsigned(MS&)> calcDW = [&](MS& a) {
 		unsigned sum = 0; 
 		
 		for(Meld* m : a) {
-			for(Card* c : m->cards) { 
-				if(c->rank > RANK_JACK) { sum += 10; }
-				else { sum += c->rank + 1; } 
+			for(Card* c : m->cards) {  // go through all the cards in each meld
+				if(c->rank > RANK_JACK) { sum += 10; } // add up its values
+				else { sum += c->rank + 1; } // Because RANK_ACE internally 0 and not 1
 			}
 		}
 		
 		return sum;
 	};
 	
-	std::sort(
+	std::sort( // sort remaining meld candidates by deadwood they eat up
 		ps.begin(), ps.end(),
 		[&](MS& a, MS& b) {
 			return calcDW(a) > calcDW(b);
 		}
 	);
 	
-	if(ps.size() != 0)
+	if(ps.size() != 0) // if we even had any melds, the optimal Meld is the first one
 		melds = ps[0]; /// @todo FIX ALL THESE DAMN MEMORY LEAKS lol
 }
 
