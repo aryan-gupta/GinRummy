@@ -27,6 +27,7 @@ using std::sort;
 #include <SDL2/SDL.h>
 #include <string.h>
 #include <functional>
+#include <set>
 
 #include "./inc/main.h"
 #include "./inc/Player.h"
@@ -174,27 +175,51 @@ void Player::getMelds() {
 	auto idx = remove_if( // remove if a card is being used used twoce in a melds
 		ps.begin(), ps.end(),
 		[&](MS& curMelds) { // check this meld state if we have a reuccuring card
-			CS usedCards;  // stores all the card used in this meld stack
+			CS ucVec;              // stores all the card used in this meld stack
+			std::set<Card*> ucSet; // stores the cards, but only one of it
+			
 			for(Meld* m : curMelds) { // add up all the cards used in the stack
-				usedCards.insert(usedCards.begin(), m->cards.begin(), m->cards.end());
+				ucVec.insert(ucVec.begin(), m->cards.begin(), m->cards.end());
+				ucSet.insert(m->cards.begin(), m->cards.end());
 			}
-			if(usedCards.end() == unique(usedCards.begin(), usedCards.end()))
+			
+			if(ucVec.size() == ucSet.size())
 				return false; // if cards are unique then return false
-			else return true;
+			LOGL("FOUND CONFLICTING")
+			return true;
 		}
 	);
 	ps.erase(idx, ps.end());
 	
-	LOGL("RUN")
-	for(auto i : ps) {
-		LOGL("A POSSIBLE MELD:")
+	std::function<unsigned(MS&)> calcDW = [&](MS& a) {
+		unsigned sum = 0; 
+		
+		for(Meld* m : a) {
+			for(Card* c : m->cards) { 
+				if(c->rank > RANK_JACK) { sum += 10; }
+				else { sum += c->rank + 1; } 
+			}
+		}
+		
+		return sum;
+	};
+	
+	std::sort(
+		ps.begin(), ps.end(),
+		[&](MS& a, MS& b) {
+			return calcDW(a) > calcDW(b);
+		}
+	);
+	
+	LOGL(endl <<"RUN")
+	for(MS& i : ps) {
+		LOGL("A POSSIBLE MELD:" << calcDW(i))
 		for(auto j : i) {
 			for(auto k : j->cards) {
 				LOG(k << " ");
 			}
 			cout << endl;
 		}
-		cout << endl;
 	}
 }
 
