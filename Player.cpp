@@ -27,6 +27,7 @@ using std::sort;
 #include <SDL2/SDL.h>
 #include <string.h>
 #include <functional>
+#include <set>
 
 #include "./inc/main.h"
 #include "./inc/Player.h"
@@ -45,6 +46,34 @@ Player::~Player() {
 
 void Player::takeCard(Card* card) {
 	hand.push_back(card);
+}
+
+
+static std::ostream& operator << (std::ostream& out, Card* card) {
+	static const char* SL[] = {
+		"C",
+		"D",
+		"H",
+		"S"
+	};
+	static const char* RL[] = {
+		"A",
+		"2",
+		"3",
+		"4",
+		"5",
+		"6",
+		"7",
+		"8",
+		"9",
+		"10",
+		"J",
+		"Q",
+		"K",
+	};
+	out << SL[card->suit] << RL[card->rank];
+	
+	return out;
 }
 
 
@@ -120,21 +149,70 @@ void Player::getMelds() {
 		}
 	);
 	
-	CS usedCards; // This stores all the used cards
-	auto idx = remove_if( // Sp we are going to remove if our melds already use a card
-		melds.begin(), melds.end(), // go through the meld
-		[&](Meld* m) {
-			for(Card* tmpCard : m->cards) { // and go theough the cards in the meld
-				if(count(usedCards.begin(), usedCards.end(), tmpCard)) return true; // if we have already used the card before
-				usedCards.push_back(tmpCard); // if we havent then store the card in the usedCard vector
+	typedef std::vector<Meld*> MS; // Meld Stack
+	typedef std::vector<MS> MM;    // Meld Matrix
+	
+	std::function<void (int, int, const int&, MS, MM&)> findAllMeld =  // create our recursive function 
+	[&](int start, int depth, const int& maxDepth, MS stack, MM& ps) {
+		stack.push_back(melds[start]);
+		
+		if(depth == maxDepth) {
+			ps.push_back(stack);
+			return;
+		}
+		
+		for(int i = start + 1; i < melds.size(); ++i) {
+			findAllMeld(i, depth + 1, maxDepth, stack, ps);
+		}
+	};
+	
+	MM ps;
+	MS stack;
+	for(int maxDepth = 0; maxDepth < melds.size(); ++maxDepth)
+		for(int start = 0; start < melds.size(); ++start)
+			findAllMeld(start, 0, maxDepth, stack, ps);
+		
+	auto idx = remove_if( // remove if a card is being used used twoce in a melds
+		ps.begin(), ps.end(),
+		[&](MS& curMelds) { // check this meld state if we have a reuccuring card
+			CS ucVec;              // stores all the card used in this meld stack
+			std::set<Card*> ucSet; // stores the cards, but only one of it
+			
+			for(Meld* m : curMelds) { // add up all the cards used in the stack
+				ucVec.insert(ucVec.begin(), m->cards.begin(), m->cards.end());
+				ucSet.insert(m->cards.begin(), m->cards.end());
 			}
-			return false;
+			
+			if(ucVec.size() == ucSet.size())
+				return false; // if cards are unique then return false
+			
+			return true;
+		}
+	);
+	ps.erase(idx, ps.end());
+	
+	std::function<unsigned(MS&)> calcDW = [&](MS& a) {
+		unsigned sum = 0; 
+		
+		for(Meld* m : a) {
+			for(Card* c : m->cards) { 
+				if(c->rank > RANK_JACK) { sum += 10; }
+				else { sum += c->rank + 1; } 
+			}
+		}
+		
+		return sum;
+	};
+	
+	std::sort(
+		ps.begin(), ps.end(),
+		[&](MS& a, MS& b) {
+			return calcDW(a) > calcDW(b);
 		}
 	);
 	
-	if(idx != melds.end())
-		melds.erase(idx, melds.end());
-	// remove from the end if the cards repeat
+	if(ps.size() != 0)
+		melds = ps[0]; /// @todo FIX ALL THESE DAMN MEMORY LEAKS lol
 }
 
 
