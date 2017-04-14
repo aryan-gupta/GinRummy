@@ -185,14 +185,16 @@ void Player::getMelds() {
 	);
 	ps.erase(idx, ps.end());
 	
+	LOGL("RUN")
 	for(auto i : ps) {
-		LOGL("A POSSIBLE MELD:" << endl)
+		LOGL("A POSSIBLE MELD:")
 		for(auto j : i) {
 			for(auto k : j->cards) {
-				cout << k << " ";
+				LOG(k << " ");
 			}
-			cout << endl << endl;
+			cout << endl;
 		}
+		cout << endl;
 	}
 }
 
