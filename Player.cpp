@@ -211,7 +211,8 @@ void Player::getMelds() {
 		}
 	);
 	
-	melds = ps[0];
+	if(ps.size() != 0)
+		melds = ps[0]; /// @todo FIX ALL THESE DAMN MEMORY LEAKS lol
 }
 
 
