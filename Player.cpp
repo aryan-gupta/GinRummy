@@ -117,7 +117,7 @@ void Player::getMelds() {
 	**/
 	for(int i = 0; i < tmpHand.size(); ++i) {                    // 1
 		int j = i + 1;
-		for(/*blank*/; j < tmpHand.size(); ++j) {                 // 2
+		for(/*blank*/; j < tmpHand.size(); ++j) {                // 2
 			if(tmpHand[i]->suit != tmpHand[j]->suit)             // 3
 				break;
 			
