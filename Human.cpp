@@ -220,28 +220,27 @@ void Human::pickCard() {
 					SDL_GetMouseState(&x, &y);
 					
 					if(selectedCard != nullptr) {
-						if(abs(x - xDown) > 3 || abs(y - yDown) > 3)
+						if(abs(x - xDown) > 3 || abs(y - yDown) > 3) // make sure the user moves at least 3 px before moving card
 							isMovingCard = true;
 					}
 				} break;
 				
 				case SDL_MOUSEBUTTONUP: { // we clicked up, here is where we want to select the decks and what not
-					/// @todo check for released the card
-					if(isMovingCard) {
+					if(isMovingCard) { // if we were moving the card, release the card
 						isMovingCard = false;
 						selectedCard = nullptr;
 					} else {
-						gWindow->changeHelp(HTI_PICK_CARD_ERR);
+						gWindow->changeHelp(HTI_PICK_CARD_ERR); // change help text to ERROR
 						
-						if( selectedCard != nullptr ) { 
-							gDiscard->takeACard(getCard(selectedCard)); 
-							finished = true; 
+						if(selectedCard != nullptr) { // if we have selected a card and not moving it
+							gDiscard->takeACard(getCard(selectedCard)); // discard it
+							finished = true; // we are finished with this step
 						}
 						
 						int x, y;
 						SDL_GetMouseState(&x, &y);
 						
-						if(gWindow->checkKnockClick(x, y)) {
+						if(gWindow->checkKnockClick(x, y)) { // we clicked on the knock button
 							LOGL("WE KNOCKED")
 						}
 						
@@ -255,7 +254,7 @@ void Human::pickCard() {
 							gWindow->changeHelp(HTI_PICK_CARD);
 						}
 						
-						selectedCard = nullptr;
+						selectedCard = nullptr; // unselected any card we clicked on (not needed but not adding bugs me)
 					}
 				} break;
 			}
@@ -271,7 +270,7 @@ void Human::pickCard() {
 void Human::moveCard(Card* c, int idx) {
 	for(unsigned i = 0; i < hand.size(); ++i) {
 		if(c == hand[i])
-			hand.erase(hand.begin() + i); // remove the selected card
+			hand.erase(hand.begin() + i); // remove the selected card from the hand
 	}
 	
 	hand.insert(hand.begin() + idx, c); // move it to the new location
