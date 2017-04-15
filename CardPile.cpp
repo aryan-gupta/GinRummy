@@ -111,6 +111,7 @@ void CardPile::render() {
 
 
 bool CardPile::checkClick(const int x, const int y) {
+	// Check if we clicked on this card pile
 	if(    x > position.x
 		&& x < position.x + position.w
 		&& y > position.y
