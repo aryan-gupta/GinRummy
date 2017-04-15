@@ -63,11 +63,12 @@ Window::~Window() {
 
 
 void Window::initWindow() {
-	
+	/// @todo remove this later on
 }
 
 
 void Window::renderAll() {
+	// does what you think it does
 	clear();
 	renderBackground();
 	
@@ -86,7 +87,7 @@ void Window::renderAll() {
 
 void Window::renderBackground() {
 	SDL_SetRenderDrawColor(renderer, 0x00, 0x99, 0x00, 0xFF); // http://www.colorhexa.com/009900
-	SDL_Rect bg{0, 0, SCRN_W, SCRN_H};
+	SDL_Rect bg{0, 0, SCRN_W, SCRN_H}; // renders a solid green background
 	SDL_RenderFillRect(renderer, &bg);
 }
 
