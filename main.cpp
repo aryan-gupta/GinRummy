@@ -45,6 +45,10 @@ Player* P2;
 Window* gWindow;
 const Resources* gAssets;
 
+bool soKnocked;
+
+vector<unsigned*> roundPoints;
+
 int main(int argc, char* argv[]) {
 	srand(time(0));
 	initSDL();
@@ -63,17 +67,17 @@ int main(int argc, char* argv[]) {
 	
 	dealCards(); // Deal the cards
 	
-	while(true) { // Loop through turns (Will change as we progress through our game)
-		if(gDeck->size() == 0){
-			swap();
+	while(true) {
+		soKnocked = false;
+		while(!soKnocked) { // Loop through turns (Will change as we progress through our game)
+			if(gDeck->size() == 0) swap();
+			P1->doTurn();
+			
+			if(gDeck->size() == 0) swap();
+			P2->doTurn();
 		}
-		P1->doTurn();
-		if(gDeck->size() == 0){
-			swap();
-		}
-		P2->doTurn();
 		
-		
+		gWindow->showHand();
 	}
 	
 	return 0x00;
