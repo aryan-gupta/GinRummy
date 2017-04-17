@@ -242,9 +242,10 @@ void Human::pickCard() {
 						SDL_GetMouseState(&x, &y);
 						
 						if(gWindow->checkKnockClick(x, y)) { // we clicked on the knock button
-							//LOGL("WE KNOCKED")
 							if(canWeKnock()) { 
-								gWindow->knock(1);  // 1 means player1 
+								gWindow->knock(PLAYER_1);  // 1 means player1 
+							} else {
+								/// @todo Display help
 							}
 							
 						}
