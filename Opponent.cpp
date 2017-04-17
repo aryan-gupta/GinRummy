@@ -69,7 +69,7 @@ void Opponent::pickDeck() {
 
 void Opponent::pickCard() {
 	// We are going to put back a random card, cause why not1
-	// gDiscard->takeACard(getCard(hand[rand() % hand.size()]));
+	
 	if(canWeKnock()) { //  
 		// go ahead and knock 
 		
@@ -102,7 +102,7 @@ void Opponent::pickCard() {
 	}
 	
 	
-	
+	gDiscard->takeACard(getCard(hand[rand() % hand.size()]));
 }
 
 
