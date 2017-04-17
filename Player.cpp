@@ -127,8 +127,8 @@ void Player::getMelds() {
 		8. Add it to the list
 		9. Start checking again starting from C2 (or the next card not part of the RUN)
 	**/
-	for(int i = 0; i < tmpHand.size(); ++i) {                    // 1
-		int j = i + 1;
+	for(size_t i = 0; i < tmpHand.size(); ++i) {                    // 1
+		size_t j = i;
 		for(/*blank*/; j < tmpHand.size(); ++j) {                // 2
 			if(tmpHand[i]->suit != tmpHand[j]->suit)             // 3
 				break;
@@ -142,7 +142,7 @@ void Player::getMelds() {
 				MELD_RUN,
 				CS(tmpHand.begin() + i, tmpHand.begin() + j)
 			});
-			i = j;                                               // 9
+			i = j - 1;                                               // 9
 		}
 	}
 	
@@ -170,7 +170,7 @@ void Player::getMelds() {
 		8. Start checking from C3 again
 	**/
 	/// @todo make this algorithm similar to the one for RUNS with Praw
-	for(int i = tmpHand.size() - 1; i > 1; --i) { // 1
+	for(size_t i = tmpHand.size() - 1; i > 1; --i) { // 1
 		if(    i > 2 // 2
 			&& checkMelds({tmpHand[i], tmpHand[i - 1], tmpHand[i - 2], tmpHand[i - 3]}) // 3
 		) {
@@ -214,8 +214,8 @@ void Player::getMelds() {
 	**/
 	/// @todo fix function name to something better
 	// create our recursive function
-	std::function<void (int, int, const int&, MS, MM&)> findAllMeld = 
-	[&](int start, int depth, const int& maxDepth, MS stack, MM& ps) {
+	std::function<void (size_t, int, const int&, MS, MM&)> findAllMeld = 
+	[&](size_t start, int depth, const int& maxDepth, MS stack, MM& ps) {
 		stack.push_back(melds[start]);                      // 1
 		
 		if(depth == maxDepth) {                             // 2
@@ -223,15 +223,15 @@ void Player::getMelds() {
 			return;                                         // 2b
 		}
 		
-		for(int i = start + 1; i < melds.size(); ++i) {     // 3
+		for(size_t i = start + 1; i < melds.size(); ++i) {     // 3
 			findAllMeld(i, depth + 1, maxDepth, stack, ps); // 4, 4a, 4b, 4c
 		}                                                   // 5
 	};
 	
 	MM ps;    // Possible Melds
 	MS stack; // Meld Stack
-	for(int maxDepth = 0; maxDepth < melds.size(); ++maxDepth) // go through all the depths
-		for(int start = 0; start < melds.size(); ++start) // go through all the starting pos
+	for(unsigned maxDepth = 0; maxDepth < melds.size(); ++maxDepth) // go through all the depths
+		for(size_t start = 0; start < melds.size(); ++start) // go through all the starting pos
 			findAllMeld(start, 0, maxDepth, stack, ps);
 	
 		// Function calculates deadwood given a Meld Stack
