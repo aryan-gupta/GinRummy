@@ -142,7 +142,9 @@ void Player::getMelds() {
 				MELD_RUN,
 				CS(tmpHand.begin() + i, tmpHand.begin() + j)
 			});
-			i = j - 1;                                               // 9
+			// j minus 1 because i is incremented after loop 
+			// finishes so we want to compensate for that
+			i = j - 1;                                           // 9
 		}
 	}
 	
