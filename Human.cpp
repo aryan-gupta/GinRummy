@@ -123,6 +123,7 @@ void Human::pickDeck() {
 						
 						if(gWindow->checkKnockClick(x, y)) {
 							LOGL("WE KNOCKED") /// @todo change help text
+							gWindow->changeHelp(HTI_CANNOT_KNOCK);
 						}
 						
 						if(gDeck->checkClick(x, y)) {
@@ -246,7 +247,9 @@ void Human::pickCard() {
 							if(canWeKnock()) { 
 								gWindow->knock(1);  // 1 means player1 
 							}
-							
+							else { 
+								gWindow->changeHelp(HTI_CANNOT_KNOCK);
+							}
 						}
 						
 						if(gWindow->checkSortClick(x, y)) { ///@todo Swap sorting algorithms
