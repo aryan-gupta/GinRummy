@@ -48,7 +48,7 @@ void Human::doTurn() {
 void Human::pickDeck() {
 	gWindow->changeHelp(HTI_PICK_DECK); // Change help text
 	
-	bool finished = false, isMovingCard = false;
+	bool finished = false, isMovingCard = false, sortByRank = false;
 	Card* selectedCard = nullptr;
 	SDL_Event event;
 	uint32_t FPS_Timer = 0;
@@ -137,12 +137,22 @@ void Human::pickDeck() {
 						}
 						
 						if(gWindow->checkSortClick(x, y)) { ///@todo Swap sorting algorithms
-							sort(
-								hand.begin(), hand.end(),
-								[](Card* a, Card* b) {
-									return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
-							}); 
-						
+							if(sortByRank) {
+								sort(
+									hand.begin(), hand.end(),
+									[](Card* a, Card* b) {
+										return a->rank*SUIT_TOTAL + a->suit < b->rank*SUIT_TOTAL + b->suit; // GCI convert rank and suit to number 
+								}); 
+								sortByRank = !sortByRank;
+							} else {
+								sort(
+									hand.begin(), hand.end(),
+									[](Card* a, Card* b) {
+										return a->suit*RANK_TOTAL + a->rank < b->suit*RANK_TOTAL + b->rank; // GCI convert rank and suit to number 
+								}); 
+								sortByRank = !sortByRank;
+							}
+							gWindow->changeHelp(HTI_PICK_DECK);
 						}
 						
 						selectedCard = nullptr;
@@ -162,7 +172,7 @@ void Human::pickCard() {
 	gWindow->changeHelp(HTI_PICK_CARD);
 	
 	/// @todo Then we want to get the melds and organize our cards and pick a card to discard
-	bool finished = false, isMovingCard = false;
+	bool finished = false, isMovingCard = false, sortByRank = false;
 	Card* selectedCard = nullptr;
 	SDL_Event event;
 	uint32_t FPS_Timer = 0;
@@ -253,11 +263,21 @@ void Human::pickCard() {
 						}
 						
 						if(gWindow->checkSortClick(x, y)) { ///@todo Swap sorting algorithms
-							sort(
-								hand.begin(), hand.end(),
-								[](Card* a, Card* b) {
-									return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
-							}); 
+							if(sortByRank) {
+								sort(
+									hand.begin(), hand.end(),
+									[](Card* a, Card* b) {
+										return a->rank*SUIT_TOTAL + a->suit < b->rank*SUIT_TOTAL + b->suit; // GCI convert rank and suit to number 
+								}); 
+								sortByRank = !sortByRank;
+							} else {
+								sort(
+									hand.begin(), hand.end(),
+									[](Card* a, Card* b) {
+										return a->suit*RANK_TOTAL + a->rank < b->suit*RANK_TOTAL + b->rank; // GCI convert rank and suit to number 
+								}); 
+								sortByRank = !sortByRank;
+							}
 							
 							gWindow->changeHelp(HTI_PICK_CARD);
 						}
