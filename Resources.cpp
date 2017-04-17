@@ -43,7 +43,15 @@ const char* HELP_TEXT[] = {
 	"You MUST draw from either card pile. Please click on either the stock deck or the discard deck.",
 	"Now you must discard a card, or knock if you can",
 	"You MUST click on a card, or knock if you can. You can knock ONLY if you have less than 10 deadwood.",
-	"Its your Opponent's turn."	
+	"Its your Opponent's turn.", 
+	"Sorry you cannot knock right now."
+	
+	
+	
+
+	
+	
+	
 };
 
 Resources::Resources() {
