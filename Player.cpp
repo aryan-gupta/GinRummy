@@ -81,6 +81,10 @@ static std::ostream& operator << (std::ostream& out, Card* card) {
 void Player::getMelds() {
 	CLEAR_TERMINAL
 	
+	LOGL("OUR HAND")
+	for(Card* tmpCard : hand)
+		LOG(tmpCard)
+	
 	typedef std::vector<Card*> CS; // Card Stack
 	
 	/// @todo make these vectors const so we can use references rather than copies
@@ -264,7 +268,7 @@ void Player::getMelds() {
 		return sum;
 	};
 	
-	LOGL(endl <<"BEFORE OPTIMIZING") 
+	LOGL("BEFORE OPTIMIZING") 
 	for(MS& i : ps) { 
 		LOGL("A POSSIBLE MELD:" << calcDW(i)) 
 		for(auto j : i) { 
@@ -282,7 +286,7 @@ void Player::getMelds() {
 		}
 	);
 	
-	LOGL(endl <<"AFTER OPTIMIZING") 
+	LOGL(endl << endl << "AFTER OPTIMIZING") 
 	for(MS& i : ps) { 
 		LOGL("A POSSIBLE MELD:" << calcDW(i)) 
 		for(auto j : i) { 
