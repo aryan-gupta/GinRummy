@@ -111,6 +111,11 @@ void Player::getMelds() {
 		}
 	);
 	
+	LOGL(endl << "OUR HAND AFTER SORTING BY SUIT")
+	for(Card* tmpCard : tmpHand)
+		LOG(tmpCard << " ")
+	LOG(endl)
+	
 	/** Algorithm for Finding RUNS
 		1. Pick first card (C1) in the hand
 		2. Compare the next card (C2) with the first card
@@ -148,6 +153,11 @@ void Player::getMelds() {
 			return (a->rank*SUIT_TOTAL + a->suit) < (b->rank*SUIT_TOTAL + b->suit);
 		}
 	);
+	
+	LOGL(endl << "OUR HAND AFTER SORTING BY RANK")
+	for(Card* tmpCard : tmpHand)
+		LOG(tmpCard << " ")
+	LOG(endl)
 	
 	/** Algorithm for Finding SETS
 		1. Pick the last Card (C1). I know its weird, I don't know why I am going backwards either
@@ -238,7 +248,7 @@ void Player::getMelds() {
 		return sum;
 	};
 	
-	LOGL("BEFORE OPTIMIZING") 
+	LOGL(endl << "BEFORE OPTIMIZING") 
 	for(MS& i : ps) { 
 		LOGL("A POSSIBLE MELD:" << calcDW(i)) 
 		for(auto j : i) { 
