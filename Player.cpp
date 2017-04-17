@@ -79,6 +79,13 @@ static std::ostream& operator << (std::ostream& out, Card* card) {
 
 
 void Player::getMelds() {
+	CLEAR_TERMINAL
+	
+	LOGL("OUR HAND")
+	for(Card* tmpCard : hand)
+		LOG(tmpCard << " ")
+	LOG(endl)
+	
 	typedef std::vector<Card*> CS; // Card Stack
 	
 	/// @todo make these vectors const so we can use references rather than copies
@@ -104,6 +111,11 @@ void Player::getMelds() {
 		}
 	);
 	
+	LOGL(endl << "OUR HAND AFTER SORTING BY SUIT")
+	for(Card* tmpCard : tmpHand)
+		LOG(tmpCard << " ")
+	LOG(endl)
+	
 	/** Algorithm for Finding RUNS
 		1. Pick first card (C1) in the hand
 		2. Compare the next card (C2) with the first card
@@ -115,8 +127,8 @@ void Player::getMelds() {
 		8. Add it to the list
 		9. Start checking again starting from C2 (or the next card not part of the RUN)
 	**/
-	for(int i = 0; i < tmpHand.size(); ++i) {                    // 1
-		int j = i + 1;
+	for(size_t i = 0; i < tmpHand.size(); ++i) {                    // 1
+		size_t j = i;
 		for(/*blank*/; j < tmpHand.size(); ++j) {                // 2
 			if(tmpHand[i]->suit != tmpHand[j]->suit)             // 3
 				break;
@@ -130,7 +142,9 @@ void Player::getMelds() {
 				MELD_RUN,
 				CS(tmpHand.begin() + i, tmpHand.begin() + j)
 			});
-			i = j;                                               // 9
+			// j minus 1 because i is incremented after loop 
+			// finishes so we want to compensate for that
+			i = j - 1;                                           // 9
 		}
 	}
 	
@@ -141,6 +155,11 @@ void Player::getMelds() {
 			return (a->rank*SUIT_TOTAL + a->suit) < (b->rank*SUIT_TOTAL + b->suit);
 		}
 	);
+	
+	LOGL(endl << "OUR HAND AFTER SORTING BY RANK")
+	for(Card* tmpCard : tmpHand)
+		LOG(tmpCard << " ")
+	LOG(endl)
 	
 	/** Algorithm for Finding SETS
 		1. Pick the last Card (C1). I know its weird, I don't know why I am going backwards either
@@ -153,7 +172,7 @@ void Player::getMelds() {
 		8. Start checking from C3 again
 	**/
 	/// @todo make this algorithm similar to the one for RUNS with Praw
-	for(int i = tmpHand.size() - 1; i > 1; --i) { // 1
+	for(size_t i = tmpHand.size() - 1; i > 1; --i) { // 1
 		if(    i > 2 // 2
 			&& checkMelds({tmpHand[i], tmpHand[i - 1], tmpHand[i - 2], tmpHand[i - 3]}) // 3
 		) {
@@ -197,8 +216,8 @@ void Player::getMelds() {
 	**/
 	/// @todo fix function name to something better
 	// create our recursive function
-	std::function<void (int, int, const int&, MS, MM&)> findAllMeld = 
-	[&](int start, int depth, const int& maxDepth, MS stack, MM& ps) {
+	std::function<void (size_t, int, const int&, MS, MM&)> findAllMeld = 
+	[&](size_t start, int depth, const int& maxDepth, MS stack, MM& ps) {
 		stack.push_back(melds[start]);                      // 1
 		
 		if(depth == maxDepth) {                             // 2
@@ -206,17 +225,42 @@ void Player::getMelds() {
 			return;                                         // 2b
 		}
 		
-		for(int i = start + 1; i < melds.size(); ++i) {     // 3
+		for(size_t i = start + 1; i < melds.size(); ++i) {     // 3
 			findAllMeld(i, depth + 1, maxDepth, stack, ps); // 4, 4a, 4b, 4c
 		}                                                   // 5
 	};
 	
 	MM ps;    // Possible Melds
 	MS stack; // Meld Stack
-	for(int maxDepth = 0; maxDepth < melds.size(); ++maxDepth) // go through all the depths
-		for(int start = 0; start < melds.size(); ++start) // go through all the starting pos
+	for(unsigned maxDepth = 0; maxDepth < melds.size(); ++maxDepth) // go through all the depths
+		for(size_t start = 0; start < melds.size(); ++start) // go through all the starting pos
 			findAllMeld(start, 0, maxDepth, stack, ps);
+	
+		// Function calculates deadwood given a Meld Stack
+	std::function<unsigned(MS&)> calcDW = [&](MS& a) {
+		unsigned sum = 0; 
 		
+		for(Meld* m : a) {
+			for(Card* c : m->cards) {  // go through all the cards in each meld
+				if(c->rank > RANK_JACK) { sum += 10; } // add up its values
+				else { sum += c->rank + 1; } // Because RANK_ACE internally 0 and not 1
+			}
+		}
+		
+		return sum;
+	};
+	
+	LOGL(endl << "BEFORE OPTIMIZING") 
+	for(MS& i : ps) { 
+		LOGL("A POSSIBLE MELD:" << calcDW(i)) 
+		for(auto j : i) { 
+			for(auto k : j->cards) { 
+				LOG(k << " "); 
+			} 
+			cout << endl; 
+		} 
+	} 
+	
 	/** Removing Illegal Candidates
 		1. Go through all the Meld candidates
 		2. Stores all the cards in the Meld candidate in a vector
@@ -248,26 +292,23 @@ void Player::getMelds() {
 	);
 	ps.erase(idx, ps.end());                                    // 7
 	
-	// Function calculates deadwood given a Meld Stack
-	std::function<unsigned(MS&)> calcDW = [&](MS& a) {
-		unsigned sum = 0; 
-		
-		for(Meld* m : a) {
-			for(Card* c : m->cards) {  // go through all the cards in each meld
-				if(c->rank > RANK_JACK) { sum += 10; } // add up its values
-				else { sum += c->rank + 1; } // Because RANK_ACE internally 0 and not 1
-			}
-		}
-		
-		return sum;
-	};
-	
 	std::sort( // sort remaining meld candidates by deadwood
 		ps.begin(), ps.end(),
 		[&](MS& a, MS& b) {
 			return calcDW(a) > calcDW(b); // highest to lowest
 		}
 	);
+	
+	LOGL(endl << endl << "AFTER OPTIMIZING") 
+	for(MS& i : ps) { 
+		LOGL("A POSSIBLE MELD:" << calcDW(i)) 
+		for(auto j : i) { 
+			for(auto k : j->cards) { 
+				LOG(k << " "); 
+			} 
+			cout << endl; 
+		} 
+	} 
 	
 	if(ps.size() != 0) // if we even had any melds, the optimal Meld is the first one
 		melds = ps[0]; /// @todo FIX ALL THESE DAMN MEMORY LEAKS lol
