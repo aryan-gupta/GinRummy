@@ -127,7 +127,7 @@ void Player::getMelds() {
 		8. Add it to the list
 		9. Start checking again starting from C2 (or the next card not part of the RUN)
 	**/
-	for(size_t i = 0; i < tmpHand.size(); ++i) {                    // 1
+	for(size_t i = 0; i < tmpHand.size(); ++i) {                 // 1
 		size_t j = i;
 		for(/*blank*/; j < tmpHand.size(); ++j) {                // 2
 			if(tmpHand[i]->suit != tmpHand[j]->suit)             // 3
@@ -236,7 +236,7 @@ void Player::getMelds() {
 		for(size_t start = 0; start < melds.size(); ++start) // go through all the starting pos
 			findAllMeld(start, 0, maxDepth, stack, ps);
 	
-		// Function calculates deadwood given a Meld Stack
+	// Function calculates deadwood given a Meld Stack
 	std::function<unsigned(MS&)> calcDW = [&](MS& a) {
 		unsigned sum = 0; 
 		
