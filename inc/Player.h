@@ -29,6 +29,13 @@ enum MeldTypes {
 	MELD_RUN  ///< A run type of meld (3 cards in the same suit that go in order)
 };
 
+enum Players {
+	PLAYER_1,
+	PLAYER_2,
+	
+	PLAYER_TOTAL
+}
+
 /// @brief A complete meld
 struct Meld {
 	MeldTypes type;           ///< Type of meld /sa MeldTypes
