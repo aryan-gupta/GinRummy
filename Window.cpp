@@ -62,6 +62,29 @@ Window::~Window() {
 }
 
 
+void Window::knock(int player) { 
+
+	unsigned player1; 
+	unsigned player2; 
+	
+	 
+	if(player == 1) { 
+		player1 = P1->getPoints(); 
+		player2 = 0; 
+	} else { 
+		player1 = 0; 
+		player2 = P2->getPoints(); 
+	}		
+	
+	//knock = true; 
+	//renderWin(player1, player2);  
+	
+	
+	
+} 
+
+
+
 void Window::initWindow() {
 	/// @todo remove this later on
 }

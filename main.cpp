@@ -64,8 +64,16 @@ int main(int argc, char* argv[]) {
 	dealCards(); // Deal the cards
 	
 	while(true) { // Loop through turns (Will change as we progress through our game)
+		if(gDeck->size() == 0){
+			swap();
+		}
 		P1->doTurn();
+		if(gDeck->size() == 0){
+			swap();
+		}
 		P2->doTurn();
+		
+		
 	}
 	
 	return 0x00;
@@ -102,6 +110,11 @@ void dealCards() {
 	}
 }
 
+void swap(){
+	std::swap(gDiscard, gDeck);
+	gDiscard->swapTypes();
+	gDeck->swapTypes();
+}
 
 void quit(int code) {
 	// Delete all of our global variables

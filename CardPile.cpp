@@ -56,7 +56,25 @@ CardPile::CardPile(CardPileTypes type) {
 	this->type = type;
 }
 
-
+void CardPile::swapTypes(){
+	if(type == PILE_DECK){
+		type = PILE_DISCARD;
+		position = SDL_Rect { // position
+			SCRN_W/2 + 20,
+			SCRN_H/2 - CARD_H/2 - WIN_PAD*3,
+			CARD_W,
+			CARD_H
+		};
+	} else {
+		type = PILE_DECK;
+		position = SDL_Rect { // position of the card pile
+			SCRN_W/2 - CARD_W - 20,
+			SCRN_H/2 - CARD_H/2 - WIN_PAD*3,
+			CARD_W,
+			CARD_H
+		};
+	}
+}
 CardPile::~CardPile() {
 	for(Card* tmpCard : pile)
 		delete tmpCard; // delete all the cards in the deck
