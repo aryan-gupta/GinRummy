@@ -83,7 +83,8 @@ void Player::getMelds() {
 	
 	LOGL("OUR HAND")
 	for(Card* tmpCard : hand)
-		LOG(tmpCard)
+		LOG(tmpCard << " ")
+	LOG(endl)
 	
 	typedef std::vector<Card*> CS; // Card Stack
 	
@@ -222,7 +223,32 @@ void Player::getMelds() {
 	for(int maxDepth = 0; maxDepth < melds.size(); ++maxDepth) // go through all the depths
 		for(int start = 0; start < melds.size(); ++start) // go through all the starting pos
 			findAllMeld(start, 0, maxDepth, stack, ps);
+	
+		// Function calculates deadwood given a Meld Stack
+	std::function<unsigned(MS&)> calcDW = [&](MS& a) {
+		unsigned sum = 0; 
 		
+		for(Meld* m : a) {
+			for(Card* c : m->cards) {  // go through all the cards in each meld
+				if(c->rank > RANK_JACK) { sum += 10; } // add up its values
+				else { sum += c->rank + 1; } // Because RANK_ACE internally 0 and not 1
+			}
+		}
+		
+		return sum;
+	};
+	
+	LOGL("BEFORE OPTIMIZING") 
+	for(MS& i : ps) { 
+		LOGL("A POSSIBLE MELD:" << calcDW(i)) 
+		for(auto j : i) { 
+			for(auto k : j->cards) { 
+				LOG(k << " "); 
+			} 
+			cout << endl; 
+		} 
+	} 
+	
 	/** Removing Illegal Candidates
 		1. Go through all the Meld candidates
 		2. Stores all the cards in the Meld candidate in a vector
@@ -253,31 +279,6 @@ void Player::getMelds() {
 		}
 	);
 	ps.erase(idx, ps.end());                                    // 7
-	
-	// Function calculates deadwood given a Meld Stack
-	std::function<unsigned(MS&)> calcDW = [&](MS& a) {
-		unsigned sum = 0; 
-		
-		for(Meld* m : a) {
-			for(Card* c : m->cards) {  // go through all the cards in each meld
-				if(c->rank > RANK_JACK) { sum += 10; } // add up its values
-				else { sum += c->rank + 1; } // Because RANK_ACE internally 0 and not 1
-			}
-		}
-		
-		return sum;
-	};
-	
-	LOGL("BEFORE OPTIMIZING") 
-	for(MS& i : ps) { 
-		LOGL("A POSSIBLE MELD:" << calcDW(i)) 
-		for(auto j : i) { 
-			for(auto k : j->cards) { 
-				LOG(k << " "); 
-			} 
-			cout << endl; 
-		} 
-	} 
 	
 	std::sort( // sort remaining meld candidates by deadwood
 		ps.begin(), ps.end(),
