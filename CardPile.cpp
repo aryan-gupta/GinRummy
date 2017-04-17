@@ -89,7 +89,7 @@ Card* CardPile::getACard() {
 
 
 void CardPile::render() {
-	if(pile.size() == 0)
+	if(pile.size() == 0) /// @todo use vector::empty()
 		return;
 	
 	if(type == PILE_DECK) {

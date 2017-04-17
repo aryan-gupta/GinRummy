@@ -53,6 +53,7 @@ void Human::pickDeck() {
 	SDL_Event event;
 	uint32_t FPS_Timer = 0;
 	int xDown, yDown;
+	
 	while(!finished) { // RENDER LOOP
 		FPS_Timer = SDL_GetTicks();
 		
@@ -231,7 +232,7 @@ void Human::pickCard() {
 						selectedCard = nullptr;
 					} else {
 						gWindow->changeHelp(HTI_PICK_CARD_ERR); // change help text to ERROR
-						
+						/// @todo warn the user if we are discarding a meld card
 						if(selectedCard != nullptr) { // if we have selected a card and not moving it
 							gDiscard->takeACard(getCard(selectedCard)); // discard it
 							finished = true; // we are finished with this step

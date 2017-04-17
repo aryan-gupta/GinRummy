@@ -235,7 +235,7 @@ void Player::getMelds() {
 			for(Meld* m : curMelds) {
 				ucVec.insert(                                   // 2
 					ucVec.begin(),
-					m->cards.begin(), m->cards.end()
+					m->cards.begin(), m->cards.end() /// @todo use push_back for efficiency
 				);
 				ucSet.insert(m->cards.begin(), m->cards.end()); // 3
 			}
