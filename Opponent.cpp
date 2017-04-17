@@ -34,6 +34,7 @@ using std::sort;
 #include "./inc/Resources.h"
 
 void Opponent::doTurn() {
+	turnCounter++; 
 	pickDeck();
 	pickCard();
 }
@@ -41,12 +42,66 @@ void Opponent::doTurn() {
 
 void Opponent::pickDeck() {
 	// for now we are picking the deck
-	takeCard(gDeck->getACard());
+	//takeCard(gDeck->getACard());
+	
+	Card* topcard = gDiscard->peek(); 
+	bool canMeld = false; 
+	
+	for(unsigned i = 0; i < hand.size(); i++) { 
+		for(unsigned j = i + 1; j < hand.size(); j++) { 
+				// check melds i, j, and topcard 
+				// if those three cards meld then turn canMeld to true 
+				
+		}
+	}	
+	
+	if(canMeld) {
+		takeCard(gDiscard->getACard()); 
+	}
+	else { 
+		takeCard(gDeck->getACard()); 	
+	}
+
+	
 }
+
 
 
 void Opponent::pickCard() {
 	// We are going to put back a random card, cause why not1
+	
+	if(canWeKnock()) { //  
+		// go ahead and knock 
+		
+	}
+	
+	Card* topcard = gDiscard->peek(); 
+	
+	
+	// we have 52 cards 
+	// 10 for player1 
+	// 10 for computer 
+	// leave 32 cards in play 
+	// that's mean 16 turn that will happen until the end of the deck 
+	// player has 8 turn and computer has 8 turn 
+	// if turnCounter is greater than 4, then pass half of the game 
+ 
+	if(turnCounter < 2) { 
+		// put down any cards that is ranking 1 or 2 away in different suit 
+		// if that is not possible then we want to discard equal rank to the top card 
+	
+	} 
+	
+	if(turnCounter < 4) { 
+		// do something 
+	}
+	else { // we want to start dumping high card and pulling low card 
+
+	
+	
+	}
+	
+	
 	gDiscard->takeACard(getCard(hand[rand() % hand.size()]));
 }
 

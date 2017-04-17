@@ -74,6 +74,8 @@ public:
 	~CardPile();
 	
 	size_t size();
+	Card* peek(); 
+	void swapTypes();
 	
 	void shuffle(); ///< Suffle the deck
 	void render();  ///< Render the deck

@@ -22,7 +22,7 @@
 
 class Opponent : public Player {
 public:
-	Opponent() {};
+	Opponent() { turnCounter = 0; };
 	virtual ~Opponent() {};
 
 	virtual void doTurn(); ///< Does a turn for the player
@@ -34,6 +34,7 @@ protected:
 	virtual void pickCard();
 	
 private: /// @todo make next two functions virtual functions
+	int turnCounter; 
 	
 };
 
