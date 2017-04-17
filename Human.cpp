@@ -244,7 +244,7 @@ void Human::pickCard() {
 						if(gWindow->checkKnockClick(x, y)) { // we clicked on the knock button
 							//LOGL("WE KNOCKED")
 							if(canWeKnock()) { 
-								gWindow->knock(1)  // 1 means player1 
+								gWindow->knock(1);  // 1 means player1 
 							}
 							
 						}

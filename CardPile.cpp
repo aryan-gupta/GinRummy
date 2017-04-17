@@ -56,7 +56,13 @@ CardPile::CardPile(CardPileTypes type) {
 	this->type = type;
 }
 
-
+void CardPile::swapTypes(){
+	if(type == PILE_DECK){
+		type = PILE_DISCARD;
+	} else {
+		type = PILE_DECK;
+	}
+}
 CardPile::~CardPile() {
 	for(Card* tmpCard : pile)
 		delete tmpCard; // delete all the cards in the deck
