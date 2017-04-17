@@ -79,6 +79,8 @@ static std::ostream& operator << (std::ostream& out, Card* card) {
 
 
 void Player::getMelds() {
+	CLEAR_TERMINAL
+	
 	typedef std::vector<Card*> CS; // Card Stack
 	
 	/// @todo make these vectors const so we can use references rather than copies
@@ -262,12 +264,34 @@ void Player::getMelds() {
 		return sum;
 	};
 	
+	LOGL(endl <<"BEFORE OPTIMIZING") 
+	for(MS& i : ps) { 
+		LOGL("A POSSIBLE MELD:" << calcDW(i)) 
+		for(auto j : i) { 
+			for(auto k : j->cards) { 
+				LOG(k << " "); 
+			} 
+			cout << endl; 
+		} 
+	} 
+	
 	std::sort( // sort remaining meld candidates by deadwood
 		ps.begin(), ps.end(),
 		[&](MS& a, MS& b) {
 			return calcDW(a) > calcDW(b); // highest to lowest
 		}
 	);
+	
+	LOGL(endl <<"AFTER OPTIMIZING") 
+	for(MS& i : ps) { 
+		LOGL("A POSSIBLE MELD:" << calcDW(i)) 
+		for(auto j : i) { 
+			for(auto k : j->cards) { 
+				LOG(k << " "); 
+			} 
+			cout << endl; 
+		} 
+	} 
 	
 	if(ps.size() != 0) // if we even had any melds, the optimal Meld is the first one
 		melds = ps[0]; /// @todo FIX ALL THESE DAMN MEMORY LEAKS lol
