@@ -48,7 +48,7 @@ void Player::takeCard(Card* card) {
 	hand.push_back(card);
 }
 
-
+#ifdef DEBUG
 static std::ostream& operator << (std::ostream& out, Card* card) {
 	// this is just a temp function, itll probs be removed in the final version
 	static const char* SL[] = {
@@ -76,15 +76,18 @@ static std::ostream& operator << (std::ostream& out, Card* card) {
 	
 	return out;
 }
+#endif
 
-
+//#define DEBUG_MELDS
 void Player::getMelds() {
-	CLEAR_TERMINAL
-	
-	LOGL("OUR HAND")
-	for(Card* tmpCard : hand)
-		LOG(tmpCard << " ")
-	LOG(endl)
+	#ifdef DEBUG_MELDS
+		CLEAR_TERMINAL
+
+		LOGL("OUR HAND")
+		for(Card* tmpCard : hand)
+			LOG(tmpCard << " ")
+		LOG(endl)
+	#endif
 	
 	typedef std::vector<Card*> CS; // Card Stack
 	
@@ -111,10 +114,12 @@ void Player::getMelds() {
 		}
 	);
 	
-	LOGL(endl << "OUR HAND AFTER SORTING BY SUIT")
-	for(Card* tmpCard : tmpHand)
-		LOG(tmpCard << " ")
-	LOG(endl)
+	#ifdef DEBUG_MELDS
+		LOGL(endl << "OUR HAND AFTER SORTING BY SUIT")
+		for(Card* tmpCard : tmpHand)
+			LOG(tmpCard << " ")
+		LOG(endl)
+	#endif
 	
 	/** Algorithm for Finding RUNS
 		1. Pick first card (C1) in the hand
@@ -156,10 +161,12 @@ void Player::getMelds() {
 		}
 	);
 	
-	LOGL(endl << "OUR HAND AFTER SORTING BY RANK")
-	for(Card* tmpCard : tmpHand)
-		LOG(tmpCard << " ")
-	LOG(endl)
+	#ifdef DEBUG_MELDS
+		LOGL(endl << "OUR HAND AFTER SORTING BY RANK")
+		for(Card* tmpCard : tmpHand)
+			LOG(tmpCard << " ")
+		LOG(endl)
+	#endif
 	
 	/** Algorithm for Finding SETS
 		1. Pick the last Card (C1). I know its weird, I don't know why I am going backwards either
@@ -250,16 +257,18 @@ void Player::getMelds() {
 		return sum;
 	};
 	
-	LOGL(endl << "BEFORE OPTIMIZING") 
-	for(MS& i : ps) { 
-		LOGL("A POSSIBLE MELD:" << calcDW(i)) 
-		for(auto j : i) { 
-			for(auto k : j->cards) { 
-				LOG(k << " "); 
+	#ifdef DEBUG_MELDS
+		LOGL(endl << "BEFORE OPTIMIZING") 
+		for(MS& i : ps) { 
+			LOGL("A POSSIBLE MELD:" << calcDW(i)) 
+			for(auto j : i) { 
+				for(auto k : j->cards) { 
+					LOG(k << " "); 
+				} 
+				cout << endl; 
 			} 
-			cout << endl; 
 		} 
-	} 
+	#endif
 	
 	/** Removing Illegal Candidates
 		1. Go through all the Meld candidates
@@ -299,16 +308,18 @@ void Player::getMelds() {
 		}
 	);
 	
-	LOGL(endl << endl << "AFTER OPTIMIZING") 
-	for(MS& i : ps) { 
-		LOGL("A POSSIBLE MELD:" << calcDW(i)) 
-		for(auto j : i) { 
-			for(auto k : j->cards) { 
-				LOG(k << " "); 
+	#ifdef DEBUG_MELDS
+		LOGL(endl << endl << "AFTER OPTIMIZING") 
+		for(MS& i : ps) { 
+			LOGL("A POSSIBLE MELD:" << calcDW(i)) 
+			for(auto j : i) { 
+				for(auto k : j->cards) { 
+					LOG(k << " "); 
+				} 
+				cout << endl; 
 			} 
-			cout << endl; 
 		} 
-	} 
+	#endif
 	
 	if(ps.size() != 0) // if we even had any melds, the optimal Meld is the first one
 		melds = ps[0]; /// @todo FIX ALL THESE DAMN MEMORY LEAKS lol
