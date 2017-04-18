@@ -80,6 +80,10 @@ static std::ostream& operator << (std::ostream& out, Card* card) {
 
 //#define DEBUG_MELDS
 void Player::getMelds() {
+	typedef std::vector<Meld*> MS; // Meld Stack
+	typedef std::vector<MS> MM;    // Meld Matrix
+	typedef std::vector<Card*> CS; // Card Stack
+	
 	#ifdef DEBUG_MELDS
 		CLEAR_TERMINAL
 
@@ -88,8 +92,6 @@ void Player::getMelds() {
 			LOG(tmpCard << " ")
 		LOG(endl)
 	#endif
-	
-	typedef std::vector<Card*> CS; // Card Stack
 	
 	/// @todo make these vectors const so we can use references rather than copies
 	/// @todo change the name, kinds deceiving
@@ -205,9 +207,6 @@ void Player::getMelds() {
 			return a->cards.size() > b->cards.size(); // greatest to least
 		}
 	);
-	
-	typedef std::vector<Meld*> MS; // Meld Stack
-	typedef std::vector<MS> MM;    // Meld Matrix
 	
 	/** Finding All Combinations for Melds
 		1. Add the current Meld (leaf)
