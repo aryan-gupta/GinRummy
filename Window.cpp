@@ -287,3 +287,31 @@ bool Window::checkSortClick(const int x, const int y) {
 	
 	return false;
 }
+
+
+void Window::finalizeGame() {
+	// calculate pre layoff points
+	// get melds and deadwood of each player
+	// layoff cards
+	// calculate final points
+	// wait until we quit or restart the game
+	while(!finished) {
+		
+		renderFinal();
+		
+		while(SDL_PollEvent(&event)) {
+			switch(event.type) {
+				case SDL_QUIT:
+					quit();
+				break;
+				
+				case SDL_MOUSEBUTTONUP: {
+					int x, y;
+					SDL_GetMouseState(&x, &y);
+					
+					/// @todo check clicks
+				} break;
+			}
+		}
+	}
+}

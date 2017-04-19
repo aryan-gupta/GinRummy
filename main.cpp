@@ -46,7 +46,6 @@ Window* gWindow;
 const Resources* gAssets;
 
 bool soKnocked;
-
 vector<unsigned*> roundPoints;
 
 int main(int argc, char* argv[]) {
@@ -77,7 +76,8 @@ int main(int argc, char* argv[]) {
 			P2->doTurn();
 		}
 		
-		//gWindow->showHand();
+		gWindow->finalizeRound();
+		
 	}
 	
 	return 0x00;
