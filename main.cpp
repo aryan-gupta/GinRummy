@@ -46,7 +46,7 @@ Window* gWindow;
 const Resources* gAssets;
 
 bool soKnocked;
-vector<unsigned*> roundPoints;
+vector<unsigned*> roundPoints; /// @todo put this in Window class?
 
 int main(int argc, char* argv[]) {
 	srand(time(0));
