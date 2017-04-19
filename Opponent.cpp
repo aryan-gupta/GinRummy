@@ -130,3 +130,7 @@ void Opponent::renderCards() {
 		currCardPos.x += CARD_PAD; // move the pos to the next card
 	}
 }
+
+void Opponent::renderLayoff() {
+	/// @todo do stuff
+}

@@ -71,12 +71,10 @@ void Window::knock(int player) {
 		pnt = new unsigned[2]{0, P2->getPoints()};
 	}		
 	
-	//roundPoints.push_back(pnt);
+	roundPoints.push_back(pnt);
 	
-	//soKnock = true; 
-	//renderWin(player1, player2);  
+	soKnocked = true; 
 } 
-
 
 
 void Window::initWindow() {
@@ -96,7 +94,7 @@ void Window::renderAll() {
 	renderHelp();
 	
 	P1->render();
-	//P2->render();
+	P2->render();
 	
 	SDL_RenderPresent(renderer);
 }
@@ -314,7 +312,8 @@ void Window::renderFinal(bool displayPoints) {
 	SDL_RenderPresent(renderer);
 }
 
-void Window::finalizeGame() {
+
+void Window::finalizeRound() {
 	// calculate pre layoff points
 	// get melds and deadwood of each player
 	// layoff cards
@@ -324,7 +323,11 @@ void Window::finalizeGame() {
 	showPoints();
 }
 
+
 void Window::layoffCards() {
+	bool finished = false;
+	SDL_Event event;
+	
 	while(!finished) {
 		
 		renderFinal(false);
@@ -332,7 +335,7 @@ void Window::layoffCards() {
 		while(SDL_PollEvent(&event)) {
 			switch(event.type) {
 				case SDL_QUIT:
-					quit();
+					quit(0x03);
 				break;
 				
 				case SDL_MOUSEBUTTONUP: {
@@ -346,7 +349,11 @@ void Window::layoffCards() {
 	}
 }
 
+
 void Window::showPoints() {
+	bool finished = false;
+	SDL_Event event;
+	
 	while(!finished) {
 		
 		renderFinal(true);
@@ -354,7 +361,7 @@ void Window::showPoints() {
 		while(SDL_PollEvent(&event)) {
 			switch(event.type) {
 				case SDL_QUIT:
-					quit();
+					quit(0x04);
 				break;
 				
 				case SDL_MOUSEBUTTONUP: {
