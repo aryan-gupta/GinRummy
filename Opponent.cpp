@@ -132,7 +132,7 @@ void Opponent::renderCards() {
 }
 
 void Opponent::renderLayoff() {
-		int cardsTWidth = 0;
+	int cardsTWidth = 0;
 	for(Meld* m : melds) cardsTWidth += m->cards.size();
 	cardsTWidth -= melds.size();
 	
