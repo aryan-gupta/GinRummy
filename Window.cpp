@@ -298,9 +298,15 @@ void Window::renderFinal(bool displayPoints) {
 	P2->renderLayoff();
 	
 	if(displayPoints) {
-		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xC0);
+		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xD0);
 		SDL_RenderFillRect(renderer, NULL);
-		// render the points
+		drawAButton(
+			gAssets->uiSheets[UIC_BLUE], // sprite sheet
+			gAssets->uiClippings[0], // clipping
+			5, 7, // border
+			gAssets->continueButton // location
+		);
+		SDL_RenderCopy(gWindow->getRenderer(), gAssets->continueTexture, NULL, &gAssets->continuePos);
 	} else {
 		drawAButton(
 			gAssets->uiSheets[UIC_BLUE], // sprite sheet
@@ -372,8 +378,10 @@ void Window::showPoints() {
 					int x, y;
 					SDL_GetMouseState(&x, &y);
 					
-					/// @todo check clicks
-				}
+					if(checkContinueClick(x, y)) {
+						finished = true;
+					}
+				} break;
 			}
 		}
 	}
