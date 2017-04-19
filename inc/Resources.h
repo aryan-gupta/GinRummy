@@ -67,6 +67,7 @@ struct Resources {
 			
 	SDL_Rect knockButton,   ///< Knock button position
 	         sortButton,    ///< Sort button position
+			 continueButton,
 	         deadwoodPanel, ///< Deadwood Panel position
 	         meldsPanel,    ///< Melds Panel position
 	         helpPanel,     ///< Help panel position

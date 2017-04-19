@@ -302,7 +302,12 @@ void Window::renderFinal(bool displayPoints) {
 		SDL_RenderFillRect(renderer, NULL);
 		// render the points
 	} else {
-		drawAButton();
+		drawAButton(
+			gAssets->uiSheets[UIC_BLUE], // sprite sheet
+			gAssets->uiClippings[0], // clipping
+			5, 7, // border
+			gAssets->continueButton // location
+		);
 	}
 	
 	SDL_RenderPresent(renderer);

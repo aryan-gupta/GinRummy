@@ -187,6 +187,13 @@ Resources::Resources() {
 			CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W,
 			MCARD_H*5/2
 		};
+		
+		continueButton = SDL_Rect{
+			SCRN_W/2 - knockButton.w*2/2,
+			CARD_H + WIN_PAD*6,
+			knockButton.w*2,
+			knockButton.h
+		};
 	}
 	
 	{ // Textures for the text used in the game
