@@ -291,11 +291,7 @@ void Window::renderFinal(bool displayPoints) {
 	// does what you think it does
 	clear();
 	renderBackground();
-	
-	gDeck->render();
-	gDiscard->render();
-	renderButtons();
-	//renderMeldsDeadwood();
+
 	renderHelp();
 	
 	P1->renderLayoff();
@@ -306,7 +302,7 @@ void Window::renderFinal(bool displayPoints) {
 		SDL_RenderFillRect(renderer, NULL);
 		// render the points
 	} else {
-		// render continue button
+		drawAButton();
 	}
 	
 	SDL_RenderPresent(renderer);
