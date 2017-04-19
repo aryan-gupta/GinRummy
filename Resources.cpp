@@ -44,14 +44,7 @@ const char* HELP_TEXT[] = {
 	"Now you must discard a card, or knock if you can",
 	"You MUST click on a card, or knock if you can. You can knock ONLY if you have less than 10 deadwood.",
 	"Its your Opponent's turn.", 
-	"Sorry you cannot knock right now."
-	
-	
-	
-
-	
-	
-	
+	"You cannot knock right now, Sorry."
 };
 
 Resources::Resources() {
