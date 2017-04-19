@@ -65,8 +65,6 @@ void Opponent::pickDeck() {
 	
 }
 
-
-
 void Opponent::pickCard() {
 	// We are going to put back a random card, cause why not1
 	
@@ -75,9 +73,7 @@ void Opponent::pickCard() {
 		
 	}
 	
-	Card* topcard = gDiscard->peek(); 
-	
-	
+	Card* topcard = gDiscard->peek(); 	
 	// we have 52 cards 
 	// 10 for player1 
 	// 10 for computer 
@@ -96,12 +92,9 @@ void Opponent::pickCard() {
 		// do something 
 	}
 	else { // we want to start dumping high card and pulling low card 
-
-	
 	
 	}
-	
-	
+
 	gDiscard->takeACard(getCard(hand[rand() % hand.size()]));
 }
 
@@ -109,7 +102,6 @@ void Opponent::pickCard() {
 void Opponent::render() {
 	renderCards();
 }
-
 
 void Opponent::renderCards() {
 	SDL_Rect currCardPos = { // Get the first card loaction
