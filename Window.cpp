@@ -308,6 +308,7 @@ void Window::renderFinal(bool displayPoints) {
 			5, 7, // border
 			gAssets->continueButton // location
 		);
+		SDL_RenderCopy(gWindow->getRenderer(), gAssets->continueTexture, NULL, &gAssets->continuePos);
 	}
 	
 	SDL_RenderPresent(renderer);
