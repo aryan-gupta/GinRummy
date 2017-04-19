@@ -63,18 +63,19 @@ int main(int argc, char* argv[]) {
 	
 	dealCards(); // Deal the cards
 	
-	while(true) { // Loop through turns (Will change as we progress through our game)
-		if(gDeck->size() == 0){
-			swap();
+	//while(true) {
+		gWindow->getKnockStatus() = false;
+		while(!gWindow->getKnockStatus()) { // Loop through turns (Will change as we progress through our game)
+			if(gDeck->size() == 0) swap();
+			P1->doTurn();
+			
+			if(gDeck->size() == 0) swap();
+			P2->doTurn();
 		}
-		P1->doTurn();
-		if(gDeck->size() == 0){
-			swap();
-		}
-		P2->doTurn();
 		
+		gWindow->finalizeRound();
 		
-	}
+	//}
 	
 	return 0x00;
 }

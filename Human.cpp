@@ -253,13 +253,12 @@ void Human::pickCard() {
 						SDL_GetMouseState(&x, &y);
 						
 						if(gWindow->checkKnockClick(x, y)) { // we clicked on the knock button
-							//LOGL("WE KNOCKED")
-							if(canWeKnock()) { 
-								gWindow->knock(1);  // 1 means player1 
-							}
-							else { 
-								gWindow->changeHelp(HTI_CANNOT_KNOCK);
-							}
+							// if(canWeKnock()) { 
+								gWindow->knock(PLAYER_1);  // 1 means player1 
+							// } else { 
+								//gWindow->changeHelp(HTI_CANNOT_KNOCK);
+							// }
+							finished = true;
 						}
 						
 						if(gWindow->checkSortClick(x, y)) { ///@todo Swap sorting algorithms
@@ -427,5 +426,47 @@ void Human::renderMelds() {
 		
 		pos.x = WIN_PAD; // CRLF
 		pos.y += pos.h + WIN_PAD/2;
+	}
+}
+
+
+void Human::renderLayoff() {
+	int cardsTWidth = 0;
+	for(Meld* m : melds) cardsTWidth += m->cards.size();
+	cardsTWidth -= melds.size();
+	
+	cardsTWidth += deadwood.size() - 1;
+	
+	SDL_Rect currCardPos = { // get the first card location
+		SCRN_W/2 - ((melds.size() * (CARD_W + WIN_PAD)) + CARD_PAD*cardsTWidth + CARD_W)/2,
+		SCRN_H - WIN_PAD - CARD_H,
+		CARD_W,
+		CARD_H
+	};
+	
+	for(Meld* m : melds) {
+		for(Card* tmpCard : m->cards) {
+			SDL_RenderCopy( // render it
+				gWindow->getRenderer(),
+				gAssets->cardsSheet,
+				&gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)],
+				&currCardPos
+			);
+			
+			currCardPos.x += CARD_PAD; // move to the next card
+		}
+		
+		currCardPos.x += CARD_W;
+	}
+	
+	for(Card* tmpCard : deadwood) {
+		SDL_RenderCopy( // render it
+			gWindow->getRenderer(),
+			gAssets->cardsSheet,
+			&gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)],
+			&currCardPos
+		);
+		
+		currCardPos.x += CARD_PAD; // move to the next card
 	}
 }
