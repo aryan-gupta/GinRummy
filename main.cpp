@@ -45,9 +45,6 @@ Player* P2;
 Window* gWindow;
 const Resources* gAssets;
 
-bool soKnocked;
-vector<unsigned*> roundPoints; /// @todo put this in Window class?
-
 int main(int argc, char* argv[]) {
 	srand(time(0));
 	initSDL();

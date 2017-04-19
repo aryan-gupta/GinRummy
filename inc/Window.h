@@ -62,6 +62,9 @@ private:
 	SDL_Window* window;     ///< Stores our main Window
 	SDL_Renderer* renderer; ///< Stores our main renderer
 	
+	bool soKnocked;
+	vector<unsigned*> roundPoints;
+	
 	HelpTextItems helpToRender;
 	
 	void clear();  ///< Clear the window

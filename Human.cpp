@@ -430,7 +430,6 @@ void Human::renderMelds() {
 }
 
 
-
 void Human::renderHand() {
 	int auxMeldSize = 0;
 	for(Meld* m : melds) auxMeldSize += m->cards.size();
