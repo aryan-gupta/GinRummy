@@ -32,7 +32,7 @@ protected:
 	virtual void renderCards(); ///< Render all the cards
 	virtual void pickDeck();    ///< Pick a deck to draw from
 	virtual void pickCard();    ///< Pick a card to put into discard
-	void renderHand();
+	virtual void renderLayoff();
 	
 private:	
 	void renderDeadwood(); ///< Render deadwood
