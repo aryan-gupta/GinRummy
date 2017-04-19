@@ -258,6 +258,7 @@ void Human::pickCard() {
 							} else { 
 								gWindow->changeHelp(HTI_CANNOT_KNOCK);
 							}
+							finished = true;
 						}
 						
 						if(gWindow->checkSortClick(x, y)) { ///@todo Swap sorting algorithms
@@ -305,7 +306,6 @@ void Human::moveCard(Card* c, int idx) {
 
 void Human::render() {
 	renderCards();
-	renderHand();
 	renderDeadwood();
 	renderMelds();
 }
@@ -430,7 +430,7 @@ void Human::renderMelds() {
 }
 
 
-void Human::renderHand() {
+void Human::renderLayoff() {
 	int auxMeldSize = 0;
 	for(Meld* m : melds) auxMeldSize += m->cards.size();
 	auxMeldSize -= melds.size();
