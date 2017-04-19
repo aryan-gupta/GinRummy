@@ -253,11 +253,11 @@ void Human::pickCard() {
 						SDL_GetMouseState(&x, &y);
 						
 						if(gWindow->checkKnockClick(x, y)) { // we clicked on the knock button
-							//if(canWeKnock()) { 
+							// if(canWeKnock()) { 
 								gWindow->knock(PLAYER_1);  // 1 means player1 
-							//} else { 
+							// } else { 
 								//gWindow->changeHelp(HTI_CANNOT_KNOCK);
-							//}
+							// }
 							finished = true;
 						}
 						
@@ -436,7 +436,7 @@ void Human::renderLayoff() {
 	auxMeldSize -= melds.size();
 	
 	SDL_Rect currCardPos = { // get the first card location
-		SCRN_W/2 - ((melds.size() * CARD_W) + CARD_PAD*auxMeldSize)/2,
+		SCRN_W/2 - ((melds.size() * (CARD_W + WIN_PAD)) + CARD_PAD*auxMeldSize)/2,
 		SCRN_H - WIN_PAD - CARD_H,
 		CARD_W,
 		CARD_H
