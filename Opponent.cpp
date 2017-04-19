@@ -35,8 +35,13 @@ using std::sort;
 
 void Opponent::doTurn() {
 	turnCounter++; 
-	pickDeck();
-	pickCard();
+	getMelds();    // update our melds
+	getDeadwood(); // update our deadwood
+	pickDeck();    // pick a deack to pick from
+	
+	getMelds();    // update our melds
+	getDeadwood(); // update our deadwood
+	pickCard();    // pick a card to discard
 }
 
 
