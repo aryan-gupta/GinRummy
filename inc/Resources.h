@@ -73,6 +73,7 @@ struct Resources {
 	         helpPanel,     ///< Help panel position
 			 knockPos,      ///< Knock text position
 			 sortPos,       ///< Sort text position
+			 continuePos,
 			 meldTextPos,   ///< Meld text position
 			 dwTextPos;     ///< Deadwood text position
 			 
@@ -80,6 +81,7 @@ struct Resources {
 	           * knockTextureST,  ///< Crossed out Knock text texture
 	           * sortTexture,     ///< Sort text texture
 			   * meldTextTexture, ///< Meld text texture
+			   * continueTexture,
 			   * dwTextTexture;   ///< Deadwood text texture
 			   
 	SDL_Color textColor; ///< Text color

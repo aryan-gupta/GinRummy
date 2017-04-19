@@ -189,9 +189,9 @@ Resources::Resources() {
 		};
 		
 		continueButton = SDL_Rect{
-			SCRN_W/2 - knockButton.w*2/2,
-			CARD_H + WIN_PAD*6,
-			knockButton.w*2,
+			SCRN_W/2 - knockButton.w/2,
+			CARD_H + WIN_PAD*5,
+			knockButton.w,
 			knockButton.h
 		};
 	}
@@ -273,6 +273,26 @@ Resources::Resources() {
 			dwTextPos = SDL_Rect{
 				WIN_PAD + 5,
 				SCRN_H - MCARD_H*2 - WIN_PAD*3,
+				textSurface->w, 
+				textSurface->h
+			}; // Text position
+			
+			SDL_FreeSurface(textSurface);
+		}
+		
+		{ // Continue texture
+			textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+				nFont,
+				"Continue", 
+				textColor
+			);
+			continueTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
+				gWindow->getRenderer(),
+				textSurface
+			);
+			continuePos = SDL_Rect{
+				continueButton.x - textSurface->w/2 + continueButton.w/2,
+				continueButton.y - textSurface->h/2 + continueButton.h/2,
 				textSurface->w, 
 				textSurface->h
 			}; // Text position
