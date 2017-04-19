@@ -432,17 +432,13 @@ void Human::renderMelds() {
 
 
 void Human::renderHand() {
-	int meldSize = 0;
-	for(Meld* m : melds) {
-		for(Card* c : m->cards) {
-			meldSize++;
-		}
-	}
-	meldSize -= melds.size();
+	int auxMeldSize = 0;
+	for(Meld* m : melds) meldSize += melds->cards.size();
+	auxMeldSize -= melds.size();
 	
 	SDL_Rect currCardPos = { // get the first card location
-		SCRN_W/2 - ((melds.size() * CARD_W) + CARD_PAD*meldSize)/2,
-		10, //SCRN_H - WIN_PAD - CARD_H,
+		SCRN_W/2 - ((melds.size() * CARD_W) + CARD_PAD*auxMeldSize)/2,
+		SCRN_H - WIN_PAD - CARD_H,
 		CARD_W,
 		CARD_H
 	};
