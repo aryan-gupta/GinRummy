@@ -132,5 +132,42 @@ void Opponent::renderCards() {
 }
 
 void Opponent::renderLayoff() {
-	/// @todo do stuff
+		int cardsTWidth = 0;
+	for(Meld* m : melds) cardsTWidth += m->cards.size();
+	cardsTWidth -= melds.size();
+	
+	cardsTWidth += deadwood.size() - 1;
+	
+	SDL_Rect currCardPos = { // get the first card location
+		SCRN_W/2 - ((melds.size() * (CARD_W + WIN_PAD)) + CARD_PAD*cardsTWidth + CARD_W)/2,
+		WIN_PAD,
+		CARD_W,
+		CARD_H
+	};
+	
+	for(Meld* m : melds) {
+		for(Card* tmpCard : m->cards) {
+			SDL_RenderCopy( // render it
+				gWindow->getRenderer(),
+				gAssets->cardsSheet,
+				&gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)],
+				&currCardPos
+			);
+			
+			currCardPos.x += CARD_PAD; // move to the next card
+		}
+		
+		currCardPos.x += CARD_W;
+	}
+	
+	for(Card* tmpCard : deadwood) {
+		SDL_RenderCopy( // render it
+			gWindow->getRenderer(),
+			gAssets->cardsSheet,
+			&gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)],
+			&currCardPos
+		);
+		
+		currCardPos.x += CARD_PAD; // move to the next card
+	}
 }
