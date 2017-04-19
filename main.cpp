@@ -77,7 +77,7 @@ int main(int argc, char* argv[]) {
 			P2->doTurn();
 		}
 		
-		gWindow->showHand();
+		//gWindow->showHand();
 	}
 	
 	return 0x00;

@@ -34,7 +34,7 @@ enum Players {
 	PLAYER_2,
 	
 	PLAYER_TOTAL
-}
+};
 
 /// @brief A complete meld
 struct Meld {

@@ -71,9 +71,9 @@ void Window::knock(int player) {
 		pnt = new unsigned[2]{0, P2->getPoints()};
 	}		
 	
-	roundPoints.push_back(pnt);
+	//roundPoints.push_back(pnt);
 	
-	soKnock = true; 
+	//soKnock = true; 
 	//renderWin(player1, player2);  
 } 
 
