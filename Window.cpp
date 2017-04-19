@@ -96,7 +96,7 @@ void Window::renderAll() {
 	renderHelp();
 	
 	P1->render();
-	P2->render();
+	//P2->render();
 	
 	SDL_RenderPresent(renderer);
 }

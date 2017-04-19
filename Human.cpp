@@ -305,6 +305,7 @@ void Human::moveCard(Card* c, int idx) {
 
 void Human::render() {
 	renderCards();
+	renderHand();
 	renderDeadwood();
 	renderMelds();
 }
@@ -426,4 +427,39 @@ void Human::renderMelds() {
 		pos.x = WIN_PAD; // CRLF
 		pos.y += pos.h + WIN_PAD/2;
 	}
+}
+
+
+
+void Human::renderHand() {
+	int meldSize = 0;
+	for(Meld* m : melds) {
+		for(Card* c : m->cards) {
+			meldSize++;
+		}
+	}
+	meldSize -= melds.size();
+	
+	SDL_Rect currCardPos = { // get the first card location
+		SCRN_W/2 - ((melds.size() * CARD_W) + CARD_PAD*meldSize)/2,
+		10, //SCRN_H - WIN_PAD - CARD_H,
+		CARD_W,
+		CARD_H
+	};
+	
+	for(Meld* m : melds) {
+		for(Card* tmpCard : m->cards) {
+			SDL_RenderCopy( // render it
+				gWindow->getRenderer(),
+				gAssets->cardsSheet,
+				&gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)],
+				&currCardPos
+			);
+			
+			currCardPos.x += CARD_PAD; // move to the next card
+		}
+		
+		currCardPos.x += CARD_W;
+	}
+	
 }
