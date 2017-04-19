@@ -289,15 +289,45 @@ bool Window::checkSortClick(const int x, const int y) {
 }
 
 
+void Window::renderFinal(bool displayPoints) {
+	// does what you think it does
+	clear();
+	renderBackground();
+	
+	gDeck->render();
+	gDiscard->render();
+	renderButtons();
+	//renderMeldsDeadwood();
+	renderHelp();
+	
+	P1->renderLayoff();
+	P2->renderLayoff();
+	
+	if(displayPoints) {
+		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xC0);
+		SDL_RenderFillRect(renderer, NULL);
+		// render the points
+	} else {
+		// render continue button
+	}
+	
+	SDL_RenderPresent(renderer);
+}
+
 void Window::finalizeGame() {
 	// calculate pre layoff points
 	// get melds and deadwood of each player
 	// layoff cards
 	// calculate final points
 	// wait until we quit or restart the game
+	layoffCards();
+	showPoints();
+}
+
+void Window::layoffCards() {
 	while(!finished) {
 		
-		renderFinal();
+		renderFinal(false);
 		
 		while(SDL_PollEvent(&event)) {
 			switch(event.type) {
@@ -311,6 +341,28 @@ void Window::finalizeGame() {
 					
 					/// @todo check clicks
 				} break;
+			}
+		}
+	}
+}
+
+void Window::showPoints() {
+	while(!finished) {
+		
+		renderFinal(true);
+		
+		while(SDL_PollEvent(&event)) {
+			switch(event.type) {
+				case SDL_QUIT:
+					quit();
+				break;
+				
+				case SDL_MOUSEBUTTONUP: {
+					int x, y;
+					SDL_GetMouseState(&x, &y);
+					
+					/// @todo check clicks
+				}
 			}
 		}
 	}
