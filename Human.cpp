@@ -304,7 +304,7 @@ void Human::moveCard(Card* c, int idx) {
 
 
 void Human::render() {
-	//renderCards();
+	renderCards();
 	renderHand();
 	renderDeadwood();
 	renderMelds();
@@ -442,7 +442,7 @@ void Human::renderHand() {
 	
 	SDL_Rect currCardPos = { // get the first card location
 		SCRN_W/2 - ((melds.size() * CARD_W) + WIN_PAD*2)/2,
-		SCRN_H - WIN_PAD - CARD_H,
+		10, //SCRN_H - WIN_PAD - CARD_H,
 		CARD_W,
 		CARD_H
 	};
