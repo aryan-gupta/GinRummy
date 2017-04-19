@@ -38,6 +38,7 @@ public:
 	void renderAll(); ///< Renders all of the objects on the screen
 	void knock(int player); 
 	
+	void finalizeRound();
 	
 	/// @brief Change the help text text
 	/// @param [in] helpToRender `HelpTextItems` Changees the help text to the specified text. \sa HelpTextItems

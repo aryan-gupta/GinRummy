@@ -63,8 +63,9 @@ public:
 	/// @return bool if we can knock
 	bool canWeKnock();
 	
-	virtual void doTurn() = 0; ///< Does a turn
-	virtual void render() = 0; ///< Renders the Player on the screen
+	virtual void doTurn()       = 0; ///< Does a turn
+	virtual void render()       = 0; ///< Renders the Player on the screen
+	virtual void renderLayoff() = 0;
 	
 protected:
 	std::vector<Card*> hand;     ///< Stores the cards in the Player's hand

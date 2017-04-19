@@ -46,8 +46,7 @@ Window* gWindow;
 const Resources* gAssets;
 
 bool soKnocked;
-
-vector<unsigned*> roundPoints;
+vector<unsigned*> roundPoints; /// @todo put this in Window class?
 
 int main(int argc, char* argv[]) {
 	srand(time(0));
@@ -77,7 +76,8 @@ int main(int argc, char* argv[]) {
 			P2->doTurn();
 		}
 		
-		//gWindow->showHand();
+		gWindow->finalizeRound();
+		
 	}
 	
 	return 0x00;
