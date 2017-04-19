@@ -344,7 +344,9 @@ void Window::layoffCards() {
 					int x, y;
 					SDL_GetMouseState(&x, &y);
 					
-					/// @todo check clicks
+					if(checkContinueClick(x, y)) {
+						finished = true;
+					}
 				} break;
 			}
 		}
@@ -375,4 +377,17 @@ void Window::showPoints() {
 			}
 		}
 	}
+}
+
+
+bool Window::checkContinueClick(const int x, const int y) {
+	const SDL_Rect &continueButton = gAssets->continueButton;
+	// check if the x and y was within the button
+	if(    x > continueButton.x
+		&& x < continueButton.x + continueButton.w
+		&& y > continueButton.y
+		&& y < continueButton.y + continueButton.h
+	) return true;
+	
+	return false;
 }

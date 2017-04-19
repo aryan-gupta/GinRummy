@@ -81,6 +81,8 @@ private:
 	void layoffCards();
 	void showPoints();
 	
+	bool checkContinueClick(const int x, const int y);
+	
 	/// @brief draws a button
 	/// @param [in] tex `SDL_Texture*` The texture to use when rendering
 	/// @param [in] src `SDL_Rect` The clipping of the button on the texture
