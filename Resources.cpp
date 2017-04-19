@@ -189,10 +189,10 @@ Resources::Resources() {
 		};
 		
 		continueButton = SDL_Rect{
-			SCRN_W/2 - knockButton.w/2,
-			CARD_H + WIN_PAD*5,
-			knockButton.w,
-			knockButton.h
+			SCRN_W/2 - knockButton.w*3/4,
+			CARD_H + WIN_PAD*4,
+			knockButton.w*3/2,
+			knockButton.h*3/2
 		};
 	}
 	
@@ -282,7 +282,7 @@ Resources::Resources() {
 		
 		{ // Continue texture
 			textSurface = TTF_RenderText_Blended( // Create temp Surface for text
-				nFont,
+				buttonFont,
 				"Continue", 
 				textColor
 			);
