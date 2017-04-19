@@ -63,9 +63,9 @@ int main(int argc, char* argv[]) {
 	
 	dealCards(); // Deal the cards
 	
-	while(true) {
-		soKnocked = false;
-		while(!soKnocked) { // Loop through turns (Will change as we progress through our game)
+	//while(true) {
+		gWindow->getKnockStatus() = false;
+		while(!gWindow->getKnockStatus()) { // Loop through turns (Will change as we progress through our game)
 			if(gDeck->size() == 0) swap();
 			P1->doTurn();
 			
@@ -75,7 +75,7 @@ int main(int argc, char* argv[]) {
 		
 		gWindow->finalizeRound();
 		
-	}
+	//}
 	
 	return 0x00;
 }
