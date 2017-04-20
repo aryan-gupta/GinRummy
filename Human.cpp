@@ -122,7 +122,6 @@ void Human::pickDeck() {
 						SDL_GetMouseState(&x, &y);
 						
 						if(gWindow->checkKnockClick(x, y)) {
-							LOGL("WE KNOCKED") /// @todo change help text
 							gWindow->changeHelp(HTI_CANNOT_KNOCK);
 						}
 						
@@ -136,7 +135,7 @@ void Human::pickDeck() {
 							finished = true; 
 						}
 						
-						if(gWindow->checkSortClick(x, y)) { ///@todo Swap sorting algorithms
+						if(gWindow->checkSortClick(x, y)) {
 							if(sortByRank) {
 								sort(
 									hand.begin(), hand.end(),
@@ -261,7 +260,7 @@ void Human::pickCard() {
 							finished = true;
 						}
 						
-						if(gWindow->checkSortClick(x, y)) { ///@todo Swap sorting algorithms
+						if(gWindow->checkSortClick(x, y)) {
 							if(sortByRank) {
 								sort(
 									hand.begin(), hand.end(),
@@ -336,9 +335,6 @@ void Human::renderCards() {
 
 
 void Human::renderDeadwood() {
-	/// @todo Dude I really need to do some clean up on this. It is terrible,
-	/// but it works. Dont mess with it
-	
 	// First render the number of deadwood
 	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->nFont,
@@ -388,7 +384,7 @@ void Human::renderDeadwood() {
 		);
 		
 		pos.x += pos.w;
-		if(pos.x + pos.w > (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*2)) { ///@ @todo make this gAssets->deadwood-panel dependent
+		if(pos.x + pos.w > (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*2)) { /// @todo make this gAssets->deadwood-panel dependent
 			pos.x = WIN_PAD; // CRLF
 			pos.y += pos.h + WIN_PAD/2;
 		}
@@ -398,8 +394,6 @@ void Human::renderDeadwood() {
 
 
 void Human::renderMelds() {
-	/// @todo Dude I really need to do some clean up on this. It is terrible,
-	/// but it works, I dont know why, but it does. Dont mess with it
 	SDL_Rect clipping = SDL_Rect{0, 0, 30, 55}; // Card clipping for mini card
 	
 	SDL_Rect pos = SDL_Rect{ // position of the meld cards
