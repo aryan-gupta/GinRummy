@@ -88,7 +88,7 @@ void Player::getMelds() {
 	melds.clear();
 	
 	MS allMelds;
-	CS tmpHand;
+	CS tmpHand = hand;
 	
 	#ifdef DEBUG_MELDS
 		CLEAR_TERMINAL
@@ -99,11 +99,7 @@ void Player::getMelds() {
 		LOG(endl)
 	#endif
 	
-	/// @todo make these vectors const so we can use references rather than copies
-	/// @todo change the name, kinds deceiving
 	/// @todo make scope resolution for the 3 parts of this function
-	
-	tmpHand = hand;
 	
 	std::sort( // sort the hand by suit then rank, makes it easier to find RUNS
 		tmpHand.begin(), tmpHand.end(),
