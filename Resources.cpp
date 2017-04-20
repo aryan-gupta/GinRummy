@@ -316,10 +316,20 @@ Resources::Resources() {
 
 
 Resources::~Resources() {
-	SDL_DestroyTexture(cardsSheet); cardsSheet = nullptr;
-	SDL_DestroyTexture(cardBackSheet); cardBackSheet = nullptr;
-	
+	SDL_DestroyTexture(cardsSheet);
+	SDL_DestroyTexture(cardsSheetT);
+	SDL_DestroyTexture(cardBackSheet); 
 	delete[] cardClippings;
+	for(int i = 0; i < UIC_TOTAL; ++i) SDL_DestroyTexture(uiSheets[i]);
+	delete[] uiSheets;
+	delete[] uiClippings;
+	TTF_CloseFont(buttonFont);
+	TTF_CloseFont(nFont);
+	SDL_DestroyTexture(knockTexture);
+	SDL_DestroyTexture(knockTextureST);
+	SDL_DestroyTexture(sortTexture);
+	SDL_DestroyTexture(meldTextTexture);
+	SDL_DestroyTexture(dwTextTexture);
 }
 
 
