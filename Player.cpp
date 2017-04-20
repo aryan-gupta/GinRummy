@@ -362,6 +362,8 @@ bool Player::canWeKnock() {
 unsigned Player::getPoints() {
 	unsigned sum = 0;
 	
+	/// @todo get Knock Points
+	
 	sum += getGin();
 	sum += getBigGin();
 	
