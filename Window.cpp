@@ -59,6 +59,9 @@ Window::Window() {
 Window::~Window() {
 	SDL_DestroyRenderer(renderer); renderer = nullptr; // Destroy our main renderer
 	SDL_DestroyWindow(window); window = nullptr; // Destroy our main window
+	
+	for(unsigned* u : roundPoints)
+		delete[] u;
 }
 
 
