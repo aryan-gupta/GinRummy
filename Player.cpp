@@ -185,21 +185,21 @@ void Player::getMelds() {
 		8. Start checking from C3 again
 	**/
 	/// @todo make this algorithm similar to the one for RUNS with Praw
-	for(size_t i = tmpHand.size() - 1; i > 1; --i) { // 1
-		if(    i > 2 // 2
-			&& checkMelds({tmpHand[i], tmpHand[i - 1], tmpHand[i - 2], tmpHand[i - 3]}) // 3
-		) {
-			allMelds.push_back( new Meld { // 4
+	for(size_t i = 0; i < tmpHand.size(); ++i) { // 1
+		size_t j = i + 1;
+		for(/*blank*/; j < tmpHand.size(); ++j) {
+			if(tmpHand[i]->rank != tmpHand[j]->rank)
+				break;
+		}
+		
+		if(j - i >= 3) {                                          // 6, 7
+			melds.push_back( new Meld {                          // 8
 				MELD_SET,
-				{tmpHand[i], tmpHand[i - 1], tmpHand[i - 2], tmpHand[i - 3]}
+				CS(tmpHand.begin() + i, tmpHand.begin() + j)
 			});
-			i -= 3; // 5
-		} else if(checkMelds({tmpHand[i], tmpHand[i - 1], tmpHand[i - 2]})) { // 6
-			allMelds.push_back( new Meld { // 7
-				MELD_SET,
-				{tmpHand[i], tmpHand[i - 1], tmpHand[i - 2]}
-			});
-			i -= 2; // 8
+			// j minus 1 because i is incremented after loop 
+			// finishes so we want to compensate for that
+			i = j - 1;                                           // 9
 		}
 	}
 	
