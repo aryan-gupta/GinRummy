@@ -103,14 +103,6 @@ void Player::getMelds() {
 	/// @todo change the name, kinds deceiving
 	/// @todo make scope resolution for the 3 parts of this function
 	
-	// lambda for checking if a card vector is a SET or not
-	bool (*checkMelds)(CS) = [](CS vec) { // Could use std::function<bool(CS)>
-		for(Card* tmpCard : vec)
-			if(tmpCard->rank != vec[0]->rank)
-				return false;	
-		return true;
-	};
-	
 	tmpHand = hand;
 	
 	std::sort( // sort the hand by suit then rank, makes it easier to find RUNS
@@ -159,7 +151,6 @@ void Player::getMelds() {
 		}
 	}
 	
-	tmpHand = hand;
 	std::sort( // Sort the cards by rank then by suit, makes it easier to find SETS
 		tmpHand.begin(), tmpHand.end(),
 		[](Card* a, Card* b) {
