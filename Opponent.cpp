@@ -65,9 +65,7 @@ void Opponent::pickDeck() {
 	}
 	else { 
 		takeCard(gDeck->getACard()); 	
-	}
-
-	
+	}	
 }
 
 void Opponent::pickCard() {
@@ -167,4 +165,19 @@ void Opponent::renderLayoff() {
 		
 		currCardPos.x += CARD_PAD; // move to the next card
 	}
+}
+
+
+bool Opponent::testMeld(const vector<Card*>& cards) {
+	bool isSet = true, isRun = true;
+	for(int i = 1; i < cards.size(); ++i) {
+		if(cards[0]->rank != cards[i]->rank) 
+			isSet = false;
+		if(cards[0]->rank != cards[i]->rank - i)
+			isRun = false;
+		if(cards[0]->suit != cards[i]->suit)
+			isRun = false;
+	}
+	
+	return isSet || isRun; // mabe use xor(^) ?
 }
