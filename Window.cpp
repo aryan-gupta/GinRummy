@@ -320,6 +320,29 @@ void Window::renderFinal(bool displayPoints) {
 			gAssets->continueButton // location
 		);
 		SDL_RenderCopy(gWindow->getRenderer(), gAssets->continueTexture, NULL, &gAssets->continuePos);
+		
+		SDL_Color textColor = {0xFF, 0xFF, 0xFF, 0xFF};
+		
+		// First render the number of deadwood
+		SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+			gAssets->buttonFont,
+			("P1 Points: " + std::to_string(roundPoints[roundPoints.size() - 1][0]) + "    P2 Points: " + std::to_string(roundPoints[roundPoints.size() - 1][1])).c_str(), // convert num of deadwood into a string
+			textColor
+		);
+		SDL_Texture* pointsTex = SDL_CreateTextureFromSurface( // Convert it to a texture
+			gWindow->getRenderer(),
+			textSurface
+		);
+		SDL_Rect pointsPos = SDL_Rect{ // get the position
+			SCRN_W/2 - textSurface->w/2,
+			gAssets->continueButton.y + gAssets->continueButton.h + WIN_PAD, // 2 lines of cards plus 3 paddings from the bottom
+			textSurface->w, 
+			textSurface->h
+		};
+		
+		SDL_FreeSurface(textSurface); // render and free memory
+		SDL_RenderCopy(gWindow->getRenderer(), pointsTex, NULL, &pointsPos);
+		SDL_DestroyTexture(pointsTex);
 	} else {
 		drawAButton(
 			gAssets->uiSheets[UIC_BLUE], // sprite sheet
@@ -376,6 +399,7 @@ void Window::layoffCards() {
 void Window::showPoints() {
 	bool finished = false;
 	SDL_Event event;
+	LOGL("POINTS: " << roundPoints[roundPoints.size() - 1][0] << " \t " << roundPoints[roundPoints.size() - 1][1]);
 	
 	while(!finished) {
 		
