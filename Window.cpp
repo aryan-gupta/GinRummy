@@ -287,6 +287,19 @@ bool Window::checkSortClick(const int x, const int y) {
 }
 
 
+bool Window::checkContinueClick(const int x, const int y) {
+	const SDL_Rect &continueButton = gAssets->continueButton;
+	// check if the x and y was within the button
+	if(    x > continueButton.x
+		&& x < continueButton.x + continueButton.w
+		&& y > continueButton.y
+		&& y < continueButton.y + continueButton.h
+	) return true;
+	
+	return false;
+}
+
+
 void Window::renderFinal(bool displayPoints) {
 	// does what you think it does
 	clear();
@@ -385,17 +398,4 @@ void Window::showPoints() {
 			}
 		}
 	}
-}
-
-
-bool Window::checkContinueClick(const int x, const int y) {
-	const SDL_Rect &continueButton = gAssets->continueButton;
-	// check if the x and y was within the button
-	if(    x > continueButton.x
-		&& x < continueButton.x + continueButton.w
-		&& y > continueButton.y
-		&& y < continueButton.y + continueButton.h
-	) return true;
-	
-	return false;
 }

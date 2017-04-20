@@ -27,9 +27,11 @@ using std::vector;
 #include "./inc/Window.h"
 #include "./inc/Resources.h"
 
+
 const int CARD_W   = 140 *5/8;
 const int CARD_H   = 190 *5/8;
 const int CARD_PAD = 35  *5/8;
+
 
 CardPile::CardPile(CardPileTypes type) {
 	if(type == PILE_DECK) {
@@ -56,6 +58,13 @@ CardPile::CardPile(CardPileTypes type) {
 	this->type = type;
 }
 
+
+CardPile::~CardPile() {
+	for(Card* tmpCard : pile)
+		delete tmpCard; // delete all the cards in the deck
+}
+
+
 void CardPile::swapTypes(){
 	if(type == PILE_DECK){
 		type = PILE_DISCARD;
@@ -74,10 +83,6 @@ void CardPile::swapTypes(){
 			CARD_H
 		};
 	}
-}
-CardPile::~CardPile() {
-	for(Card* tmpCard : pile)
-		delete tmpCard; // delete all the cards in the deck
 }
 
 
@@ -138,7 +143,6 @@ bool CardPile::checkClick(const int x, const int y) {
 	
 	return false;
 }
-
 
 
 Card* CardPile::peek() { 
