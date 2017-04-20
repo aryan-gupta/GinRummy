@@ -23,7 +23,7 @@
  
 #define R_PROJNAME		     /* Project Name */ "Gin Rummy"
 #define R_PRGMNAME		     /* Program Name */ "Gin Rummy"
-#define R_DESCRIPTION	      /* Description */ "This is a game of Gin ummy"
+#define R_DESCRIPTION	      /* Description */ "A game of Gin Rummy"
 
 #define R_AUTHOR		     	   /* Author */ "Aryan Gupta" ///@todo modify this to reflect group
 #define R_COMPANY		          /* Company */ "The Gupta Empire"

@@ -44,14 +44,7 @@ const char* HELP_TEXT[] = {
 	"Now you must discard a card, or knock if you can",
 	"You MUST click on a card, or knock if you can. You can knock ONLY if you have less than 10 deadwood.",
 	"Its your Opponent's turn.", 
-	"Sorry you cannot knock right now."
-	
-	
-	
-
-	
-	
-	
+	"You cannot knock right now, Sorry."
 };
 
 Resources::Resources() {
@@ -187,6 +180,13 @@ Resources::Resources() {
 			CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W,
 			MCARD_H*5/2
 		};
+		
+		continueButton = SDL_Rect{
+			SCRN_W/2 - knockButton.w*3/4,
+			CARD_H + WIN_PAD*4,
+			knockButton.w*3/2,
+			knockButton.h*3/2
+		};
 	}
 	
 	{ // Textures for the text used in the game
@@ -266,6 +266,26 @@ Resources::Resources() {
 			dwTextPos = SDL_Rect{
 				WIN_PAD + 5,
 				SCRN_H - MCARD_H*2 - WIN_PAD*3,
+				textSurface->w, 
+				textSurface->h
+			}; // Text position
+			
+			SDL_FreeSurface(textSurface);
+		}
+		
+		{ // Continue texture
+			textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+				buttonFont,
+				"Continue", 
+				textColor
+			);
+			continueTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
+				gWindow->getRenderer(),
+				textSurface
+			);
+			continuePos = SDL_Rect{
+				continueButton.x - textSurface->w/2 + continueButton.w/2,
+				continueButton.y - textSurface->h/2 + continueButton.h/2,
 				textSurface->w, 
 				textSurface->h
 			}; // Text position
