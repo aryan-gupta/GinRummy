@@ -78,7 +78,7 @@ static std::ostream& operator << (std::ostream& out, Card* card) {
 }
 #endif
 
-//#define DEBUG_MELDS
+#define DEBUG_MELDS
 void Player::getMelds() {
 	typedef std::vector<Meld*> MS; // Meld Stack
 	typedef std::vector<MS> MM;    // Meld Matrix
@@ -180,7 +180,7 @@ void Player::getMelds() {
 		}
 		
 		if(j - i >= 3) {                                          // 6, 7
-			melds.push_back( new Meld {                          // 8
+			allMelds.push_back( new Meld {                          // 8
 				MELD_SET,
 				CS(tmpHand.begin() + i, tmpHand.begin() + j)
 			});
@@ -198,6 +198,8 @@ void Player::getMelds() {
 			return a->cards.size() > b->cards.size(); // greatest to least
 		}
 	);
+	
+	
 	
 	/** Finding All Combinations for Melds
 		1. Add the current Meld (leaf)
@@ -251,7 +253,7 @@ void Player::getMelds() {
 		LOGL(endl << "BEFORE OPTIMIZING") 
 		for(MS& i : ps) { 
 			LOGL("A POSSIBLE MELD:" << calcDW(i)) 
-			for(auto j : i) { 
+			for(auto& j : i) { 
 				for(auto k : j->cards) { 
 					LOG(k << " "); 
 				} 
