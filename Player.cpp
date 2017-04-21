@@ -78,7 +78,7 @@ static std::ostream& operator << (std::ostream& out, Card* card) {
 }
 #endif
 
-#define DEBUG_MELDS
+//#define DEBUG_MELDS
 void Player::getMelds() {
 	typedef std::vector<Meld*> MS; // Meld Stack
 	typedef std::vector<MS> MM;    // Meld Matrix
