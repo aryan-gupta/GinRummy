@@ -36,8 +36,7 @@ protected:
 	
 private: /// @todo make next two functions virtual functions
 	int turnCounter; 
-	
-	bool testMeld(const std::vector<Card*>& cards);
+	static bool testMeld(const std::vector<Card*>& cards);
 	
 };
 

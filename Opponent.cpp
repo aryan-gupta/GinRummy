@@ -170,7 +170,7 @@ void Opponent::renderLayoff() {
 
 bool Opponent::testMeld(const vector<Card*>& cards) {
 	bool isSet = true, isRun = true;
-	for(int i = 1; i < cards.size(); ++i) {
+	for(size_t i = 1; i < cards.size(); ++i) {
 		if(cards[0]->rank != cards[i]->rank) 
 			isSet = false;
 		if(cards[0]->rank != cards[i]->rank - i)
