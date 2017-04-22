@@ -35,15 +35,15 @@ const int SCRN_H = 510;
 
 const int WIN_PAD = 15;
 
-
-
 const char* HELP_TEXT[] = {
 	"Its your turn. Pick a deck to pick from. You can either click on the stock deck or the discard deck.",
 	"You MUST draw from either card pile. Please click on either the stock deck or the discard deck.",
 	"Now you must discard a card, or knock if you can",
 	"You MUST click on a card, or knock if you can. You can knock ONLY if you have less than 10 deadwood.",
 	"Its your Opponent's turn.", 
-	"You cannot knock right now, Sorry."
+	"You cannot knock right now, You need less than 10 deadwoods to knock"
+	"You cannot knock right now, You need to draw card from a deck" 
+	"These are the melds, click continue to see points" 
 };
 
 Window::Window() {
