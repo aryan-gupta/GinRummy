@@ -41,8 +41,8 @@ const char* HELP_TEXT[] = {
 	"Now you must discard a card, or knock if you can",
 	"You MUST click on a card, or knock if you can. You can knock ONLY if you have less than 10 deadwood.",
 	"Its your Opponent's turn.", 
-	"You cannot knock right now, You need less than 10 deadwoods to knock"
-	"You cannot knock right now, You need to draw card from a deck" 
+	"You cannot knock right now, You need less than 10 deadwoods to knock",
+	"You cannot knock right now, You need to draw card from a deck", 
 	"These are the melds, click continue to see points" 
 };
 
