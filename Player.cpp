@@ -137,7 +137,7 @@ void Player::getMelds() {
 				break;
 		}                                                        // 5
 		
-		if(j - i >= 3) {                                          // 6, 7
+		if(j - i >= 3) {                                         // 6, 7
 			allMelds.push_back( new Meld {                       // 8
 				MELD_RUN,
 				CS(tmpHand.begin() + i, tmpHand.begin() + j)

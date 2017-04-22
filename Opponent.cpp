@@ -74,33 +74,20 @@ void Opponent::pickCard() {
 	
 	if(canWeKnock()) { //  
 		// go ahead and knock 		
-		gWindow->knock(PLAYER_2); 
-		
+		gWindow->knock(PLAYER_2); 	
 	}
 	
-	Card* topcard = gDiscard->peek(); 	
-	// we have 52 cards 
-	// 10 for player1 
-	// 10 for computer 
-	// leave 32 cards in play 
-	// that's mean 16 turn that will happen until the end of the deck 
-	// player has 8 turn and computer has 8 turn 
-	// if turnCounter is greater than 4, then pass half of the game 
- 
-	if(turnCounter < 2) { 
-		// put down any cards that is ranking 1 or 2 away in different suit 
-		// if that is not possible then we want to discard equal rank to the top card 
-	
-	} 
-	
-	if(turnCounter < 4) { 
-		// do something 
-	}
-	else { // we want to start dumping high card and pulling low card 
-	
-	}
+	// iterator function 
+	auto it;
+	it = std::max_element(deadwood.begin(), deadwood.end(), 
+		[](Card* a, Card* b) {
+			return (a->rank*SUIT_TOTAL + a->suit) < (b->rank*SUIT_TOTAL + b->suit);
+		}
+	); 
 
-	gDiscard->takeACard(getCard(hand[rand() % hand.size()]));
+	gDiscard->takeACard(getCard(*it)); 
+ 
+	
 }
 
 
