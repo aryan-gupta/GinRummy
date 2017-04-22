@@ -78,8 +78,7 @@ void Opponent::pickCard() {
 	}
 	
 	// iterator function 
-	auto it;
-	it = std::max_element(deadwood.begin(), deadwood.end(), 
+	auto it = std::max_element(deadwood.begin(), deadwood.end(), 
 		[](Card* a, Card* b) {
 			return (a->rank*SUIT_TOTAL + a->suit) < (b->rank*SUIT_TOTAL + b->suit);
 		}
