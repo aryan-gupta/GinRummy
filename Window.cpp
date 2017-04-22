@@ -394,9 +394,11 @@ void Window::finalizeRound() {
 
 
 void Window::layoffCards() {
+	
+    gWindow->changeHelp(HTI_SHOWMELD); // Change help text	
 	bool finished = false;
 	SDL_Event event;
-	
+
 	while(!finished) {
 		
 		renderFinal(false);
