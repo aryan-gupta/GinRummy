@@ -54,9 +54,10 @@ void Opponent::pickDeck() {
 	
 	for(unsigned i = 0; i < hand.size(); i++) { 
 		for(unsigned j = i + 1; j < hand.size(); j++) { 
-				// check melds i, j, and topcard 
-				// if those three cards meld then turn canMeld to true 
-				
+			// check melds i, j, and topcard 
+			// if those three cards meld then turn canMeld to true 
+			if(testMeld({hand[i],hand[j],topcard})) 
+				canMeld = true; 				
 		}
 	}	
 	
