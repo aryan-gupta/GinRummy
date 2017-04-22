@@ -136,7 +136,7 @@ void Opponent::renderLayoff() {
 	cardsTWidth += deadwood.size() - 1;
 	
 	SDL_Rect currCardPos = { // get the first card location
-		SCRN_W/2 - ((melds.size() * (CARD_W + WIN_PAD)) + CARD_PAD*cardsTWidth + CARD_W)/2,
+		SCRN_W/2 - (((int)melds.size() * (CARD_W + WIN_PAD)) + CARD_PAD*cardsTWidth + CARD_W)/2,
 		WIN_PAD,
 		CARD_W,
 		CARD_H

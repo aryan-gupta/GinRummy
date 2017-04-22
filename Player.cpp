@@ -47,8 +47,9 @@ Player::~Player() {
 void Player::takeCard(Card* card) {
 	hand.push_back(card);
 }
+//#define DEBUG_MELDS
 
-#ifdef DEBUG
+#ifdef DEBUG_MELDS
 static std::ostream& operator << (std::ostream& out, Card* card) {
 	// this is just a temp function, itll probs be removed in the final version
 	static const char* SL[] = {
@@ -78,7 +79,7 @@ static std::ostream& operator << (std::ostream& out, Card* card) {
 }
 #endif
 
-//#define DEBUG_MELDS
+
 void Player::getMelds() {
 	typedef std::vector<Meld*> MS; // Meld Stack
 	typedef std::vector<MS> MM;    // Meld Matrix
