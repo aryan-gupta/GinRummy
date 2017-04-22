@@ -85,8 +85,7 @@ void Opponent::pickCard() {
 	); 
 
 	gDiscard->takeACard(getCard(*it)); 
- 
-	
+ 	
 }
 
 
