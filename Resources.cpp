@@ -35,7 +35,7 @@ static const char* UI_SHEETS[] = {
 	"..\\res\\sprites\\Spritesheets\\greenSheet.png",
 	"..\\res\\sprites\\Spritesheets\\greySheet.png",
 	"..\\res\\sprites\\Spritesheets\\redSheet.png",
-	"..\\res\\sprites\\Spritesheets\\yellowSheet.png",
+	"..\\res\\sprites\\Spritesheets\\yellowSheet.png"
 };
 
 
