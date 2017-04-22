@@ -73,7 +73,8 @@ void Opponent::pickCard() {
 	// We are going to put back a random card, cause why not1
 	
 	if(canWeKnock()) { //  
-		// go ahead and knock 
+		// go ahead and knock 		
+		gWindow->knock(PLAYER_2); 
 		
 	}
 	
