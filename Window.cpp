@@ -35,6 +35,17 @@ const int SCRN_H = 510;
 
 const int WIN_PAD = 15;
 
+
+
+const char* HELP_TEXT[] = {
+	"Its your turn. Pick a deck to pick from. You can either click on the stock deck or the discard deck.",
+	"You MUST draw from either card pile. Please click on either the stock deck or the discard deck.",
+	"Now you must discard a card, or knock if you can",
+	"You MUST click on a card, or knock if you can. You can knock ONLY if you have less than 10 deadwood.",
+	"Its your Opponent's turn.", 
+	"You cannot knock right now, Sorry."
+};
+
 Window::Window() {
 	if( NULL ==
 		(window = SDL_CreateWindow(  // Create our Window
