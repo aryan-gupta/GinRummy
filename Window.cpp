@@ -20,6 +20,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_Image.h>
 #include <string>
+#include <cmath>
 
 #include "./inc/main.h"
 #include "./inc/Window.h"
@@ -68,10 +69,20 @@ Window::~Window() {
 void Window::knock(int player) { 
 	unsigned* pnt;
 	
-	if(player == PLAYER_1) { 
+	if(player == PLAYER_1) { // player1 
 		pnt = new unsigned[2]{P1->getPoints(), 0};
-	} else { 
+		//P1->getNumDeadwood(); 
+		//P2->getNumDeadwood(); 
+		
+		int totalDeadwood = abs(P1->getNumDeadwood() - P2->getNumDeadwood()); 
+		pnt[0] = pnt[0] + totalDeadwood; 
+		
+	} else { // player2 
 		pnt = new unsigned[2]{0, P2->getPoints()};
+		
+		int totalDeadwood = abs(P2->getNumDeadwood() - P1->getNumDeadwood()); 
+		pnt[1] = pnt[1] + totalDeadwood; 
+	
 	}		
 	
 	roundPoints.push_back(pnt);
