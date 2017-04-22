@@ -74,13 +74,13 @@ void Window::knock(int player) {
 		//P1->getNumDeadwood(); 
 		//P2->getNumDeadwood(); 
 		
-		int totalDeadwood = abs(P1->getNumDeadwood() - P2->getNumDeadwood()); 
+		int totalDeadwood = abs((int)P1->getNumDeadwood() - (int)P2->getNumDeadwood()); 
 		pnt[0] = pnt[0] + totalDeadwood; 
 		
 	} else { // player2 
 		pnt = new unsigned[2]{0, P2->getPoints()};
 		
-		int totalDeadwood = abs(P2->getNumDeadwood() - P1->getNumDeadwood()); 
+		int totalDeadwood = abs((int)P2->getNumDeadwood() - (int)P1->getNumDeadwood()); 
 		pnt[1] = pnt[1] + totalDeadwood; 
 	
 	}		
