@@ -4,13 +4,13 @@
 # Proprietary and confidential
 #
 # Written by:
-# Harrison Read <hread2@uncc.edu>
-# Pichsapa Kulapruk <pkulapru@uncc.edu>
-# Aryan Gupta <agupta40@uncc.edu>
+# Harrison Read		<hread2@uncc.edu>
+# Pichsapa Kulapruk	<pkulapru@uncc.edu>
+# Aryan Gupta			<agupta40@uncc.edu>
 # 
 # ==============================================================================
 # @author 			The Cool Group
-# @project 			GinRummy 			Tic Tac Toe
+# @project 		GinRummy 			Tic Tac Toe
 # @file 			Makefile
 # @date				2017-03-12 (YYYY-MM-DD)
 # @version			1.0.0

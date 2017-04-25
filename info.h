@@ -4,13 +4,13 @@
  * Proprietary and confidential
  *
  * Written by:
- * Harrison Read <hread2@uncc.edu>
- * Pichsapa Kulapruk <pkulapru@uncc.edu>
- * Aryan Gupta <agupta40@uncc.edu>
+ * Harrison Read		<hread2@uncc.edu>
+ * Pichsapa Kulapruk	<pkulapru@uncc.edu>
+ * Aryan Gupta			<agupta40@uncc.edu>
  * 
  * =============================================================================
  * @author			Aryan Gupta
- * @project 			GinRummy			Template
+ * @project 		GinRummy			Template
  * @title			Program Info
  * @date			 (YYYY-MM-DD)
  * @fversion	
