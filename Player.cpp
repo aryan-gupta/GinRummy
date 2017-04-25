@@ -369,7 +369,7 @@ unsigned Player::getPoints() {
 	unsigned sum = 0;
 	
 	/// @todo get Knock Points
-	
+	 
 	sum += getGin();
 	sum += getBigGin();
 	
@@ -384,18 +384,9 @@ Card* Player::getCard(Card* card) {
 	return card; // return the card
 }		
 
-/*
-unsigned Player::getKnockPoints() {
-	
-	
-	
-	
-	// return 0; 
-}
-*/
 
 unsigned Player::getGin() {
-	// when all 10 cards in our hand are parts of melds also have no deadwood 
+	// when all 10 cards in our hand are parts of melds also have 1 card in deadwood 
 	
 	if(deadwood.size() == 1) 
 		

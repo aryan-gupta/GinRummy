@@ -87,7 +87,7 @@ void CardPile::swapTypes(){
 
 
 size_t CardPile::size() {
-	return pile.size();
+	return pile.size();  // card return to 0 then swap 
 }
 
 
@@ -97,7 +97,7 @@ void CardPile::takeACard(Card* card) {  // each player put card face up after ge
 
 
 void CardPile::shuffle() {
-	std::random_shuffle(pile.begin(), pile.end());
+	std::random_shuffle(pile.begin(), pile.end());  // stl
 }
 
 
@@ -154,5 +154,4 @@ Card* CardPile::peek() {
 	
 	return pile[0]; // return first card  
  
-
 } 

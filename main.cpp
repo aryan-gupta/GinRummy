@@ -73,7 +73,7 @@ int main(int argc, char* argv[]) {
 			P2->doTurn();
 		}
 		
-		gWindow->finalizeRound();
+		gWindow->finalizeRound(); // getting the point and all the melds 
 		
 	//}
 	
