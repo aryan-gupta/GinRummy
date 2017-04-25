@@ -18,6 +18,8 @@
 #ifndef WINDOW_H_INC
 #define WINDOW_H_INC
 
+#include <vector>
+
 #include "./Resources.h"
 
 extern const int SCRN_W;  ///< The Screen Width
@@ -38,6 +40,7 @@ public:
 	void renderAll(); ///< Renders all of the objects on the screen
 	void knock(int player); 
 	
+	void finalizeRound();
 	
 	/// @brief Change the help text text
 	/// @param [in] helpToRender `HelpTextItems` Changees the help text to the specified text. \sa HelpTextItems
@@ -53,13 +56,19 @@ public:
 	/// @param [in] y `int` The y cordinate of the click
 	bool checkSortClick(const int x, const int y);
 	
+	void finalizeGame();
+	
 	/// @brief Get the current Window's renderer
 	/// @return SDL_Renderer* A pointer to the current windows render
 	inline SDL_Renderer* getRenderer();
+	inline bool& getKnockStatus();
 	
 private:
 	SDL_Window* window;     ///< Stores our main Window
 	SDL_Renderer* renderer; ///< Stores our main renderer
+	
+	bool soKnocked;
+	std::vector<unsigned*> roundPoints;
 	
 	HelpTextItems helpToRender;
 	
@@ -68,6 +77,11 @@ private:
 	void renderButtons();       ///< Render the buttons
 	void renderMeldsDeadwood(); ///< Render the meld/deadwood texts
 	void renderHelp();   ///< Render the help text and panel
+	void renderFinal(bool displayPoints);
+	void layoffCards();
+	void showPoints();
+	
+	bool checkContinueClick(const int x, const int y);
 	
 	/// @brief draws a button
 	/// @param [in] tex `SDL_Texture*` The texture to use when rendering
@@ -82,5 +96,9 @@ private:
 inline
 SDL_Renderer* Window::getRenderer()
 { return renderer; }
+
+inline
+bool& Window::getKnockStatus() 
+{ return soKnocked; }
 
 #endif

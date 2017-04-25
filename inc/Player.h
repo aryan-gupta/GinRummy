@@ -29,6 +29,13 @@ enum MeldTypes {
 	MELD_RUN  ///< A run type of meld (3 cards in the same suit that go in order)
 };
 
+enum Players {
+	PLAYER_1,
+	PLAYER_2,
+	
+	PLAYER_TOTAL
+};
+
 /// @brief A complete meld
 struct Meld {
 	MeldTypes type;           ///< Type of meld /sa MeldTypes
@@ -56,8 +63,13 @@ public:
 	/// @return bool if we can knock
 	bool canWeKnock();
 	
-	virtual void doTurn() = 0; ///< Does a turn
-	virtual void render() = 0; ///< Renders the Player on the screen
+	virtual void doTurn()       = 0; ///< Does a turn
+	virtual void render()       = 0; ///< Renders the Player on the screen
+	virtual void renderLayoff() = 0;
+	/// @brief Get the amount of deadwood we have
+	/// @return unsigned the number of deadwood
+	unsigned getNumDeadwood();
+	
 	
 protected:
 	std::vector<Card*> hand;     ///< Stores the cards in the Player's hand
@@ -72,10 +84,7 @@ protected:
 	
 	void getMelds();    ///< Finds meld in player's hand
 	void getDeadwood(); ///< Finds the deadwood in the hand
-	
-	/// @brief Get the amount of deadwood we have
-	/// @return unsigned the number of deadwood
-	unsigned getNumDeadwood();
+
 	
 	virtual void renderCards() = 0; ///< Render the cards
 	virtual void pickDeck()    = 0; ///< Pick a deck to pick a Card from

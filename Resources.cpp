@@ -35,24 +35,10 @@ static const char* UI_SHEETS[] = {
 	"..\\res\\sprites\\Spritesheets\\greenSheet.png",
 	"..\\res\\sprites\\Spritesheets\\greySheet.png",
 	"..\\res\\sprites\\Spritesheets\\redSheet.png",
-	"..\\res\\sprites\\Spritesheets\\yellowSheet.png",
+	"..\\res\\sprites\\Spritesheets\\yellowSheet.png"
 };
 
-const char* HELP_TEXT[] = {
-	"Its your turn. Pick a deck to pick from. You can either click on the stock deck or the discard deck.",
-	"You MUST draw from either card pile. Please click on either the stock deck or the discard deck.",
-	"Now you must discard a card, or knock if you can",
-	"You MUST click on a card, or knock if you can. You can knock ONLY if you have less than 10 deadwood.",
-	"Its your Opponent's turn.", 
-	"Sorry you cannot knock right now."
-	
-	
-	
 
-	
-	
-	
-};
 
 Resources::Resources() {
 	cardClippingBack = SDL_Rect{280, 570, 140, 190}; // Clipping for the back of the card
@@ -187,6 +173,13 @@ Resources::Resources() {
 			CARD_PAD*(NUM_CARDS_PER - 1) + CARD_W,
 			MCARD_H*5/2
 		};
+		
+		continueButton = SDL_Rect{
+			SCRN_W/2 - knockButton.w*3/4,
+			CARD_H + WIN_PAD*4,
+			knockButton.w*3/2,
+			knockButton.h*3/2
+		};
 	}
 	
 	{ // Textures for the text used in the game
@@ -273,6 +266,26 @@ Resources::Resources() {
 			SDL_FreeSurface(textSurface);
 		}
 		
+		{ // Continue texture
+			textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+				buttonFont,
+				"Continue", 
+				textColor
+			);
+			continueTexture = SDL_CreateTextureFromSurface( // Convert it to a texture
+				gWindow->getRenderer(),
+				textSurface
+			);
+			continuePos = SDL_Rect{
+				continueButton.x - textSurface->w/2 + continueButton.w/2,
+				continueButton.y - textSurface->h/2 + continueButton.h/2,
+				textSurface->w, 
+				textSurface->h
+			}; // Text position
+			
+			SDL_FreeSurface(textSurface);
+		}
+		
 		TTF_SetFontStyle(buttonFont, TTF_STYLE_STRIKETHROUGH);
 		textColor = SDL_Color{0xFF, 0x00, 0x00, 0xFF}; // black text color
 		{ // knock crossed out texture
@@ -296,10 +309,20 @@ Resources::Resources() {
 
 
 Resources::~Resources() {
-	SDL_DestroyTexture(cardsSheet); cardsSheet = nullptr;
-	SDL_DestroyTexture(cardBackSheet); cardBackSheet = nullptr;
-	
+	SDL_DestroyTexture(cardsSheet);
+	SDL_DestroyTexture(cardsSheetT);
+	SDL_DestroyTexture(cardBackSheet); 
 	delete[] cardClippings;
+	for(int i = 0; i < UIC_TOTAL; ++i) SDL_DestroyTexture(uiSheets[i]);
+	delete[] uiSheets;
+	delete[] uiClippings;
+	TTF_CloseFont(buttonFont);
+	TTF_CloseFont(nFont);
+	SDL_DestroyTexture(knockTexture);
+	SDL_DestroyTexture(knockTextureST);
+	SDL_DestroyTexture(sortTexture);
+	SDL_DestroyTexture(meldTextTexture);
+	SDL_DestroyTexture(dwTextTexture);
 }
 
 

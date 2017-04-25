@@ -55,8 +55,8 @@ enum Ranks {
 
 /// @brief A card
 struct Card {
-	Suits suit;
-	Ranks rank;
+	const Suits suit;
+	const Ranks rank;
 };
 
 /// @brief The card pile types

@@ -48,7 +48,7 @@ void Human::doTurn() {
 void Human::pickDeck() {
 	gWindow->changeHelp(HTI_PICK_DECK); // Change help text
 	
-	bool finished = false, isMovingCard = false;
+	bool finished = false, isMovingCard = false, sortByRank = false;
 	Card* selectedCard = nullptr;
 	SDL_Event event;
 	uint32_t FPS_Timer = 0;
@@ -122,8 +122,7 @@ void Human::pickDeck() {
 						SDL_GetMouseState(&x, &y);
 						
 						if(gWindow->checkKnockClick(x, y)) {
-							LOGL("WE KNOCKED") /// @todo change help text
-							gWindow->changeHelp(HTI_CANNOT_KNOCK);
+							gWindow->changeHelp(HTI_CANNOT_KNOCK1); // change help text  
 						}
 						
 						if(gDeck->checkClick(x, y)) {
@@ -136,13 +135,23 @@ void Human::pickDeck() {
 							finished = true; 
 						}
 						
-						if(gWindow->checkSortClick(x, y)) { ///@todo Swap sorting algorithms
-							sort(
-								hand.begin(), hand.end(),
-								[](Card* a, Card* b) {
-									return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
-							}); 
-						
+						if(gWindow->checkSortClick(x, y)) {
+							if(sortByRank) {
+								sort(
+									hand.begin(), hand.end(),
+									[](Card* a, Card* b) {
+										return a->rank*SUIT_TOTAL + a->suit < b->rank*SUIT_TOTAL + b->suit; // GCI convert rank and suit to number 
+								}); 
+								sortByRank = !sortByRank;
+							} else {
+								sort(
+									hand.begin(), hand.end(),
+									[](Card* a, Card* b) {
+										return a->suit*RANK_TOTAL + a->rank < b->suit*RANK_TOTAL + b->rank; // GCI convert rank and suit to number 
+								}); 
+								sortByRank = !sortByRank;
+							}
+							gWindow->changeHelp(HTI_PICK_DECK);
 						}
 						
 						selectedCard = nullptr;
@@ -162,7 +171,7 @@ void Human::pickCard() {
 	gWindow->changeHelp(HTI_PICK_CARD);
 	
 	/// @todo Then we want to get the melds and organize our cards and pick a card to discard
-	bool finished = false, isMovingCard = false;
+	bool finished = false, isMovingCard = false, sortByRank = false;
 	Card* selectedCard = nullptr;
 	SDL_Event event;
 	uint32_t FPS_Timer = 0;
@@ -243,21 +252,30 @@ void Human::pickCard() {
 						SDL_GetMouseState(&x, &y);
 						
 						if(gWindow->checkKnockClick(x, y)) { // we clicked on the knock button
-							//LOGL("WE KNOCKED")
 							if(canWeKnock()) { 
-								gWindow->knock(1);  // 1 means player1 
-							}
-							else { 
-								gWindow->changeHelp(HTI_CANNOT_KNOCK);
+								gWindow->knock(PLAYER_1);  // 1 means player1 
+								finished = true;
+							} else { 
+								gWindow->changeHelp(HTI_CANNOT_KNOCK2); // change help text 
 							}
 						}
 						
-						if(gWindow->checkSortClick(x, y)) { ///@todo Swap sorting algorithms
-							sort(
-								hand.begin(), hand.end(),
-								[](Card* a, Card* b) {
-									return GCI(a->suit, a->rank) < GCI(b->suit, b->rank); // GCI convert rank and suit to number 
-							}); 
+						if(gWindow->checkSortClick(x, y)) {
+							if(sortByRank) {
+								sort(
+									hand.begin(), hand.end(),
+									[](Card* a, Card* b) {
+										return a->rank*SUIT_TOTAL + a->suit < b->rank*SUIT_TOTAL + b->suit; // GCI convert rank and suit to number 
+								}); 
+								sortByRank = !sortByRank;
+							} else {
+								sort(
+									hand.begin(), hand.end(),
+									[](Card* a, Card* b) {
+										return a->suit*RANK_TOTAL + a->rank < b->suit*RANK_TOTAL + b->rank; // GCI convert rank and suit to number 
+								}); 
+								sortByRank = !sortByRank;
+							}
 							
 							gWindow->changeHelp(HTI_PICK_CARD);
 						}
@@ -317,9 +335,6 @@ void Human::renderCards() {
 
 
 void Human::renderDeadwood() {
-	/// @todo Dude I really need to do some clean up on this. It is terrible,
-	/// but it works. Dont mess with it
-	
 	// First render the number of deadwood
 	SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
 		gAssets->nFont,
@@ -369,7 +384,7 @@ void Human::renderDeadwood() {
 		);
 		
 		pos.x += pos.w;
-		if(pos.x + pos.w > (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*2)) { ///@ @todo make this gAssets->deadwood-panel dependent
+		if(pos.x + pos.w > (SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2 - WIN_PAD*2)) { /// @todo make this gAssets->deadwood-panel dependent
 			pos.x = WIN_PAD; // CRLF
 			pos.y += pos.h + WIN_PAD/2;
 		}
@@ -379,8 +394,6 @@ void Human::renderDeadwood() {
 
 
 void Human::renderMelds() {
-	/// @todo Dude I really need to do some clean up on this. It is terrible,
-	/// but it works, I dont know why, but it does. Dont mess with it
 	SDL_Rect clipping = SDL_Rect{0, 0, 30, 55}; // Card clipping for mini card
 	
 	SDL_Rect pos = SDL_Rect{ // position of the meld cards
@@ -407,5 +420,47 @@ void Human::renderMelds() {
 		
 		pos.x = WIN_PAD; // CRLF
 		pos.y += pos.h + WIN_PAD/2;
+	}
+}
+
+
+void Human::renderLayoff() {
+	int cardsTWidth = 0;
+	for(Meld* m : melds) cardsTWidth += m->cards.size();
+	cardsTWidth -= melds.size();
+	
+	cardsTWidth += deadwood.size() - 1;
+	
+	SDL_Rect currCardPos = { // get the first card location
+		SCRN_W/2 - (((int)melds.size() * (CARD_W + WIN_PAD)) + CARD_PAD*cardsTWidth + CARD_W)/2,
+		SCRN_H - WIN_PAD - CARD_H,
+		CARD_W,
+		CARD_H
+	};
+	
+	for(Meld* m : melds) {
+		for(Card* tmpCard : m->cards) {
+			SDL_RenderCopy( // render it
+				gWindow->getRenderer(),
+				gAssets->cardsSheet,
+				&gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)],
+				&currCardPos
+			);
+			
+			currCardPos.x += CARD_PAD; // move to the next card
+		}
+		
+		currCardPos.x += CARD_W;
+	}
+	
+	for(Card* tmpCard : deadwood) {
+		SDL_RenderCopy( // render it
+			gWindow->getRenderer(),
+			gAssets->cardsSheet,
+			&gAssets->cardClippings[GCI(tmpCard->suit, tmpCard->rank)],
+			&currCardPos
+		);
+		
+		currCardPos.x += CARD_PAD; // move to the next card
 	}
 }

@@ -27,9 +27,11 @@ using std::vector;
 #include "./inc/Window.h"
 #include "./inc/Resources.h"
 
+
 const int CARD_W   = 140 *5/8;
 const int CARD_H   = 190 *5/8;
 const int CARD_PAD = 35  *5/8;
+
 
 CardPile::CardPile(CardPileTypes type) {
 	if(type == PILE_DECK) {
@@ -56,6 +58,13 @@ CardPile::CardPile(CardPileTypes type) {
 	this->type = type;
 }
 
+
+CardPile::~CardPile() {
+	for(Card* tmpCard : pile)
+		delete tmpCard; // delete all the cards in the deck
+}
+
+
 void CardPile::swapTypes(){
 	if(type == PILE_DECK){
 		type = PILE_DISCARD;
@@ -75,14 +84,10 @@ void CardPile::swapTypes(){
 		};
 	}
 }
-CardPile::~CardPile() {
-	for(Card* tmpCard : pile)
-		delete tmpCard; // delete all the cards in the deck
-}
 
 
 size_t CardPile::size() {
-	return pile.size();
+	return pile.size();  // card return to 0 then swap 
 }
 
 
@@ -92,7 +97,7 @@ void CardPile::takeACard(Card* card) {  // each player put card face up after ge
 
 
 void CardPile::shuffle() {
-	std::random_shuffle(pile.begin(), pile.end());
+	std::random_shuffle(pile.begin(), pile.end());  // stl
 }
 
 
@@ -140,7 +145,6 @@ bool CardPile::checkClick(const int x, const int y) {
 }
 
 
-
 Card* CardPile::peek() { 
 
 	if(pile.size() == 0) { 
@@ -150,5 +154,4 @@ Card* CardPile::peek() {
 	
 	return pile[0]; // return first card  
  
-
 } 

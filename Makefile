@@ -34,7 +34,7 @@ L_SDLLM = -framework SDL -framework Cocoa -framework SDL_mixer -framework SDL_tt
 # ==============================  MACROS  ======================================
 CFLAGS = $(DEBUG) -Wall -std=c++11 -c
 LFLAGS = $(DEBUG) -Wall
-OBJ = $(OBJDIR)/main.o $(OBJDIR)/Player.o $(OBJDIR)/CardPile.o $(OBJDIR)/Window.o $(OBJDIR)/Resources.o $(OBJDIR)/Human.o $(OBJDIR)/Opponent.o
+OBJ = $(OBJDIR)/main.o $(OBJDIR)/Player.o $(OBJDIR)/CardPile.o $(OBJDIR)/Window.o $(OBJDIR)/Resources.o $(OBJDIR)/Human.o $(OBJDIR)/Opponent.o $(OBJDIR)/res.o
 
 # ============================ RECEPIES ========================================
 

@@ -23,14 +23,14 @@
  
 #define R_PROJNAME		     /* Project Name */ "Gin Rummy"
 #define R_PRGMNAME		     /* Program Name */ "Gin Rummy"
-#define R_DESCRIPTION	      /* Description */ "This is a game of Gin ummy"
+#define R_DESCRIPTION	      /* Description */ "A game of Gin Rummy"
 
-#define R_AUTHOR		     	   /* Author */ "Aryan Gupta" ///@todo modify this to reflect group
-#define R_COMPANY		          /* Company */ "The Gupta Empire"
-#define R_COPYRIGHT				/* Copyright */ "Copyright (c) The Gupta Empire - All Rights Reserved"
+#define R_AUTHOR		     	   /* Author */ "Aryan Gupta, Pichsapa Kulapruk, and Harison Read" ///@todo modify this to reflect group
+#define R_COMPANY		          /* Company */ "The cool group"
+#define R_COPYRIGHT				/* Copyright */ "Copyright (c) The cool group - All Rights Reserved"
 #define R_ORGFILENAME  /* Original File Name */ "main.exe" 
 #define R_FVERSION		     /* File Version */ "1.0.0"
-#define R_COMMENTS		         /* Comments */ "The Gupta Empire - http://theguptaempire.net"
+#define R_COMMENTS		         /* Comments */  ""
 #define R_LEGALTRDMKS	  /* Legal Tademarks */ "..."
 #define R_PRIVATEBUILD	    /* Private Build */ "\0" 
 #define R_SPECIALBUILD	    /* Special Build */ "\0"

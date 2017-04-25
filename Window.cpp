@@ -20,6 +20,7 @@
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_Image.h>
 #include <string>
+#include <cmath>
 
 #include "./inc/main.h"
 #include "./inc/Window.h"
@@ -33,6 +34,17 @@ const int SCRN_W = 680; /// @todo Make sure that this is a good ratio
 const int SCRN_H = 510;
 
 const int WIN_PAD = 15;
+
+const char* HELP_TEXT[] = {
+	"Its your turn. Pick a deck to pick from. You can either click on the stock deck or the discard deck.",
+	"You MUST draw from either card pile. Please click on either the stock deck or the discard deck.",
+	"Now you must discard a card, or knock if you can",
+	"You MUST click on a card, or knock if you can. You can knock ONLY if you have less than 10 deadwood.",
+	"Its your Opponent's turn.", 
+	"You cannot knock right now, You need less than 10 deadwoods to knock",
+	"You cannot knock right now, You need to draw card from a deck", 
+	"These are the melds, click continue to see points" 
+};
 
 Window::Window() {
 	if( NULL ==
@@ -59,30 +71,33 @@ Window::Window() {
 Window::~Window() {
 	SDL_DestroyRenderer(renderer); renderer = nullptr; // Destroy our main renderer
 	SDL_DestroyWindow(window); window = nullptr; // Destroy our main window
+	
+	for(unsigned* u : roundPoints)
+		delete[] u;
 }
 
 
 void Window::knock(int player) { 
-
-	unsigned player1; 
-	unsigned player2; 
+	unsigned* pnt;
 	
-	 
-	if(player == 1) { 
-		player1 = P1->getPoints(); 
-		player2 = 0; 
-	} else { 
-		player1 = 0; 
-		player2 = P2->getPoints(); 
+	if(player == PLAYER_1) { // player1 
+		pnt = new unsigned[2]{P1->getPoints(), 0};
+		 
+		int totalDeadwood = abs((int)P1->getNumDeadwood() - (int)P2->getNumDeadwood()); 
+		pnt[0] = pnt[0] + totalDeadwood; 
+		
+	} else { // player2 
+		pnt = new unsigned[2]{0, P2->getPoints()};
+		
+		int totalDeadwood = abs((int)P2->getNumDeadwood() - (int)P1->getNumDeadwood()); 
+		pnt[1] = pnt[1] + totalDeadwood; 
+	
 	}		
 	
-	//knock = true; 
-	//renderWin(player1, player2);  
+	roundPoints.push_back(pnt);
 	
-	
-	
+	soKnocked = true; 
 } 
-
 
 
 void Window::initWindow() {
@@ -292,4 +307,144 @@ bool Window::checkSortClick(const int x, const int y) {
 	) return true;
 	
 	return false;
+}
+
+
+bool Window::checkContinueClick(const int x, const int y) {
+	const SDL_Rect &continueButton = gAssets->continueButton;
+	// check if the x and y was within the button
+	if(    x > continueButton.x
+		&& x < continueButton.x + continueButton.w
+		&& y > continueButton.y
+		&& y < continueButton.y + continueButton.h
+	) return true;
+	
+	return false;
+}
+
+
+void Window::renderFinal(bool displayPoints) {
+	// does what you think it does
+	clear();
+	renderBackground();
+
+	renderHelp();
+	
+	P1->renderLayoff();
+	P2->renderLayoff();
+	
+	if(displayPoints) {
+		SDL_SetRenderDrawColor(renderer, 0x00, 0x00, 0x00, 0xD0);
+		SDL_RenderFillRect(renderer, NULL);
+		drawAButton(
+			gAssets->uiSheets[UIC_BLUE], // sprite sheet
+			gAssets->uiClippings[0], // clipping
+			5, 7, // border
+			gAssets->continueButton // location
+		);
+		SDL_RenderCopy(gWindow->getRenderer(), gAssets->continueTexture, NULL, &gAssets->continuePos);
+		
+		SDL_Color textColor = {0xFF, 0xFF, 0xFF, 0xFF};
+		
+		// First render the number of deadwood
+		SDL_Surface* textSurface = TTF_RenderText_Blended( // Create temp Surface for text
+			gAssets->buttonFont,
+			("P1 Points: " + std::to_string(roundPoints[roundPoints.size() - 1][0]) + "    P2 Points: " + std::to_string(roundPoints[roundPoints.size() - 1][1])).c_str(), // convert num of deadwood into a string
+			textColor
+		);
+		SDL_Texture* pointsTex = SDL_CreateTextureFromSurface( // Convert it to a texture
+			gWindow->getRenderer(),
+			textSurface
+		);
+		SDL_Rect pointsPos = SDL_Rect{ // get the position
+			SCRN_W/2 - textSurface->w/2,
+			gAssets->continueButton.y + gAssets->continueButton.h + WIN_PAD, // 2 lines of cards plus 3 paddings from the bottom
+			textSurface->w, 
+			textSurface->h
+		};
+		
+		SDL_FreeSurface(textSurface); // render and free memory
+		SDL_RenderCopy(gWindow->getRenderer(), pointsTex, NULL, &pointsPos);
+		SDL_DestroyTexture(pointsTex);
+	} else {
+		drawAButton(
+			gAssets->uiSheets[UIC_BLUE], // sprite sheet
+			gAssets->uiClippings[0], // clipping
+			5, 7, // border
+			gAssets->continueButton // location
+		);
+		SDL_RenderCopy(gWindow->getRenderer(), gAssets->continueTexture, NULL, &gAssets->continuePos);
+	}
+	
+	SDL_RenderPresent(renderer);
+}
+
+
+void Window::finalizeRound() {
+	// calculate pre layoff points
+	// get melds and deadwood of each player
+	// layoff cards
+	// calculate final points
+	// wait until we quit or restart the game
+	layoffCards();
+	showPoints();
+}
+
+
+void Window::layoffCards() {
+	
+    gWindow->changeHelp(HTI_SHOWMELD); // Change help text	
+	bool finished = false;
+	SDL_Event event;
+
+	while(!finished) {
+		
+		renderFinal(false);
+		
+		while(SDL_PollEvent(&event)) {
+			switch(event.type) {
+				case SDL_QUIT:
+					quit(0x03);
+				break;
+				
+				case SDL_MOUSEBUTTONUP: {
+					int x, y;
+					SDL_GetMouseState(&x, &y);
+					
+					if(checkContinueClick(x, y)) {
+						finished = true;
+					}
+				} break;
+			}
+		}
+	}
+}
+
+
+void Window::showPoints() {
+	bool finished = false;
+	SDL_Event event;
+	LOGL("POINTS: " << roundPoints[roundPoints.size() - 1][0] << " \t " << roundPoints[roundPoints.size() - 1][1]);
+	
+	while(!finished) {
+		
+		renderFinal(true);
+		
+		while(SDL_PollEvent(&event)) {
+			switch(event.type) {
+				case SDL_QUIT:
+					quit(0x04);
+				break;
+				
+				case SDL_MOUSEBUTTONUP: {
+					int x, y;
+					SDL_GetMouseState(&x, &y);
+					
+					if(checkContinueClick(x, y)) {
+						finished = true;
+					}
+				} break;
+			}
+		}
+	}
 }
