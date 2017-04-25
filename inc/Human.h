@@ -1,13 +1,16 @@
 /* 
- * Copyright (c) 2017 The Gupta Empire - All Rights Reserved
+ * Copyright (c) 2017 The Cool Group - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and confidential
  *
- * Written by Aryan Gupta <me@theguptaempire.net>
+ * Written by:
+ * Harrison Read		<hread2@uncc.edu>
+ * Pichsapa Kulapruk	<pkulapru@uncc.edu>
+ * Aryan Gupta			<agupta40@uncc.edu>
  * 
  * =============================================================================
- * @author 			Aryan Gupta
- * @project 		
+ * @author 			The Cool Group
+ * @project 		GinRummy 		
  * @title 			
  * @date			(YYYY-MM-DD)
  * @fversion		1.0.0
@@ -29,10 +32,10 @@ public:
 	virtual void render(); ///< Render the Player
 	
 protected:
-	virtual void renderCards(); ///< Render all the cards
-	virtual void pickDeck();    ///< Pick a deck to draw from
-	virtual void pickCard();    ///< Pick a card to put into discard
-	virtual void renderLayoff();
+	virtual void renderCards();  ///< Render all the cards
+	virtual void pickDeck();     ///< Pick a deck to draw from
+	virtual void pickCard();     ///< Pick a card to put into discard
+	virtual void renderLayoff(); ///< Render the cards as layoff
 	
 private:	
 	void renderDeadwood(); ///< Render deadwood

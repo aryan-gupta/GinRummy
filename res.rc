@@ -1,13 +1,16 @@
 /* 
- * Copyright (c) The Gupta Empire - All Rights Reserved
+ * Copyright (c) The Cool Group - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and confidential
  *
- * Written by Aryan Gupta <me@theguptaempire.net>, February 2017
+ * Written by:
+ * Harrison Read		<hread2@uncc.edu>
+ * Pichsapa Kulapruk	<pkulapru@uncc.edu>
+ * Aryan Gupta			<agupta40@uncc.edu>
  * 
  * =============================================================================
  * @author Aryan Gupta
- * @project Console Battleship
+ * @project 		GinRummy Console Battleship
  * @title Resource File
  * @date 2017-02-11 (YYYY-MM-DD)
  * @fversion 1.0.0

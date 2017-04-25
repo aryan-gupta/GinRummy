@@ -1,13 +1,16 @@
 
-# Copyright (c) 2017 The Gupta Empire - All Rights Reserved
+# Copyright (c) 2017 The Cool Group - All Rights Reserved
 # Unauthorized copying of this file, via any medium is strictly prohibited
 # Proprietary and confidential
 #
-# Written by Aryan Gupta <me@theguptaempire.net>
+# Written by:
+# Harrison Read		<hread2@uncc.edu>
+# Pichsapa Kulapruk	<pkulapru@uncc.edu>
+# Aryan Gupta			<agupta40@uncc.edu>
 # 
 # ==============================================================================
-# @author 			Aryan Gupta
-# @project 			Tic Tac Toe
+# @author 			The Cool Group
+# @project 		GinRummy 			Tic Tac Toe
 # @file 			Makefile
 # @date				2017-03-12 (YYYY-MM-DD)
 # @version			1.0.0
