@@ -1,13 +1,16 @@
 /* 
- * Copyright (c) The Gupta Empire - All Rights Reserved
+ * Copyright (c) The Cool Group - All Rights Reserved
  * Unauthorized copying of this file, via any medium is strictly prohibited
  * Proprietary and confidential
  *
- * Written by Aryan Gupta <me@theguptaempire.net>, February 2017
+ * Written by:
+ * Harrison Read <hread2@uncc.edu>
+ * Pichsapa Kulapruk <pkulapru@uncc.edu>
+ * Aryan Gupta <agupta40@uncc.edu>
  * 
  * =============================================================================
  * @author			Aryan Gupta
- * @project			Template
+ * @project 			GinRummy			Template
  * @title			Program Info
  * @date			 (YYYY-MM-DD)
  * @fversion	
@@ -25,9 +28,9 @@
 #define R_PRGMNAME		     /* Program Name */ "Gin Rummy"
 #define R_DESCRIPTION	      /* Description */ "A game of Gin Rummy"
 
-#define R_AUTHOR		     	   /* Author */ "Aryan Gupta, Pichsapa Kulapruk, and Harison Read" ///@todo modify this to reflect group
-#define R_COMPANY		          /* Company */ "The cool group"
-#define R_COPYRIGHT				/* Copyright */ "Copyright (c) The cool group - All Rights Reserved"
+#define R_AUTHOR		     	   /* Author */ "Aryan Gupta, Pichsapa Kulapruk, and Harison Read"
+#define R_COMPANY		          /* Company */ "The Cool Group"
+#define R_COPYRIGHT				/* Copyright */ "Copyright (c) The Cool Group - All Rights Reserved"
 #define R_ORGFILENAME  /* Original File Name */ "main.exe" 
 #define R_FVERSION		     /* File Version */ "1.0.0"
 #define R_COMMENTS		         /* Comments */  ""
