@@ -163,31 +163,32 @@ void Player::getMelds() {
 	#endif
 	
 	/** Algorithm for Finding SETS
-		1. Pick the last Card (C1). I know its weird, I don't know why I am going backwards either
-		2. Make sure that we can pick 3 cards going backwards
-		3. Compare the next 3 cards (going backwards) if it can be a SET (C2 - C4)
-		4. If it can then add it to the list
-		5. Start checking from C4 again
-		6. If it cant compare the next 2 cards (going backwards) if it can be a SET (C2 - C3)
-		7. If it can then add it to the list
-		8. Start checking from C3 again
+		1.  Start at the first card
+		2.  Pick the next card
+		3.  See if it can form a SETS
+		4.  If it can go the next card
+		5.  Continue until we cannot create a set
+		6.  If we cannot create a SETS
+		7.  Then compare the distance between the two cards
+		8.  If its 3 or higher then we have a meld
+		9.  Add it to the list
+		10. Continue Checking
 	**/
-	/// @todo make this algorithm similar to the one for RUNS with Praw
-	for(size_t i = 0; i < tmpHand.size(); ++i) { // 1
-		size_t j = i + 1;
-		for(/*blank*/; j < tmpHand.size(); ++j) {
-			if(tmpHand[i]->rank != tmpHand[j]->rank)
-				break;
-		}
+	for(size_t i = 0; i < tmpHand.size(); ++i) {                // 1
+		size_t j = i + 1;                                       // 2
+		for(/*blank*/; j < tmpHand.size(); ++j) {               // 4
+			if(tmpHand[i]->rank != tmpHand[j]->rank)            // 3
+				break;                                          // 6
+		}                                                       // 5
 		
-		if(j - i >= 3) {                                          // 6, 7
-			allMelds.push_back( new Meld {                          // 8
+		if(j - i >= 3) {                                        // 7, 8
+			allMelds.push_back( new Meld {                      // 9
 				MELD_SET,
 				CS(tmpHand.begin() + i, tmpHand.begin() + j)
 			});
 			// j minus 1 because i is incremented after loop 
 			// finishes so we want to compensate for that
-			i = j - 1;                                           // 9
+			i = j - 1;                                           // 10
 		}
 	}
 	
@@ -220,14 +221,14 @@ void Player::getMelds() {
 	[&](size_t start, int depth, const int& maxDepth, MS stack, MM& ps) {
 		stack.push_back(allMelds[start]);                      // 1
 		
-		if(depth == maxDepth) {                             // 2
-			ps.push_back(stack);                            // 2a
-			return;                                         // 2b
+		if(depth == maxDepth) {                                // 2
+			ps.push_back(stack);                               // 2a
+			return;                                            // 2b
 		}
 		
-		for(size_t i = start + 1; i < allMelds.size(); ++i) {     // 3
-			findAllMeld(i, depth + 1, maxDepth, stack, ps); // 4, 4a, 4b, 4c
-		}                                                   // 5
+		for(size_t i = start + 1; i < allMelds.size(); ++i) {  // 3
+			findAllMeld(i, depth + 1, maxDepth, stack, ps);    // 4, 4a, 4b, 4c
+		}                                                      // 5
 	};
 	
 	MM ps;    // Possible Melds
@@ -292,7 +293,7 @@ void Player::getMelds() {
 			return true;                                        // 6
 		}
 	);
-	ps.erase(idx1, ps.end());                                    // 7
+	ps.erase(idx1, ps.end());                                   // 7
 	
 	std::sort( // sort remaining meld candidates by deadwood
 		ps.begin(), ps.end(),
