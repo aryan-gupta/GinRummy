@@ -29,10 +29,10 @@ public:
 	virtual void render(); ///< Render the Player
 	
 protected:
-	virtual void renderCards(); ///< Render all the cards
-	virtual void pickDeck();    ///< Pick a deck to draw from
-	virtual void pickCard();    ///< Pick a card to put into discard
-	virtual void renderLayoff();
+	virtual void renderCards();  ///< Render all the cards
+	virtual void pickDeck();     ///< Pick a deck to draw from
+	virtual void pickCard();     ///< Pick a card to put into discard
+	virtual void renderLayoff(); ///< Render the cards as layoff
 	
 private:	
 	void renderDeadwood(); ///< Render deadwood

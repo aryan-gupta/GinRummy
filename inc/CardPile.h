@@ -73,8 +73,14 @@ public:
 	CardPile(CardPileTypes type);
 	~CardPile();
 	
+	/// @brief Gets the size of the pile
+	/// @return size_t The size of the pile
 	size_t size();
+	
+	
 	Card* peek(); 
+	
+	
 	void swapTypes();
 	
 	void shuffle(); ///< Suffle the deck
@@ -87,7 +93,7 @@ public:
 	
 	/// @brief Puts a card on the top of the deck
 	/// @warning Does not check if \p is nullptr or NULL
-	/// @param [in] Card* The Card pointer
+	/// @param [in] card The Card pointer
 	void takeACard(Card* card);
 	
 	/// @brief checks of our click was on this deck
