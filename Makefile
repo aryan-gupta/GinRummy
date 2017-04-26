@@ -27,11 +27,12 @@ INCDIR = ./inc
 
 DEBUG = -g -DDEBUG=true
 
-# ============================  SDL LIBS  ======================================
+# Comment this line to see Console Window
 GRAPHICS = -w -Wl,-subsystem,windows
-# Standard SDL libs
+
+# ============================  SDL LIBS  ======================================
 L_SDLC = -I./SDL/include 
-L_SDLL = -L./SDL/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL2_image
+L_SDLL = $(GRAPHICS) -L./SDL/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL2_image
 L_SDLLM = -framework SDL -framework Cocoa -framework SDL_mixer -framework SDL_ttf -framework SDL_image
 
 # ==============================  MACROS  ======================================
@@ -79,13 +80,13 @@ $(BINDIR)/main: $(OBJ)
 # ============================= PHONY RECEPIES =================================
 .PHONY: all
 all: clean $(OBJ)
-	$(CC) $(OBJ) $(LFLAGS) $(LSDLL) $(LSDLIL) $(LSDLTL) -o $(BINDIR)/final.exe
+	$(CC) $(OBJ) $(LFLAGS) $(L_SDLL) -o $(BINDIR)/final.exe
 
 .PHONY: link
 link:
-	$(CC) ./$^ $(LFLAGS) $(LSDLL) $(LSDLIL) $(LSDLTL) -o $(BINDIR)/main.exe	
+	$(CC) ./$^ $(LFLAGS) $(L_SDLL) -o $(BINDIR)/main.exe	
 	
 .PHONY: clean
 clean:
-	del $(OBJDIR)/*.o
-	del $(BINDIR)/*.exe
+	del .\obj\*.o
+	del .\bin\*.exe
