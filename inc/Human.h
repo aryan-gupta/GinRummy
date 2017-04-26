@@ -25,7 +25,7 @@
 
 class Human : public Player {
 public:
-	Human() {};
+	Human() : Player() {};
 	virtual ~Human() {};
 	
 	virtual void doTurn(); ///< Does a turn for the player

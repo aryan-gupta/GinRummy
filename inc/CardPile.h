@@ -58,14 +58,14 @@ enum Ranks {
 
 /// @brief A card
 struct Card {
-	const Suits suit;
-	const Ranks rank;
+	const Suits suit; ///< The suit
+	const Ranks rank; ///< The rank
 };
 
 /// @brief The card pile types
 enum CardPileTypes {
-	PILE_DECK,
-	PILE_DISCARD,
+	PILE_DECK,    ///< Stock Pile
+	PILE_DISCARD, ///< Discard Pile
 	
 	PILE_TOTAL
 };
@@ -80,14 +80,14 @@ public:
 	/// @return size_t The size of the pile
 	size_t size();
 	
-	
+	/// @brief peeks at the top of the deck. Only used by Computer
+	/// @return Card at the top of the deck
+	/// @sa getACard()
 	Card* peek(); 
 	
-	
-	void swapTypes();
-	
-	void shuffle(); ///< Suffle the deck
-	void render();  ///< Render the deck
+	void swapTypes(); ///< Swaps the type of CardPile it is
+	void shuffle();   ///< Suffle the deck
+	void render();    ///< Render the deck
 	
 	/// @brief Pulls a card from the deck
 	/// @warning The card gets removed from the deck
@@ -106,7 +106,7 @@ public:
 	
 private:
 	std::vector<Card*> pile; ///< The deck/pile of cards
-	CardPileTypes type;      ///< Type of CardPile @todo Convert to bool
+	CardPileTypes type;      ///< Type of CardPile
 	
 	SDL_Rect position; ///< Position of the deck on the screen
 };
