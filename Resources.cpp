@@ -241,7 +241,7 @@ Resources::Resources() {
 			);
 			meldTextPos = SDL_Rect{
 				WIN_PAD + 5,
-				SCRN_H - MCARD_H*5 - WIN_PAD*7, /// @todo Make this y pos relative, It works for now tho
+				SCRN_H - MCARD_H*5 - WIN_PAD*7,
 				textSurface->w, 
 				textSurface->h
 			}; // Text position
