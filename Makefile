@@ -6,7 +6,7 @@
 # Written by:
 # Harrison Read		<hread2@uncc.edu>
 # Pichsapa Kulapruk	<pkulapru@uncc.edu>
-# Aryan Gupta			<agupta40@uncc.edu>
+# Aryan Gupta		<agupta40@uncc.edu>
 # 
 # ==============================================================================
 # @author 			The Cool Group
