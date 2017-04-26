@@ -25,15 +25,9 @@ BINDIR = ./bin
 DATDIR = ./dat
 INCDIR = ./inc
 
-DEBUG = -g -DDEBUG=true
-
-# Comment this line to see Console Window
-GRAPHICS = -w -Wl,-subsystem,windows
-
 # ============================  SDL LIBS  ======================================
 L_SDLC = -I./SDL/include 
 L_SDLL = $(GRAPHICS) -L./SDL/lib -lmingw32 -lSDL2main -lSDL2 -lSDL2_mixer  -lSDL2_ttf  -lSDL2_image
-L_SDLLM = -framework SDL -framework Cocoa -framework SDL_mixer -framework SDL_ttf -framework SDL_image
 
 # ==============================  MACROS  ======================================
 CFLAGS = $(DEBUG) -Wall -std=c++11 -c
@@ -70,6 +64,7 @@ $(OBJDIR)/res.o: ./res.rc ./info.h
 	$(RES) ./res.rc  ./$@
 	
 # Link	
+$(BINDIR)/main.exe: DEBUG = -g -DDEBUG
 $(BINDIR)/main.exe: $(OBJ)
 	$(CC) ./$^ -o ./$@ $(LFLAGS) $(L_SDLL)
 	
@@ -82,11 +77,15 @@ $(BINDIR)/main: $(OBJ)
 all: clean $(OBJ)
 	$(CC) $(OBJ) $(LFLAGS) $(L_SDLL) -o $(BINDIR)/final.exe
 
-.PHONY: link
-link:
-	$(CC) ./$^ $(LFLAGS) $(L_SDLL) -o $(BINDIR)/main.exe	
+.PHONY: install
+install: DEBUG = -O2 -s -DNDEBUG
+install: GRAPHICS = -w -Wl,-subsystem,windows
+install: all Runner.cpp $(OBJDIR)/res.o
+	$(CC) ./Runner.cpp $(OBJDIR)/res.o -static -o Play_GinRummy.exe
+	Play_GinRummy.exe
 	
 .PHONY: clean
 clean:
+	del .\*.exe
 	del .\obj\*.o
 	del .\bin\*.exe
