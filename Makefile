@@ -24,8 +24,10 @@ OBJDIR = ./obj
 BINDIR = ./bin
 DATDIR = ./dat
 INCDIR = ./inc
+DEBUG = -g -DDEBUG
 
-DEBUG = -g -DDEBUG=true
+# Comment this line out for debugging
+DEBUG = -O2 -s -DNDEBUG
 
 # Comment this line to see Console Window
 GRAPHICS = -w -Wl,-subsystem,windows
@@ -83,7 +85,7 @@ all: clean $(OBJ)
 
 .PHONY: install
 install: all Runner.cpp $(OBJDIR)/res.o
-	$(CC) ./Runner.cpp $(OBJDIR)/res.o -o Play_GinRummy.exe
+	$(CC) ./Runner.cpp $(OBJDIR)/res.o -static -o Play_GinRummy.exe
 	Play_GinRummy.exe
 	
 .PHONY: link
