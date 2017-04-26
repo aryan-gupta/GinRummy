@@ -103,7 +103,7 @@ void Player::getMelds() {
 		LOG(endl)
 	#endif
 	
-	/// @todo make scope resolution for the 3 parts of this function
+	/// @todo make separate function for the 3 parts of this function
 	
 	std::sort( // sort the hand by suit then rank, makes it easier to find RUNS
 		tmpHand.begin(), tmpHand.end(),
@@ -219,7 +219,6 @@ void Player::getMelds() {
 		5. If there are no more leaves, collapse our function stack
 	**/
 	/// @todo fix function name to something better
-	// create our recursive function
 	std::function<void (size_t, int, const int&, MS, MM&)> findAllMeld = 
 	[&](size_t start, int depth, const int& maxDepth, MS stack, MM& ps) {
 		stack.push_back(allMelds[start]);                      // 1
@@ -319,7 +318,7 @@ void Player::getMelds() {
 	#endif
 	
 	if(ps.size() != 0) // if we even had any melds, the optimal Meld is the first one
-		melds = ps[0]; /// @todo FIX ALL THESE DAMN MEMORY LEAKS lol
+		melds = ps[0]; /// @todo FIX ALL THESE DAMN MEMORY LEAKS
 		
 	// auto idx2 = remove_if(
 		// allMelds.begin(), allMelds.end(),

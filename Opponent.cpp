@@ -49,9 +49,6 @@ void Opponent::doTurn() {
 
 
 void Opponent::pickDeck() {
-	// for now we are picking the deck
-	//takeCard(gDeck->getACard());
-	
 	Card* topcard = gDiscard->peek(); 
 	bool canMeld = false; 
 	
@@ -66,16 +63,13 @@ void Opponent::pickDeck() {
 	
 	if(canMeld) {
 		takeCard(gDiscard->getACard()); 
-	}
-	else { 
+	} else { 
 		takeCard(gDeck->getACard()); 	
 	}	
 }
 
 void Opponent::pickCard() {
-	// We are going to put back a random card, cause why not1
-	
-	if(canWeKnock()) { //  
+	if(canWeKnock()) { // If we can knock
 		// go ahead and knock 		
 		gWindow->knock(PLAYER_2); 	
 	}
@@ -87,8 +81,7 @@ void Opponent::pickCard() {
 		}
 	); 
 
-	gDiscard->takeACard(getCard(*it)); 
- 	
+	gDiscard->takeACard(getCard(*it)); 	
 }
 
 
