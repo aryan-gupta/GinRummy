@@ -33,10 +33,10 @@ enum MeldTypes {
 };
 
 enum Players {
-	PLAYER_1,
-	PLAYER_2,
+	PLAYER_1, ///< Player 1
+	PLAYER_2, ///< Player 2
 	
-	PLAYER_TOTAL
+	PLAYER_TOTAL ///< Total Players
 };
 
 /// @brief A complete meld
@@ -51,14 +51,14 @@ extern const int MCARD_H; ///< Height of the mini cards
 /// @brief A abstract class for each player on the board
 class Player {
 public: 
-	Player() {};
+	Player() : hand({}), deadwood({}), melds({}) {};
 	virtual ~Player(); /// Default destructor
 	
 	/// @brief Take a specific card
-	/// @param[in] card `Card*` The card that user should take
+	/// @param [in] card - The card that user will take
 	void takeCard(Card* card);
 	
-	/// @brief gets the number of points we have at the end of the game
+	/// @brief Gets the number of points we have at the end of the game
 	/// @return unsigned the number of points
 	unsigned getPoints();
 	
@@ -66,13 +66,13 @@ public:
 	/// @return bool if we can knock
 	bool canWeKnock();
 	
-	virtual void doTurn()       = 0; ///< Does a turn
-	virtual void render()       = 0; ///< Renders the Player on the screen
-	virtual void renderLayoff() = 0;
 	/// @brief Get the amount of deadwood we have
 	/// @return unsigned the number of deadwood
 	unsigned getNumDeadwood();
 	
+	virtual void doTurn()       = 0; ///< Does a turn
+	virtual void render()       = 0; ///< Renders the Player on the screen
+	virtual void renderLayoff() = 0; ///< Render Layoff
 	
 protected:
 	std::vector<Card*> hand;     ///< Stores the cards in the Player's hand
@@ -81,7 +81,7 @@ protected:
 	
 	/// @brief gets a specific card from the hand
 	/// @warning removes the card from the hand
-	/// @param [in] The card pointer to remove
+	/// @param [in] card - The card pointer to remove
 	/// @return The card pointer we removed
 	Card* getCard(Card* card); 
 	

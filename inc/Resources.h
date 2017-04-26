@@ -72,13 +72,13 @@ struct Resources {
 			
 	SDL_Rect knockButton,   ///< Knock button position
 	         sortButton,    ///< Sort button position
-			 continueButton,
+			 continueButton,///< continue button position
 	         deadwoodPanel, ///< Deadwood Panel position
 	         meldsPanel,    ///< Melds Panel position
 	         helpPanel,     ///< Help panel position
 			 knockPos,      ///< Knock text position
 			 sortPos,       ///< Sort text position
-			 continuePos,
+			 continuePos,   ///< Continue text position
 			 meldTextPos,   ///< Meld text position
 			 dwTextPos;     ///< Deadwood text position
 			 
@@ -86,7 +86,7 @@ struct Resources {
 	           * knockTextureST,  ///< Crossed out Knock text texture
 	           * sortTexture,     ///< Sort text texture
 			   * meldTextTexture, ///< Meld text texture
-			   * continueTexture,
+			   * continueTexture, ///< Continue text Texture
 			   * dwTextTexture;   ///< Deadwood text texture
 			   
 	SDL_Color textColor; ///< Text color

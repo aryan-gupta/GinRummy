@@ -23,12 +23,13 @@
 
 #include <vector>
 
-#include "./Resources.h"
+#include "./Resources.h" /// for HelpTextItems
 
 extern const int SCRN_W;  ///< The Screen Width
 extern const int SCRN_H;  ///< The Screen Height
 extern const int WIN_PAD; ///< Padding for various elements
 
+/// @brief Stores our Window, and all of the game functions. 
 class Window {
 public:
 	Window();  ///< Creates our Window
@@ -41,12 +42,15 @@ public:
 	void initWindow();
 	
 	void renderAll(); ///< Renders all of the objects on the screen
+	
+	/// @brief Sets knocked flag to true
+	/// @param [in] player - The knocker
 	void knock(int player); 
 	
-	void finalizeRound();
+	void finalizeRound(); ///< Finalizes the round (shows the hand of each player and counts up points etc.)
 	
 	/// @brief Change the help text text
-	/// @param [in] helpToRender `HelpTextItems` Changees the help text to the specified text. \sa HelpTextItems
+	/// @param [in] helpToRender - The text index to change to. \sa HelpTextItems
 	void changeHelp(HelpTextItems helpToRender);
 	
 	/// @brief checks of our click was in the knock button
@@ -59,31 +63,38 @@ public:
 	/// @param [in] y `int` The y cordinate of the click
 	bool checkSortClick(const int x, const int y);
 	
-	void finalizeGame();
-	
 	/// @brief Get the current Window's renderer
 	/// @return SDL_Renderer* A pointer to the current windows render
 	inline SDL_Renderer* getRenderer();
+	
+	/// @brief Gets read-write access to the knock status
+	/// @return bool the knock status
 	inline bool& getKnockStatus();
 	
 private:
 	SDL_Window* window;     ///< Stores our main Window
 	SDL_Renderer* renderer; ///< Stores our main renderer
 	
-	bool soKnocked;
-	std::vector<unsigned*> roundPoints;
+	bool soKnocked; ///< flag that stores if we have knocked or not
+	std::vector<unsigned*> roundPoints; ///< Stores all the points for the rounds
 	
-	HelpTextItems helpToRender;
+	HelpTextItems helpToRender; ///< Which help text we should render
 	
 	void clear();  ///< Clear the window
 	void renderBackground();    ///< Render the background
 	void renderButtons();       ///< Render the buttons
 	void renderMeldsDeadwood(); ///< Render the meld/deadwood texts
 	void renderHelp();   ///< Render the help text and panel
-	void renderFinal(bool displayPoints);
-	void layoffCards();
-	void showPoints();
+	void layoffCards();  ///< Show the laying off screen
+	void showPoints();   ///< Show the final screen
 	
+	/// @brief Render the final screen
+	/// @param [in] displayPoints - Should we darken the screen and display the points
+	void renderFinal(bool displayPoints);
+	
+	/// @brief Checks if or mouse click is on the continue button
+	/// @param x - The x coordinate of the click
+	/// @param y - The y coordinate of the click
 	bool checkContinueClick(const int x, const int y);
 	
 	/// @brief draws a button

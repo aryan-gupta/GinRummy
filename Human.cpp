@@ -173,7 +173,6 @@ void Human::pickDeck() {
 void Human::pickCard() {
 	gWindow->changeHelp(HTI_PICK_CARD);
 	
-	/// @todo Then we want to get the melds and organize our cards and pick a card to discard
 	bool finished = false, isMovingCard = false, sortByRank = false;
 	Card* selectedCard = nullptr;
 	SDL_Event event;
@@ -211,7 +210,6 @@ void Human::pickCard() {
 				break;
 				
 				case SDL_MOUSEBUTTONDOWN: { // If we clicked down (Only thing here is moving the card)
-					/// @todo get card that the user selected
 					SDL_GetMouseState(&xDown, &yDown);
 					
 					if(    xDown > SCRN_W/2 - (CARD_PAD*((int)hand.size() - 1) + CARD_W)/2
