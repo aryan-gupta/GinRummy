@@ -24,13 +24,6 @@ OBJDIR = ./obj
 BINDIR = ./bin
 DATDIR = ./dat
 INCDIR = ./inc
-DEBUG = -g -DDEBUG
-
-# Comment this line out for debugging
-DEBUG = -O2 -s -DNDEBUG
-
-# Comment this line to see Console Window
-GRAPHICS = -w -Wl,-subsystem,windows
 
 # ============================  SDL LIBS  ======================================
 L_SDLC = -I./SDL/include 
@@ -71,6 +64,7 @@ $(OBJDIR)/res.o: ./res.rc ./info.h
 	$(RES) ./res.rc  ./$@
 	
 # Link	
+$(BINDIR)/main.exe: DEBUG = -g -DDEBUG
 $(BINDIR)/main.exe: $(OBJ)
 	$(CC) ./$^ -o ./$@ $(LFLAGS) $(L_SDLL)
 	
@@ -84,13 +78,11 @@ all: clean $(OBJ)
 	$(CC) $(OBJ) $(LFLAGS) $(L_SDLL) -o $(BINDIR)/final.exe
 
 .PHONY: install
+install: DEBUG = -O2 -s -DNDEBUG
+install: GRAPHICS = -w -Wl,-subsystem,windows
 install: all Runner.cpp $(OBJDIR)/res.o
 	$(CC) ./Runner.cpp $(OBJDIR)/res.o -static -o Play_GinRummy.exe
 	Play_GinRummy.exe
-	
-.PHONY: link
-link:
-	$(CC) ./$^ $(LFLAGS) $(L_SDLL) -o $(BINDIR)/main.exe	
 	
 .PHONY: clean
 clean:
