@@ -9,7 +9,7 @@ our Final Project.
 
 ### Rules
 
-https://cardgames.io/rummy/#rules
+https://cardgames.io/ginrummy/#rules
 
 ### Strategy
 
@@ -77,17 +77,17 @@ The signup sheets for the oral exam will be posted later.
 ## Prerequisites
 
 You do **NOT** need have SDL libs installed. I put them in the repository for
-ease of use. And make sure to have the standard C++ compilers libs. 
+ease of use. 
 
 ## Installation
 
-Please use `<make> .\bin\make.exe` to compile the program.
+Please use `<make> ./bin/make.exe` to compile the program.
 You can also use `<make> all`.
 
 ## Usage
 
 Compile then run the game. Make sure the working director is .\bin or the images
-will not load correctally
+will not load correctly
   
 ## Built with
 
