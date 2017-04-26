@@ -10,11 +10,11 @@
 # 
 # ==============================================================================
 # @author 			The Cool Group
-# @project 		GinRummy 			Tic Tac Toe
+# @project 			GinRummy
 # @file 			Makefile
 # @date				2017-03-12 (YYYY-MM-DD)
 # @version			1.0.0
-# @brief 		This is the Makefile for The Tic Tac Toe Project
+# @brief 			This is the Makefile for The GinRummy Project
 # ==============================================================================
 .DEFAULT_GOAL := all
 # ==========================  CONST MACROS  ====================================
@@ -59,7 +59,7 @@ $(OBJDIR)/CardPile.o: ./CardPile.cpp $(INCDIR)/CardPile.h $(INCDIR)/main.h $(INC
 $(OBJDIR)/Window.o: ./Window.cpp $(INCDIR)/Window.h $(INCDIR)/main.h $(INCDIR)/Player.h $(INCDIR)/Human.h $(INCDIR)/Opponent.h $(INCDIR)/CardPile.h $(INCDIR)/Resources.h
 	$(CC) ./Window.cpp -o ./$@ $(CFLAGS) $(L_SDLC)
 	
-$(OBJDIR)/Resources.o: ./Resources.cpp $(INCDIR)/Resources.h $(INCDIR)/main.h $(INCDIR)/CardPile.h
+$(OBJDIR)/Resources.o: ./Resources.cpp $(INCDIR)/Resources.h $(INCDIR)/main.h $(INCDIR)/CardPile.h $(INCDIR)/Player.h $(INCDIR)/Window.h
 	$(CC) ./Resources.cpp -o ./$@ $(CFLAGS) $(L_SDLC)
 
 $(OBJDIR)/%.o: ./%.cpp
