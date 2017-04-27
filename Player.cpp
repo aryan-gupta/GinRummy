@@ -317,21 +317,20 @@ void Player::getMelds() {
 		} 
 	#endif
 	
-	if(ps.size() != 0) // if we even had any melds, the optimal Meld is the first one
+	if(ps.size() != 0) {// if we even had any melds, the optimal Meld is the first one
 		melds = ps[0]; /// @todo FIX ALL THESE DAMN MEMORY LEAKS
 		
-	// auto idx2 = remove_if(
-		// allMelds.begin(), allMelds.end(),
-		// [&](Meld* a) {
-			// for(Meld* m : melds) {
-				// if(a == m)
-					// return false;
-			// }
-			// return true;
-		// }
-	// );
-	
-	// std::for_each(idx2, allMelds.end(), [](Meld* m) { delete m; });
+		std::for_each(
+			allMelds.begin(), allMelds.end(),
+			[&](Meld* a) {
+				for(Meld* m : melds) {
+					if(a == m)
+						return;
+				}
+				delete a;
+			}
+		);
+	}
 }
 
 
