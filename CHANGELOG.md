@@ -18,7 +18,7 @@ All notable changes to this project will be documented in this file.
 - README.md
 
 ## [v1.0] - 2017-04-26 ##
-	- First Release!
+- First Release!
 	
 [v1.0]: https://github.com/Kuantum-Freak/GinRummy/compare/7da948...Release-v1.0
 [v1.1]: https://github.com/Kuantum-Freak/GinRummy/compare/Release-v1.0...Release-v1.1
