@@ -52,7 +52,7 @@ const char* HELP_TEXT[] = {
 Window::Window() {
 	if( NULL ==
 		(window = SDL_CreateWindow(  // Create our Window
-			R_PRGMNAME,  // Window name
+			R_DESCRIPTION,  // Window name
 			SDL_WINDOWPOS_UNDEFINED,  // Window position (x)
 			SDL_WINDOWPOS_UNDEFINED,  // Window position (y)
 			SCRN_W, SCRN_H,  // Screen size
