@@ -22,7 +22,7 @@
 #define INFO_H_INCLUDED
 
 // =================  PROGRAM  INFO  =================
-#define R_PVERSION	       /* Version Number */ "1.1.0"
+#define R_PVERSION	       /* Version Number */ "1.2.0"
  
 #define R_PROJNAME		     /* Project Name */ "GinRummy"
 #define R_DESCRIPTION	      /* Description */ "Gin Rummy"
