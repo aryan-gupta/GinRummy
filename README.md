@@ -19,6 +19,11 @@ our Final Project.
 * http://ginrummy.com/strategy.html
 
 
+### Screenshots
+<p align="center">
+  <img src="res/example2.PNG" alt="Drawing" width="45%"/>
+  <img src="res/example3.PNG" alt="Drawing" width="45%"/>
+</p>
 
 ### Details ###
 The goal of the project is to develop a game where the computer (that is your 
